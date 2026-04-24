@@ -6,8 +6,14 @@ const registerProvider = async (req, res) => {
     const {
       name,
       mobile,
+      email,
       password,
       service,
+      address,
+      city,
+      state,
+      pincode,
+      experience,
       lat,
       lng
     } = req.body;
@@ -28,15 +34,27 @@ const registerProvider = async (req, res) => {
       mobile,
       password: hashed,
       service,
-      location: {
-        type: "Point",
-        coordinates: [Number(lng), Number(lat)]
+      experience: Number(experience) || 0,
+        location: {
+        address,
+        city,
+        state,
+        pincode,
+        coordinates: {
+          type: "Point",
+          coordinates: [Number(lng), Number(lat)]
+        }
       },
       isAvailable: true,
 
       idProof: {
-        url: req.file?.path,
-        public_id: req.file?.filename
+        url: req.files?.idProof?.[0]?.path,
+        public_id: req.files?.idProof?.[0]?.filename
+      },
+
+      profileImage: {
+        url: req.files?.profileImage?.[0]?.path,
+        public_id: req.files?.profileImage?.[0]?.filename
       }
     });
 

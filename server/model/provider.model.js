@@ -53,6 +53,11 @@ const providerSchema = new mongoose.Schema({
     public_id: String
   },
 
+  profileImage: {
+  url: String,
+  public_id: String
+  },
+
   isAvailable: { 
     type: Boolean, 
     default: true 

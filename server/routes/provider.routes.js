@@ -5,5 +5,5 @@ import { registerProvider } from "../controllers/provider.controller.js";
 
 const router = express.Router();
 
-router.post("/register", upload.single("idProof"), registerProvider);
+router.post("/register", upload.fields([ { name: "profileImage" }, { name: "idProof" }]), registerProvider);
 export default router;

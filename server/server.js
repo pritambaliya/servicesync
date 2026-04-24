@@ -50,7 +50,6 @@ app.get("/me", (req, res) => {
 });
 
 
-
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
