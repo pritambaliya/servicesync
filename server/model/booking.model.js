@@ -23,7 +23,18 @@ const bookingSchema = new mongoose.Schema({
   date: Date,
   time: String,
 
+  location: {
   address: String,
+  city: String,
+  state: String,
+  coordinates: {
+    type: {
+      type: String,
+      default: "Point"
+    },
+    coordinates: [Number] 
+    }
+  },
 
   status: {
     type: String,

@@ -9,6 +9,8 @@ import authRoutes from "./routes/auth.routes.js";
 import customerRoutes from "./routes/customer.routes.js";
 import providerRoutes from "./routes/provider.routes.js";
 import adminRoutes from "./routes/admin.routes.js";
+import bookingRoutes from "./routes/booking.routes.js";
+import reviewRoutes from "./routes/review.routes.js";
 import dotenv from "dotenv";
 dotenv.config();
 const app = express();
@@ -37,6 +39,8 @@ app.use("/auth", authRoutes);
 app.use("/customer", customerRoutes);
 app.use("/provider", providerRoutes);
 app.use("/admin", adminRoutes);
+app.use("/bookings", bookingRoutes);
+app.use("/reviews", reviewRoutes);
 
 app.get("/", (req, res) => {
   res.send("Server is running 🚀");
@@ -47,6 +51,12 @@ app.get("/me", (req, res) => {
     return res.json({ user: req.user });
   }
   res.status(401).json({ message: "Not logged in" });
+});
+
+
+app.use((req, res) => {
+  console.log("Route not found:", req.method, req.url);
+  res.status(404).json({ message: "Route not found" });
 });
 
 

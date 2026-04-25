@@ -79,7 +79,22 @@ const providerSchema = new mongoose.Schema({
   reviewsCount: { 
     type: Number, 
     default: 0 
+  },
+
+  reviews: [
+  {
+    customer: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Customer"
+    },
+    rating: {
+      type: Number,
+      min: 1,
+      max: 5
+    },
+    comment: String
   }
+]
   
 }, 
 { 
