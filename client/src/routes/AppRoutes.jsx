@@ -10,6 +10,7 @@ import CustomerDashboard from "../pages/customer/CustomerDashboard";
 import ProviderDashboard from "../pages/provider/ProviderDashboard";
 import ManageBookings from "../pages/provider/ManageBookings";
 import About from "../pages/About";
+import RegisterRole from "../pages/auth/RegisterRole";
 
 
 export default function AppRoutes() {
@@ -23,6 +24,10 @@ export default function AppRoutes() {
           <Route path="/login" element={<Login />} />
           <Route path="/about" element={<About />} />
         </Route>
+
+        <Routes element={<PublicLayout />}>
+          <Route path="/register" element={<RegisterRole />} />
+        </Routes>
 
         {/* PRIVATE ROUTES */}
         <Route element={<PrivateLayout />}>

@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
 const customerSchema = new mongoose.Schema({
+  role: {
+    type: String,
+    default: "customer"
+  },
+  
   name: {
     type: String,
     required: true
@@ -36,6 +41,7 @@ const customerSchema = new mongoose.Schema({
       }
     }
   },
+
 
   profileImage: {
     url: String,

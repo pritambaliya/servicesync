@@ -9,6 +9,8 @@ passport.use(
     { usernameField: "mobile", passReqToCallback: true },
     async (req, mobile, password, done) => {
       try {
+        const frontendRole = req.body.role;
+
         let user = await Provider.findOne({ mobile });
         let role = "provider";
 
@@ -18,26 +20,28 @@ passport.use(
         }
 
         if (!user) {
-          req.flash("error", "User not found");
-          return done(null, false);
+          return done(null, false, { message: "User not found" });
         }
 
+        // 🔥 VALIDATE FRONTEND ROLE (IMPORTANT FIX)
+        if (frontendRole && frontendRole !== role) {
+          return done(null, false, { message: "Invalid role selected" });
+        }
+
+        // provider approval check
         if (role === "provider" && user.status !== "approved") {
-          req.flash("error", "Wait for admin approval");
-          return done(null, false);
+          return done(null, false, { message: "Wait for admin approval" });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-          req.flash("error", "Wrong password");
-          return done(null, false);
+          return done(null, false, { message: "Wrong password" });
         }
 
-        user.role = role;
+        user = user.toObject();
+        user.role = role; // attach runtime role
 
-        req.flash("success", "Login successful");
         return done(null, user);
-
       } catch (err) {
         return done(err);
       }
@@ -56,17 +60,18 @@ passport.deserializeUser(async (data, done) => {
 
     if (data.role === "provider") {
       user = await Provider.findById(data.id);
-    } else {
+    } else if (data.role === "customer") {
       user = await Customer.findById(data.id);
+    } else {
+      return done(null, false);
     }
 
-    // attach role again
-    if (user) {
-      user.role = data.role;
-    }
+    if (!user) return done(null, false);
+
+    user = user.toObject();
+    user.role = data.role;
 
     done(null, user);
-
   } catch (err) {
     done(err);
   }

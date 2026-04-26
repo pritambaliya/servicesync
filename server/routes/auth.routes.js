@@ -1,25 +1,37 @@
 import express from "express";
 import passport from "passport";
-import { loginSuccess, logoutUser } from "../controllers/auth.controller.js";
+import { logoutUser } from "../controllers/auth.controller.js";
 
 const router = express.Router();
 
 router.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
-
-    if (err) return next(err);
+    
+    if (err) {
+      return res.status(500).json({
+        success: false,
+        message: "Server error"
+      });
+    }
 
     if (!user) {
       return res.status(400).json({
-        message: req.flash("error")[0]
+        success: false,
+        message: info?.message || "Login failed"
       });
     }
 
     req.login(user, (err) => {
-      if (err) return next(err);
+      if (err) {
+        return res.status(500).json({
+          success: false,
+          message: "Login session error"
+        });
+      }
 
       return res.json({
-        message: req.flash("success")[0],
+        success: true,
+        message: "Login successful",
         user
       });
     });

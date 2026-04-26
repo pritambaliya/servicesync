@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Wrench, X } from "lucide-react";
 import API from "../../api/axios";
+import Loader from "../../components/Loader";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default function Login() {
     setMobile(value);
   };
 
-  // ✅ Submit with Axios
+  // ✅ Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -38,42 +39,39 @@ export default function Login() {
 
     try {
       const { data } = await API.post("/auth/login", {
-        mobile: "+91" + mobile,
-        password
+        mobile,
+        password,
+        role
       });
 
+      // ❌ backend error
       if (!data.success) {
         setFlash({
           type: "error",
-          message: data.message || "Invalid mobile or password"
+          message: data.message || "Login failed"
         });
         return;
       }
 
-      // role mismatch
-      if (role !== data.role) {
-        setFlash({
-          type: "error",
-          message: "Invalid role selected"
-        });
-        setPassword("");
-        return;
-      }
-
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("role", data.role);
-
+      // ✅ success message
       setFlash({
         type: "success",
         message: data.message || "Login successful"
       });
 
+      // store auth data
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("role", data.user.role);
+
+      // redirect after login
       setTimeout(() => {
-        if (data.role === "customer") navigate("/customer");
-        else if (data.role === "provider") navigate("/provider");
-        else if (data.role === "admin") navigate("/admin");
+        const userRole = data.user?.role;
+        <Loader/>
+        if (userRole === "customer") navigate("/customer");
+        else if (userRole === "provider") navigate("/provider");
+        else if (userRole === "admin") navigate("/admin");
         else navigate("/");
-      }, 1000);
+      }, 2000);
 
     } catch (err) {
       setFlash({
@@ -86,8 +84,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#081c3a] to-[#0b3c78] flex flex-col">
-
-      {/* 🔥 FLASH ABOVE HEADER (FIXED) */}
+      
       {flash.message && (
         <div
           className={`top-[65px] left-0 w-full flex items-center justify-between px-4 py-3 z-[9999] shadow-md
@@ -106,14 +103,14 @@ export default function Login() {
         </div>
       )}
 
-      {/* CONTENT */}
-      <div className="flex flex-1 items-center justify-center px-4 pt-20">
+      {/* FORM UI */}
+      <div className="flex flex-1 items-center justify-center px-6">
 
-        <div className="bg-white w-full max-w-md rounded-2xl shadow-lg p-8">
+        <div className="bg-white w-full max-w-md rounded-2xl shadow-lg p-10">
 
           {/* TITLE */}
           <h2 className="text-2xl font-bold text-center mb-6 flex items-center justify-center gap-2">
-            <Wrench className="text-blue-500 w-6 h-6" />
+            <Wrench className="text-blue-500 w-5 h-5" />
             <span className="text-[#081c3a]">Service</span>
             <span className="text-blue-500">Sync</span>
           </h2>

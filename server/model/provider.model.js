@@ -81,6 +81,11 @@ const providerSchema = new mongoose.Schema({
     default: 0 
   },
 
+  role: {
+    type: String,
+    default: "provider"
+  },
+
   reviews: [
   {
     customer: {
@@ -95,7 +100,6 @@ const providerSchema = new mongoose.Schema({
     comment: String
   }
 ]
-  
 }, 
 { 
     timestamps: true 
