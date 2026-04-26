@@ -12,11 +12,17 @@ import adminRoutes from "./routes/admin.routes.js";
 import bookingRoutes from "./routes/booking.routes.js";
 import reviewRoutes from "./routes/review.routes.js";
 import dotenv from "dotenv";
+import cors from "cors";
 dotenv.config();
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cors({
+  origin: "http://localhost:5173", // frontend URL
+  credentials: true
+}));
 app.use(cookieParser());
 
 app.use(
@@ -41,6 +47,10 @@ app.use("/provider", providerRoutes);
 app.use("/admin", adminRoutes);
 app.use("/bookings", bookingRoutes);
 app.use("/reviews", reviewRoutes);
+
+app.get("/api/test", (req, res) => {
+  res.json({ success: true, message: "API working" });
+});
 
 app.get("/", (req, res) => {
   res.send("Server is running 🚀");
