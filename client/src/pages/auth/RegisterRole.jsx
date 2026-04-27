@@ -1,29 +1,76 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { X } from "lucide-react";
 
 export default function RegisterRole() {
   const navigate = useNavigate();
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#081c3a] to-[#0b3c78]">
+  // 🔥 FLASH STATE (FIXED)
+  const [flash, setFlash] = useState({
+    type: "",
+    message: ""
+  });
 
-      <div className="bg-white p-10 rounded-2xl shadow-lg w-full max-w-md text-center">
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#081c3a] to-[#0b3c78] px-4">
+
+      {/* 🔥 FLASH MESSAGE */}
+      {flash.message && (
+        <div
+          className={`fixed top-[65px] left-0 w-full flex items-center justify-between px-4 py-3 z-[9999] shadow-md
+          ${flash.type === "customer"
+            ? "bg-blue-600 text-white font-bold"
+            : "bg-green-600 text-white font-bold"}`}
+        >
+          <span className="text-sm md:text-base font-medium">
+            {flash.message}
+          </span>
+
+          <X
+            onClick={() => setFlash({ type: "", message: "" })}
+            className="cursor-pointer hover:opacity-70"
+          />
+        </div>
+      )}
+
+      {/* CARD */}
+      <div className="bg-white p-8 md:p-10 rounded-2xl shadow-lg w-full max-w-md text-center">
 
         <h2 className="text-2xl font-bold mb-6 text-[#081c3a]">
           Choose Your Role
         </h2>
 
+        <p className="text-gray-500 mb-6 text-sm">
+          Select how you want to register
+        </p>
+
         <div className="space-y-4">
 
           <button
-            onClick={() => navigate("/register/customer")}
-            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
+            onClick={() => {
+              setFlash({
+                type: "customer",
+                message: "Redirecting to Customer Registration..."
+              });
+
+              setTimeout(() => navigate("/register/customer"), 2000);
+            }}
+            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
           >
             Register as Customer
           </button>
 
           <button
-            onClick={() => navigate("/register/provider")}
-            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700"
+            onClick={() => {
+              setFlash({
+                type: "provider",
+                message: "Redirecting to Provider Registration..."
+              });
+
+              setTimeout(() => navigate("/register/provider"), 2000);
+            }}
+            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition"
           >
             Register as Service Provider
           </button>
