@@ -8,7 +8,6 @@ export default function RegisterCustomer() {
 
   const [loading, setLoading] = useState(false);
 
-  // 🔥 FLASH STATE (NEW)
   const [flash, setFlash] = useState({
     type: "",
     message: ""
@@ -42,30 +41,39 @@ export default function RegisterCustomer() {
 
   // 🌍 LOCATION
   const getLocation = () => {
-    if (!navigator.geolocation) {
-      setFlash({ type: "error", message: "Geolocation not supported" });
-      return;
+  if (!navigator.geolocation) {
+    setFlash({ type: "error", message: "Geolocation not supported" });
+    return;
+  }
+
+  setLoading(true);
+
+  navigator.geolocation.getCurrentPosition(
+    (position) => {
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+
+      setForm((prev) => ({
+        ...prev,
+        latitude: lat,
+        longitude: lng
+      }));
+
+      setLoading(false);
+      setFlash({
+        type: "success",
+        message: "Location captured successfully"
+      });
+    },
+    () => {
+      setLoading(false);
+      setFlash({
+        type: "error",
+        message: "Location access denied"
+      });
     }
-
-    setLoading(true);
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setForm((prev) => ({
-          ...prev,
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude
-        }));
-
-        setLoading(false);
-        setFlash({ type: "success", message: "Location captured successfully" });
-      },
-      () => {
-        setLoading(false);
-        setFlash({ type: "error", message: "Location access denied" });
-      }
-    );
-  };
+  );
+};
 
   // 🚀 SUBMIT
   const handleSubmit = async (e) => {
@@ -126,7 +134,7 @@ export default function RegisterCustomer() {
 
       {flash.message && (
         <div
-          className={`fixed top-[65px] left-0 w-full flex items-center justify-between px-4 py-3 z-[9999] shadow-md
+          className={`fixed top-0 left-0 w-full flex items-center justify-between px-4 py-3 z-[9999] shadow-md
           ${flash.type === "success"
             ? "bg-green-500 text-white"
             : "bg-red-500 text-white"}`}

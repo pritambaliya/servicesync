@@ -1,0 +1,329 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import API from "../../api/axios";
+import { X } from "lucide-react";
+
+export default function RegisterProvider() {
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
+
+  const [flash, setFlash] = useState({
+    type: "",
+    message: ""
+  });
+
+  const [form, setForm] = useState({
+    name: "",
+    mobile: "",
+    email: "",
+    password: "",
+    service: "",
+    address: "",
+    city: "",
+    state: "",
+    pincode: "",
+    latitude: null,
+    longitude: null,
+    experience: "",
+    priceRange: "",
+    idProof: null,
+    profileImage: null
+  });
+
+  const indianStates = [
+    "Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh",
+    "Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka",
+    "Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram",
+    "Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana",
+    "Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Delhi",
+    "Jammu and Kashmir","Ladakh"
+  ];
+
+  const services = [
+    "Plumber",
+    "Electrician",
+    "Carpenter",
+    "Painter",
+    "Cleaner",
+    "AC Technician"
+  ];
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleFileChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.files[0]
+    });
+  };
+
+  const getLocation = () => {
+    if (!navigator.geolocation) {
+      setFlash({ type: "error", message: "Geolocation not supported" });
+      return;
+    }
+
+    setLoading(true);
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setForm((prev) => ({
+          ...prev,
+          latitude: pos.coords.latitude,
+          longitude: pos.coords.longitude
+        }));
+
+        setLoading(false);
+        setFlash({
+          type: "success",
+          message: "Location captured successfully"
+        });
+      },
+      () => {
+        setLoading(false);
+        setFlash({
+          type: "error",
+          message: "Location access denied"
+        });
+      }
+    );
+  };
+
+  // 🚀 SUBMIT
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!form.name || !form.mobile || !form.password || !form.service) {
+    setFlash({
+      type: "error",
+      message: "Please fill all required fields"
+    });
+    return;
+  }
+
+  if (!form.latitude || !form.longitude) {
+    setFlash({
+      type: "error",
+      message: "Please allow location access"
+    });
+    return;
+  }
+
+  try {
+    setLoading(true);
+
+    const formData = new FormData();
+
+    // BASIC
+    formData.append("name", form.name);
+    formData.append("mobile", form.mobile);
+    formData.append("email", form.email);
+    formData.append("password", form.password);
+    formData.append("service", form.service);
+    formData.append("experience", form.experience);
+    formData.append("priceRange", form.priceRange);
+
+    // LOCATION
+    formData.append("address", form.address);
+    formData.append("city", form.city);
+    formData.append("state", form.state);
+    formData.append("pincode", form.pincode);
+    formData.append("latitude", String(form.latitude));
+    formData.append("longitude", String(form.longitude));
+
+    // FILES
+    if (form.idProof) formData.append("idProof", form.idProof);
+    if (form.profileImage) formData.append("profileImage", form.profileImage);
+
+    // 🔥 IMPORTANT: FIX ROUTE HERE
+    const { data } = await API.post("/provider/register", formData);
+
+    console.log("SUCCESS RESPONSE:", data);
+
+    setFlash({
+      type: "success",
+      message: data.message || "Registered successfully"
+    });
+
+    setLoading(false);
+
+    setTimeout(() => navigate("/login"), 1200);
+
+  } catch (err) {
+    console.log("ERROR FULL:", err);
+    console.log("SERVER ERROR:", err.response?.data);
+
+    setLoading(false);
+
+    setFlash({
+      type: "error",
+      message: err.response?.data?.message || "Registration failed"
+    });
+  }
+};
+
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-[#081c3a] to-[#0b3c78] px-4 py-10">
+
+      {/* 🔥 FLASH */}
+      {flash.message && (
+        <div
+          className={`fixed top-0 left-0 w-full flex justify-between px-4 py-4 z-[9999] shadow-md
+          ${flash.type === "success" ? "bg-green-500" : "bg-red-500"} text-white`}
+        >
+          <span>{flash.message}</span>
+          <X
+            onClick={() => setFlash({ type: "", message: "" })}
+            className="cursor-pointer"
+          />
+        </div>
+      )}
+
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white w-full max-w-2xl p-6 md:p-10 rounded-xl shadow-lg space-y-4"
+      >
+
+        <h2 className="text-2xl font-bold text-center text-blue-700">
+          Service Provider Registration
+        </h2>
+
+        {/* SERVICE */}
+        <select
+          name="service"
+          value={form.service}
+          onChange={handleChange}
+          className="p-3 border rounded w-full"
+        >
+          <option value="">Select Service</option>
+          {services.map((s, i) => (
+            <option key={i} value={s}>{s}</option>
+          ))}
+        </select>
+
+        {/* NAME + MOBILE */}
+        <div className="grid md:grid-cols-2 gap-4">
+          <input
+            name="name"
+            placeholder="Full Name"
+            onChange={handleChange}
+            className="p-3 border rounded"
+          />
+
+          <div className="flex items-center border rounded w-full overflow-hidden">
+            <span className="px-3 text-gray-700 border-r">+91</span>
+            <input
+              name="mobile"
+              value={form.mobile}
+              onChange={(e) => {
+                let v = e.target.value.replace(/\D/g, "");
+                if (v.length > 10) v = v.slice(0, 10);
+                setForm({ ...form, mobile: v });
+              }}
+              className="p-3 w-full outline-none"
+              placeholder="Mobile Number"
+            />
+          </div>
+        </div>
+
+        {/* EMAIL + PASSWORD */}
+        <div className="grid md:grid-cols-2 gap-4">
+          <input
+            name="email"
+            placeholder="Email"
+            onChange={handleChange}
+            className="p-3 border rounded"
+          />
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            onChange={handleChange}
+            className="p-3 border rounded"
+          />
+        </div>
+
+        {/* EXPERIENCE + PRICE */}
+        <div className="grid md:grid-cols-2 gap-4">
+          <input
+            name="experience"
+            type="number"
+            placeholder="Experience (years)"
+            onChange={handleChange}
+            className="p-3 border rounded"
+          />
+
+          <input
+            name="priceRange"
+            placeholder="Price per hour (₹)"
+            onChange={handleChange}
+            className="p-3 border rounded"
+          />
+        </div>
+
+        {/* ADDRESS */}
+        <input
+          name="address"
+          placeholder="Address"
+          onChange={handleChange}
+          className="p-3 border rounded w-full"
+        />
+
+        {/* CITY STATE PIN */}
+        <div className="grid md:grid-cols-3 gap-4">
+          <input name="city" placeholder="City" onChange={handleChange} className="p-3 border rounded" />
+
+          <select name="state" value={form.state} onChange={handleChange} className="p-3 border rounded">
+            <option value="">State</option>
+            {indianStates.map((s, i) => (
+              <option key={i}>{s}</option>
+            ))}
+          </select>
+
+          <input name="pincode" placeholder="Pincode" onChange={handleChange} className="p-3 border rounded" />
+        </div>
+
+        {/* FILE UPLOADS */}
+        <div>
+          <label className="text-sm font-medium">Upload ID Proof</label>
+          <input type="file" name="idProof" accept="image/*" onChange={handleFileChange} className="w-full p-2 border rounded" />
+        </div>
+
+        <div>
+          <label className="text-sm font-medium">Upload Profile Image</label>
+          <input type="file" name="profileImage" accept="image/*" onChange={handleFileChange} className="w-full p-2 border rounded" />
+        </div>
+
+        {/* LOCATION */}
+        <button
+          type="button"
+          onClick={getLocation}
+          className="w-full bg-green-600 text-white py-3 rounded"
+        >
+          {loading ? "Getting Location..." : "📍 Allow Location Access"}
+        </button>
+
+        {/* SUBMIT */}
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-blue-600 text-white py-3 rounded"
+        >
+          {loading ? "Registering..." : "Register Provider"}
+        </button>
+
+        <p className="text-center text-sm">
+          Already have an account?{" "}
+          <span onClick={() => navigate("/login")} className="text-blue-600 cursor-pointer">
+            Login
+          </span>
+        </p>
+
+      </form>
+    </div>
+  );
+}

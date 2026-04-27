@@ -14,8 +14,8 @@ const registerProvider = async (req, res) => {
       state,
       pincode,
       experience,
-      lat,
-      lng
+      latitude,
+      longitude
     } = req.body;
 
     const existing = await Provider.findOne({ mobile });
@@ -23,7 +23,8 @@ const registerProvider = async (req, res) => {
     if (existing) {
       req.flash("error", "Provider already exists");
       return res.status(400).json({
-        message: req.flash("error")
+        success: false,
+        message: req.flash("error")[0]
       });
     }
 
@@ -32,19 +33,25 @@ const registerProvider = async (req, res) => {
     const newProvider = await Provider.create({
       name,
       mobile,
+      email,
       password: hashed,
       service,
       experience: Number(experience) || 0,
-        location: {
+
+      location: {
         address,
         city,
         state,
         pincode,
         coordinates: {
           type: "Point",
-          coordinates: [Number(lng), Number(lat)]
+          coordinates: [
+            Number(longitude),
+            Number(latitude)
+          ]
         }
       },
+
       isAvailable: true,
 
       idProof: {
@@ -58,20 +65,22 @@ const registerProvider = async (req, res) => {
       }
     });
 
-    console.log("FILE:", req.file);
-
     req.flash("success", "Request sent to admin");
 
     res.json({
-      message: req.flash("success"),
+      success: true,
+      message: req.flash("success")[0],
       data: newProvider
     });
 
   } catch (err) {
+    console.log("ERROR:", err);
+
     req.flash("error", err.message);
 
     res.status(500).json({
-      message: req.flash("error")
+      success: false,
+      message: req.flash("error")[0]
     });
   }
 };

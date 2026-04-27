@@ -12,6 +12,7 @@ import ManageBookings from "../pages/provider/ManageBookings";
 import About from "../pages/About";
 import RegisterRole from "../pages/auth/RegisterRole";
 import RegisterCustomer from "../pages/customer/RegisterCustomer";
+import RegisterProvider from "../pages/provider/RegisterProvider";
 
 
 export default function AppRoutes() {
@@ -26,6 +27,7 @@ export default function AppRoutes() {
           <Route path="/about" element={<About />} />
           <Route path="/register" element={<RegisterRole />} />
           <Route path="/register/customer" element={<RegisterCustomer />} />
+          <Route path="/register/provider" element={<RegisterProvider />} />
         </Route>
 
 
