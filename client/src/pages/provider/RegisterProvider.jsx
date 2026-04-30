@@ -195,11 +195,9 @@ const handleFileChange = (e) => {
     formData.append("latitude", String(form.latitude));
     formData.append("longitude", String(form.longitude));
 
-    // FILES
     if (form.idProof) formData.append("idProof", form.idProof);
     if (form.profileImage) formData.append("profileImage", form.profileImage);
 
-    // 🔥 IMPORTANT: FIX ROUTE HERE
     const { data } = await API.post("/provider/register", formData);
 
     

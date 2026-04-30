@@ -12,86 +12,121 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-
   const [flash, setFlash] = useState({
     type: "",
     message: ""
   });
 
+  // 📱 Mobile validation
   const handleMobileChange = (e) => {
     let value = e.target.value.replace(/\D/g, "");
     if (value.length > 10) value = value.slice(0, 10);
     setMobile(value);
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  // 🚀 Submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  setFlash({ type: "", message: "" });
+    setFlash({ type: "", message: "" });
 
-  if (!role || mobile.length !== 10 || !password) {
-    setFlash({
-      type: "error",
-      message: "Please fill all fields correctly"
-    });
-    return;
-  }
-
-  try {
-    setLoading(true); 
-
-    const { data } = await API.post("/auth/login", {
-      mobile,
-      password,
-      role
-    });
-
-    if (!data.success) {
-      setLoading(false); 
+    if (!role || mobile.length !== 10 || !password) {
       setFlash({
         type: "error",
-        message: data.message || "Login failed"
+        message: "Please fill all fields correctly"
       });
       return;
     }
 
-    setFlash({
-      type: "success",
-      message: data.message || "Login successful"
-    });
+    // 🔥 ADMIN LOGIN (HARDCODE)
+    if (
+      role === "admin" &&
+      mobile === "9966334455" &&
+      password === "234567"
+    ) {
+      setLoading(true);
 
-    localStorage.setItem("user", JSON.stringify(data.user));
-    localStorage.setItem("role", data.user.role);
+      setFlash({
+        type: "success",
+        message: "Admin login successful"
+      });
 
-    setTimeout(() => {
-      const userRole = data.user?.role;
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          role: "admin",
+          name: "Admin"
+        })
+      );
+      localStorage.setItem("role", "admin");
 
-      setLoading(false); 
+      setTimeout(() => {
+        setLoading(false);
+        navigate("/admin");
+      }, 1200);
 
-      if (userRole === "customer") navigate("/customer");
-      else if (userRole === "provider") navigate("/provider");
-      else if (userRole === "admin") navigate("/admin");
-      else navigate("/");
-    }, 2000);
+      return;
+    }
 
-  } catch (err) {
-    setLoading(false);
+    try {
+      setLoading(true);
 
-    setFlash({
-      type: "error",
-      message:
-        err.response?.data?.message || "Server error. Try again later."
-    });
-  }
-};
+      const { data } = await API.post("/auth/login", {
+        mobile,
+        password,
+        role
+      });
+
+      if (!data.success) {
+        setLoading(false);
+        setFlash({
+          type: "error",
+          message: data.message || "Login failed"
+        });
+        return;
+      }
+
+      setFlash({
+        type: "success",
+        message: data.message || "Login successful"
+      });
+
+      localStorage.setItem("user", JSON.stringify(data.user));
+      localStorage.setItem("role", data.user.role);
+
+      setTimeout(() => {
+        setLoading(false);
+
+        const userRole = data.user?.role;
+
+        if (userRole === "customer") navigate("/customer");
+        else if (userRole === "provider") navigate("/provider");
+        else if (userRole === "admin") navigate("/admin");
+        else navigate("/");
+      }, 1500);
+
+    } catch (err) {
+      setLoading(false);
+
+      console.log("LOGIN ERROR:", err.response?.data);
+
+      setFlash({
+        type: "error",
+        message:
+          err.response?.data?.message || "Server error. Try again later."
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#081c3a] to-[#0b3c78] flex flex-col">
-      
+
+      {/* 🔥 FLASH */}
       {flash.message && (
         <div
-          className={`top-[65px] left-0 w-full flex items-center justify-between px-4 py-3 z-[9999] shadow-md
+          className={`fixed top-0 left-0 w-full flex items-center justify-between px-4 py-3 z-[9999] shadow-md
           ${flash.type === "success"
-            ? ""
+            ? "bg-green-500 text-white"
             : "bg-red-500 text-white"}`}
         >
           <span className="text-sm md:text-base font-medium">
@@ -105,8 +140,10 @@ const handleSubmit = async (e) => {
         </div>
       )}
 
+      {/* 🔄 LOADER */}
       {loading && <Loader />}
 
+      {/* FORM */}
       <div className="flex flex-1 items-center justify-center px-6">
 
         <div className="bg-white w-full max-w-md rounded-2xl shadow-lg p-10">
@@ -119,6 +156,7 @@ const handleSubmit = async (e) => {
 
           <form onSubmit={handleSubmit} className="space-y-4">
 
+            {/* ROLE */}
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
@@ -130,6 +168,7 @@ const handleSubmit = async (e) => {
               <option value="admin">Admin</option>
             </select>
 
+            {/* MOBILE */}
             <div className="flex items-center border rounded-lg overflow-hidden">
               <span className="px-3 text-gray-700">+91</span>
               <input
@@ -142,6 +181,7 @@ const handleSubmit = async (e) => {
               />
             </div>
 
+            {/* PASSWORD */}
             <input
               type="password"
               value={password}
@@ -150,11 +190,14 @@ const handleSubmit = async (e) => {
               className="w-full p-3 border rounded-lg"
             />
 
+            {/* SUBMIT */}
             <button className="w-full bg-[#081c3a] text-white py-3 rounded-lg hover:bg-[#0b3c78] transition">
               Login
             </button>
+
           </form>
 
+          {/* EXTRA */}
           <p className="text-center mt-4 text-sm">
             New user?{" "}
             <span
