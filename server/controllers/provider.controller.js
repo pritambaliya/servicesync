@@ -19,6 +19,8 @@ const registerProvider = async (req, res) => {
     } = req.body;
 
     const existing = await Provider.findOne({ mobile });
+    console.log("BODY:", req.body);
+    console.log("FILES:", req.files);
 
     if (existing) {
       req.flash("error", "Provider already exists");

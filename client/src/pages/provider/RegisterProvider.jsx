@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../api/axios";
 import { X } from "lucide-react";
+import Loader from "../../components/Loader";
 
 export default function RegisterProvider() {
   const navigate = useNavigate();
@@ -11,6 +12,11 @@ export default function RegisterProvider() {
   const [flash, setFlash] = useState({
     type: "",
     message: ""
+  });
+
+  const [fileErrors, setFileErrors] = useState({
+    idProof: "",
+    profileImage: ""
   });
 
   const [form, setForm] = useState({
@@ -53,12 +59,67 @@ export default function RegisterProvider() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleFileChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.files[0]
-    });
-  };
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  const field = e.target.name;
+
+  if (!file) return;
+
+  const allowedTypes = [
+    "image/jpeg",
+    "image/jpg",
+    "image/png",
+    "application/pdf"
+  ];
+
+  const imageTypes = ["image/jpeg", "image/jpg", "image/png"];
+
+  const maxSize = 5 * 1024 * 1024; // 5MB
+
+  let errorMsg = "";
+
+  // TYPE VALIDATION
+  if (!allowedTypes.includes(file.type)) {
+    errorMsg = "Only JPG, JPEG, PNG, PDF allowed";
+  }
+
+  // PROFILE IMAGE ONLY IMAGES
+  if (field === "profileImage" && !imageTypes.includes(file.type)) {
+    errorMsg = "Profile image must be JPG or PNG";
+  }
+
+  // SIZE VALIDATION
+  if (file.size > maxSize) {
+    errorMsg = "File must be less than 5MB";
+  }
+
+  if (errorMsg) {
+    setFileErrors((prev) => ({
+      ...prev,
+      [field]: errorMsg
+    }));
+
+    // reset file
+    setForm((prev) => ({
+      ...prev,
+      [field]: null
+    }));
+
+    e.target.value = "";
+    return;
+  }
+
+  // CLEAR ERROR
+  setFileErrors((prev) => ({
+    ...prev,
+    [field]: ""
+  }));
+
+  setForm((prev) => ({
+    ...prev,
+    [field]: file
+  }));
+};
 
   const getLocation = () => {
     if (!navigator.geolocation) {
@@ -141,8 +202,7 @@ export default function RegisterProvider() {
     // 🔥 IMPORTANT: FIX ROUTE HERE
     const { data } = await API.post("/provider/register", formData);
 
-    console.log("SUCCESS RESPONSE:", data);
-
+    
     setFlash({
       type: "success",
       message: data.message || "Registered successfully"
@@ -182,6 +242,8 @@ export default function RegisterProvider() {
         </div>
       )}
 
+    {loading && <Loader/>}
+
       <form
         onSubmit={handleSubmit}
         className="bg-white w-full max-w-2xl p-6 md:p-10 rounded-xl shadow-lg space-y-4"
@@ -204,7 +266,6 @@ export default function RegisterProvider() {
           ))}
         </select>
 
-        {/* NAME + MOBILE */}
         <div className="grid md:grid-cols-2 gap-4">
           <input
             name="name"
@@ -290,12 +351,38 @@ export default function RegisterProvider() {
         {/* FILE UPLOADS */}
         <div>
           <label className="text-sm font-medium">Upload ID Proof</label>
-          <input type="file" name="idProof" accept="image/*" onChange={handleFileChange} className="w-full p-2 border rounded" />
+
+          <input
+            type="file"
+            name="idProof"
+            accept=".jpg,.jpeg,.png,.pdf"
+            onChange={handleFileChange}
+            className="w-full p-2 border rounded"
+          />
+
+          {fileErrors.idProof && (
+            <p className="text-red-500 text-sm mt-1">
+              * {fileErrors.idProof}
+            </p>
+          )}
         </div>
 
         <div>
           <label className="text-sm font-medium">Upload Profile Image</label>
-          <input type="file" name="profileImage" accept="image/*" onChange={handleFileChange} className="w-full p-2 border rounded" />
+
+          <input
+            type="file"
+            name="profileImage"
+            accept=".jpg,.jpeg,.png"
+            onChange={handleFileChange}
+            className="w-full p-2 border rounded"
+          />
+
+          {fileErrors.profileImage && (
+            <p className="text-red-500 text-sm mt-1">
+              * {fileErrors.profileImage}
+            </p>
+          )}
         </div>
 
         {/* LOCATION */}

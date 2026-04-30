@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
+import Loader from "../../components/Loader";
 
 export default function RegisterRole() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
-  // 🔥 FLASH STATE (FIXED)
   const [flash, setFlash] = useState({
     type: "",
     message: ""
@@ -15,26 +16,8 @@ export default function RegisterRole() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#081c3a] to-[#0b3c78] px-4">
 
-      {/* 🔥 FLASH MESSAGE */}
-      {flash.message && (
-        <div
-          className={`fixed top-[65px] left-0 w-full flex items-center justify-between px-4 py-3 z-[9999] shadow-md
-          ${flash.type === "customer"
-            ? "bg-blue-600 text-white font-bold"
-            : "bg-green-600 text-white font-bold"}`}
-        >
-          <span className="text-sm md:text-base font-medium">
-            {flash.message}
-          </span>
+    {loading && <Loader/>}
 
-          <X
-            onClick={() => setFlash({ type: "", message: "" })}
-            className="cursor-pointer hover:opacity-70"
-          />
-        </div>
-      )}
-
-      {/* CARD */}
       <div className="bg-white p-8 md:p-10 rounded-2xl shadow-lg w-full max-w-md text-center">
 
         <h2 className="text-2xl font-bold mb-6 text-[#081c3a]">
@@ -49,12 +32,8 @@ export default function RegisterRole() {
 
           <button
             onClick={() => {
-              setFlash({
-                type: "customer",
-                message: "Redirecting to Customer Registration..."
-              });
-
-              setTimeout(() => navigate("/register/customer"), 2000);
+              setLoading(true);
+              setTimeout(() => navigate("/register/customer"),2000);
             }}
             className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
           >
@@ -63,11 +42,8 @@ export default function RegisterRole() {
 
           <button
             onClick={() => {
-              setFlash({
-                type: "provider",
-                message: "Redirecting to Provider Registration..."
-              });
-
+              
+              setLoading(true);
               setTimeout(() => navigate("/register/provider"), 2000);
             }}
             className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition"

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../../api/axios";
 import { X } from "lucide-react";
+import Loader from "../../components/Loader";
 
 export default function RegisterCustomer() {
   const navigate = useNavigate();
@@ -27,55 +28,53 @@ export default function RegisterCustomer() {
   });
 
   const indianStates = [
-    "Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh",
-    "Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka",
-    "Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram",
-    "Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana",
-    "Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Delhi",
-    "Jammu and Kashmir","Ladakh"
+    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
+    "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka",
+    "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram",
+    "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana",
+    "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Delhi",
+    "Jammu and Kashmir", "Ladakh"
   ];
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  // 🌍 LOCATION
   const getLocation = () => {
-  if (!navigator.geolocation) {
-    setFlash({ type: "error", message: "Geolocation not supported" });
-    return;
-  }
-
-  setLoading(true);
-
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      const lat = position.coords.latitude;
-      const lng = position.coords.longitude;
-
-      setForm((prev) => ({
-        ...prev,
-        latitude: lat,
-        longitude: lng
-      }));
-
-      setLoading(false);
-      setFlash({
-        type: "success",
-        message: "Location captured successfully"
-      });
-    },
-    () => {
-      setLoading(false);
-      setFlash({
-        type: "error",
-        message: "Location access denied"
-      });
+    if (!navigator.geolocation) {
+      setFlash({ type: "error", message: "Geolocation not supported" });
+      return;
     }
-  );
-};
 
-  // 🚀 SUBMIT
+    setLoading(true);
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+
+        setForm((prev) => ({
+          ...prev,
+          latitude: lat,
+          longitude: lng
+        }));
+
+        setLoading(false);
+        setFlash({
+          type: "success",
+          message: "Location captured successfully"
+        });
+      },
+      () => {
+        setLoading(false);
+        setFlash({
+          type: "error",
+          message: "Location access denied"
+        });
+      }
+    );
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -109,14 +108,13 @@ export default function RegisterCustomer() {
 
       setLoading(false);
 
-      // 🔥 SERVER FLASH MESSAGE
       setFlash({
         type: data.success ? "success" : "error",
         message: data.message
       });
 
       if (data.success) {
-        setTimeout(() => navigate("/login"), 1200);
+        setTimeout(() => navigate("/login"), 2000);
       }
 
     } catch (err) {
@@ -136,8 +134,8 @@ export default function RegisterCustomer() {
         <div
           className={`fixed top-0 left-0 w-full flex items-center justify-between px-4 py-3 z-[9999] shadow-md
           ${flash.type === "success"
-            ? "bg-green-500 text-white"
-            : "bg-red-500 text-white"}`}
+              ? "bg-green-500 text-white"
+              : "bg-red-500 text-white"}`}
         >
           <span className="text-sm md:text-base font-medium">
             {flash.message}
@@ -150,6 +148,8 @@ export default function RegisterCustomer() {
         </div>
       )}
 
+      {loading && <Loader/>}
+
       <form
         onSubmit={handleSubmit}
         className="bg-white w-full items-center max-w-2xl p-6 md:p-10 rounded-xl shadow-lg space-y-4"
@@ -159,7 +159,6 @@ export default function RegisterCustomer() {
           Customer Registration
         </h2>
 
-        {/* NAME + MOBILE */}
         <div className="grid md:grid-cols-2 gap-4">
 
           <input
@@ -190,7 +189,6 @@ export default function RegisterCustomer() {
 
         </div>
 
-        {/* EMAIL + PASSWORD */}
         <div className="grid md:grid-cols-2 gap-4">
 
           <input
@@ -210,7 +208,6 @@ export default function RegisterCustomer() {
 
         </div>
 
-        {/* ADDRESS */}
         <input
           name="address"
           placeholder="Address"
@@ -218,7 +215,6 @@ export default function RegisterCustomer() {
           className="p-3 border rounded w-full"
         />
 
-        {/* CITY + STATE + PINCODE */}
         <div className="grid md:grid-cols-3 gap-4">
 
           <input
@@ -249,7 +245,6 @@ export default function RegisterCustomer() {
 
         </div>
 
-        {/* LOCATION */}
         <button
           type="button"
           onClick={getLocation}
@@ -258,7 +253,6 @@ export default function RegisterCustomer() {
           {loading ? "Getting Location..." : "📍 Allow Location Access"}
         </button>
 
-        {/* SUBMIT */}
         <button
           type="submit"
           disabled={loading}
@@ -267,8 +261,8 @@ export default function RegisterCustomer() {
           {loading ? "Registering..." : "Register Customer"}
         </button>
 
-        <p className="text-center text-sm"> Already have an account?{" "} 
-            <span onClick={() => navigate("/login")} className="text-blue-600 cursor-pointer font-semibold" > Login </span> 
+        <p className="text-center text-sm"> Already have an account?{" "}
+          <span onClick={() => navigate("/login")} className="text-blue-600 cursor-pointer font-semibold" > Login </span>
         </p>
 
       </form>
