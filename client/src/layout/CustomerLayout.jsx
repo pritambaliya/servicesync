@@ -1,0 +1,13 @@
+import Customerbar from "../components/customerbar";
+import Footer from "../components/Footer";
+import { Outlet } from "react-router-dom";
+
+export default function CustomerLayout() {
+  return (
+    <>
+      <Customerbar />
+      <Outlet />
+      <Footer />
+    </>
+  );
+}

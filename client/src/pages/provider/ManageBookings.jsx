@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../../api/axios";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/AdminNavbar";
 
 export default function ManageBookings() {
   const [bookings, setBookings] = useState([]);

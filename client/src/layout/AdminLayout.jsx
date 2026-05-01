@@ -1,11 +1,11 @@
-import Navbar from "../components/Navbar";
+import AdminNavbar from "../components/AdminNavbar";
 import Footer from "../components/Footer";
 import { Outlet } from "react-router-dom";
 
-export default function PrivateLayout() {
+export default function AdminLayout() {
   return (
     <>
-      <Navbar />
+      <AdminNavbar />
       <Outlet />
       <Footer />
     </>

@@ -1,31 +1,29 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import PublicLayout from "../layout/PublicLayout";
-import PrivateLayout from "../layout/PrivateLayout";
 
 import Home from "../pages/Home";
 import Login from "../pages/auth/Login";
 
 import CustomerDashboard from "../pages/customer/CustomerDashboard";
-import ProviderDashboard from "../pages/provider/ProviderDashboard";
-import ManageBookings from "../pages/provider/ManageBookings";
 
 import About from "../pages/About";
 import RegisterRole from "../pages/auth/RegisterRole";
 import RegisterCustomer from "../pages/customer/RegisterCustomer";
 import RegisterProvider from "../pages/provider/RegisterProvider";
 
-// ✅ ADMIN IMPORTS
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import PendingProviders from "../pages/admin/PendingProviders";
 import Logout from "../pages/auth/Logout";
+import Footer from "../components/Footer";
+import AdminLayout from "../layout/AdminLayout";
+import CustomerLayout from "../layout/customerLayout";
 
 export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
 
-        {/* PUBLIC ROUTES */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -36,20 +34,13 @@ export default function AppRoutes() {
           <Route path="/logout" element={<Logout />} />
         </Route>
 
-        {/* PRIVATE ROUTES */}
-        <Route element={<PrivateLayout />}>
-
-          {/* Customer */}
-          <Route path="/customer" element={<CustomerDashboard />} />
-
-          {/* Provider */}
-          <Route path="/provider" element={<ProviderDashboard />} />
-          <Route path="/provider/bookings" element={<ManageBookings />} />
-
-          {/* ✅ ADMIN */}
+        <Route element={<AdminLayout />}>
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/providers" element={<PendingProviders />} />
+        </Route>
 
+        <Route element={<CustomerLayout />}>
+          <Route path="/customer" element={<CustomerDashboard />} />
         </Route>
 
       </Routes>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../../api/axios";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../components/AdminNavbar";
 import { useNavigate } from "react-router-dom";
 
 export default function ProviderDashboard() {
