@@ -18,6 +18,7 @@ import RegisterProvider from "../pages/provider/RegisterProvider";
 // ✅ ADMIN IMPORTS
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import PendingProviders from "../pages/admin/PendingProviders";
+import Logout from "../pages/auth/Logout";
 
 export default function AppRoutes() {
   return (
@@ -32,6 +33,7 @@ export default function AppRoutes() {
           <Route path="/register" element={<RegisterRole />} />
           <Route path="/register/customer" element={<RegisterCustomer />} />
           <Route path="/register/provider" element={<RegisterProvider />} />
+          <Route path="/logout" element={<Logout />} />
         </Route>
 
         {/* PRIVATE ROUTES */}

@@ -35,7 +35,7 @@ export default function RegisterRole() {
               setTimeout(() => navigate("/register/customer"),2000);
             }}
             className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
-          >
+          >                     
             Register as Customer
           </button>
 

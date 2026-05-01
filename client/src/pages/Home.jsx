@@ -17,6 +17,8 @@ export default function Home() {
   return (
     <div className="bg-gray-200 min-h-screen">
 
+      
+      
       <div className="bg-gradient-to-r from-[#081c3a] to-[#0b3c78] text-white py-20 text-center text-white text-center py-20 px-6">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
           Find Trusted Services Near You
@@ -27,7 +29,7 @@ export default function Home() {
         </p>
 
         <button
-          onClick={() => navigate("/login")}
+           onClick={() => navigate("/login")}
           className="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded-md text-white font-medium shadow-md transition"
         >
           Get Started 

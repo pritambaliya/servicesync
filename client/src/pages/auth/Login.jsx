@@ -4,6 +4,7 @@ import { Wrench, X } from "lucide-react";
 import API from "../../api/axios";
 import Loader from "../../components/Loader";
 
+
 export default function Login() {
   const navigate = useNavigate();
 
@@ -126,7 +127,7 @@ export default function Login() {
         <div
           className={`fixed top-0 left-0 w-full flex items-center justify-between px-4 py-3 z-[9999] shadow-md
           ${flash.type === "success"
-            ? "bg-green-500 text-white"
+            ? ""
             : "bg-red-500 text-white"}`}
         >
           <span className="text-sm md:text-base font-medium">
