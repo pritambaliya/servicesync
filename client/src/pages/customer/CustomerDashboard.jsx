@@ -51,7 +51,7 @@ export default function CustomerServices() {
         </p>
       </div>
 
-      <div className="px-6 pb-10 grid sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+      <div className="px-6 pb-10 grid sm:grid-cols-2 md:grid-cols-3 gap-9 max-w-5xl mx-auto">
 
         {services.map((s, i) => (
           <div

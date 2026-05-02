@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { FiUser, FiLogOut, FiMenu, FiX } from "react-icons/fi";
 
 export default function AdminNavbar() {
   const navigate = useNavigate();
@@ -32,9 +33,9 @@ export default function AdminNavbar() {
 
         <button
           onClick={handleLogout}
-          className="bg-red-500 hover:bg-red-600 px-4 py-1 rounded transition"
+          className="bg-red-500 px-3 py-1 rounded flex items-center gap-1 hover:bg-red-600"
         >
-          Logout
+          <FiLogOut size={16} /> Logout
         </button>
 
       </div>

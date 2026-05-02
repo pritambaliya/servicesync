@@ -15,7 +15,8 @@ const registerProvider = async (req, res) => {
       pincode,
       experience,
       latitude,
-      longitude
+      longitude,
+      priceRange
     } = req.body;
 
     const existing = await Provider.findOne({ mobile });
@@ -39,7 +40,7 @@ const registerProvider = async (req, res) => {
       password: hashed,
       service,
       experience: Number(experience) || 0,
-
+      priceRange,
       location: {
         address,
         city,
