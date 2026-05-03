@@ -84,7 +84,7 @@ export default function CustomerServices() {
 
             {/* BUTTON */}
             <button
-              onClick={() => navigate(`/service/${s.name.toLowerCase()}`)}
+              onClick={() => navigate(`/customer/service/${s.name.toLowerCase()}`)}
               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm"
             >
               Book Now

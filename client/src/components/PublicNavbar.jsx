@@ -37,7 +37,7 @@ export default function PublicNavbar() {
       </div>
 
       {/* 📱 Mobile Menu Button */}
-      <div className="md:hidden">
+      <div className="md:hidden ">
         <button onClick={() => setOpen(!open)}>
           {open ? <FiX size={26} /> : <FiMenu size={26} />}
         </button>
@@ -45,7 +45,7 @@ export default function PublicNavbar() {
 
       {/* 📱 Mobile Dropdown */}
       {open && (
-        <div className="absolute top-16 left-0 w-full bg-blue-800 flex flex-col items-center gap-5 py-6 md:hidden z-50 shadow-lg">
+        <div className="absolute top-16 left-0 w-full bg-[#081c3a] flex flex-col items-center gap-5 py-6 md:hidden z-50 shadow-lg">
           
           <button
             onClick={() => {

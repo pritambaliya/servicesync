@@ -24,6 +24,7 @@ export const createBooking = async (req, res) => {
       });
     }
 
+    
     const booking = await Booking.create({
       customer: req.user._id,
       provider: providerId,

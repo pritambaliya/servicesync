@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import API from "../../api/axios";
 import Loader from "../../components/Loader";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function ServiceProviderList() {
   const { type } = useParams();
@@ -10,6 +10,7 @@ export default function ServiceProviderList() {
   const [filteredProviders, setFilteredProviders] = useState([]);
   const [searchCity, setSearchCity] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   // 🔥 NEW → selected provider (modal)
   const [selectedProvider, setSelectedProvider] = useState(null);
@@ -182,12 +183,13 @@ export default function ServiceProviderList() {
               )}
             </div>
 
-            {/* BOOK BUTTON */}
               {selectedProvider.isAvailable ? (
                 <button
               className="w-full mt-5 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
               onClick={() => {
-                console.log("Book:", selectedProvider._id);
+                navigate(`/customer/service/booking/${selectedProvider._id}`, {
+                  state: selectedProvider
+                });console.log("STATE:", state);
               }}
             > Book Now </button>
                 ) : (
@@ -199,8 +201,6 @@ export default function ServiceProviderList() {
             > Book Now </button>
                 )}
 
-
-            
 
           </div>
         </div>

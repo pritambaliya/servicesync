@@ -32,7 +32,7 @@ export default function Customerbar() {
           </button>
 
           <button
-            onClick={() => navigate("/profile")}
+            onClick={() => navigate("/customer/profile")}
             className="hover:text-blue-300 flex items-center gap-1"
           >
             <FiUser size={18} /> Profile
@@ -85,7 +85,7 @@ export default function Customerbar() {
 
           <button
             onClick={() => {
-              navigate("/profile");
+              navigate("/customer/profile");
               setOpen(false);
             }}
             className="flex items-center gap-2"

@@ -18,14 +18,12 @@ export default function Login() {
     message: ""
   });
 
-  // 📱 Mobile validation
   const handleMobileChange = (e) => {
     let value = e.target.value.replace(/\D/g, "");
     if (value.length > 10) value = value.slice(0, 10);
     setMobile(value);
   };
 
-  // 🚀 Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -39,7 +37,6 @@ export default function Login() {
       return;
     }
 
-    // 🔥 ADMIN LOGIN (HARDCODE)
     if (
       role === "admin" &&
       mobile === "9966334455" &&

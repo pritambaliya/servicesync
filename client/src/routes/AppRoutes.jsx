@@ -20,6 +20,7 @@ import AdminLayout from "../layout/AdminLayout";
 import CustomerLayout from "../layout/customerLayout";
 import ServiceProviderList from "../pages/customer/ServiceProviderList";
 import Profile from "../pages/customer/Profile";
+import BookingPage from "../pages/customer/BookingPage";
 
 export default function AppRoutes() {
   return (
@@ -43,8 +44,9 @@ export default function AppRoutes() {
 
         <Route element={<CustomerLayout />}>
           <Route path="/customer" element={<CustomerDashboard />} />
-          <Route path="/service/:type" element={<ServiceProviderList />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/customer/service/:type" element={<ServiceProviderList />} />
+          <Route path="/customer/profile" element={<Profile />} />
+          <Route path="/customer/service/booking/:providerid" element={<BookingPage />} />
         </Route>
 
       </Routes>
