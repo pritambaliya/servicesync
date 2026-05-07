@@ -4,7 +4,8 @@ import {
   updateBookingStatus,
   getCustomerBookings,
   getProviderBookings,
-  cancelBookingByCustomer
+  cancelBookingByCustomer,
+  deleteBooking
 } from "../controllers/booking.controller.js";
 
 import {
@@ -15,13 +16,15 @@ import {
 
 const router = express.Router();
 
-router.post("/create", isLoggedIn, isCustomer, createBooking);
+router.post("/create",isLoggedIn, isCustomer, createBooking); //Customer Side
 
-router.put("/:id/status", isLoggedIn, isProvider, updateBookingStatus);
+router.delete("/delete/:id", isLoggedIn, isCustomer, deleteBooking);
 
-router.get("/customer", isLoggedIn, isCustomer, getCustomerBookings);
+router.put("/:id/status", isLoggedIn, isProvider, updateBookingStatus); //Provider Side
 
-router.get("/provider", isLoggedIn, isProvider, getProviderBookings);
+router.get("/customer", isLoggedIn, isCustomer, getCustomerBookings);  //Customer Side
 
-router.put("/cancel/:id", isLoggedIn, isCustomer, cancelBookingByCustomer);
+router.get("/provider", isLoggedIn, isProvider, getProviderBookings); //Provider Side
+
+router.put("/cancel/:id", isLoggedIn, isCustomer, cancelBookingByCustomer); //Customer Side
 export default router;

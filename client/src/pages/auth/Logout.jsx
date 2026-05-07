@@ -1,39 +1,38 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import API from "../../api/axios";
 import Loader from "../../components/Loader";
+
 
 export default function Logout() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // simulate delay (UX smooth)
-    setTimeout(() => {
-      // 🔥 clear storage
-      localStorage.removeItem("user");
-      localStorage.removeItem("role");
-      localStorage.removeItem("token");
+    const logoutUser = async () => {
+      try {
+        await API.get("/auth/logout", {
+          withCredentials: true
+        });
 
-      setLoading(false);
+        localStorage.clear();
 
-      // redirect
-      navigate("/login");
-    }, 1500); 
-  }, [navigate]);
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500);
+
+      } catch (err) {
+        console.log(err);
+
+        navigate("/login");
+      }
+    };
+
+    logoutUser();
+  }, []);
 
   return (
-    <div className="min-h-screen bg-[#081c3a] flex items-center justify-center">
-      
-      {/* ✅ SHOW LOADER */}
-      {loading && <Loader />}
-
-      {/* fallback text */}
-      {!loading && (
-        <h1 className="text-white text-lg font-semibold">
-          Logging out...
-        </h1>
-      )}
-
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#081c3a] to-[#0b3c78]">
+        <Loader />
     </div>
   );
 }

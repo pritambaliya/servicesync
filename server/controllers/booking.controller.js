@@ -24,7 +24,8 @@ export const createBooking = async (req, res) => {
       });
     }
 
-    
+    console.log(req.user);
+    console.log(req.isAuthenticated());
     const booking = await Booking.create({
       customer: req.user._id,
       provider: providerId,
@@ -38,7 +39,7 @@ export const createBooking = async (req, res) => {
         state,
         coordinates: {
           type: "Point",
-          coordinates: [Number(lng), Number(lat)]
+          coordinates: [lng, lat]
         }
       }
     });
@@ -277,6 +278,42 @@ export const cancelBookingByCustomer = async (req, res) => {
       success: false,
       message: req.flash("error")[0],
       data: null
+    });
+  }
+};
+
+export const deleteBooking = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const booking = await Booking.findById(id);
+
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: "Booking not found"
+      });
+    }
+
+    // only own booking delete
+    if (String(booking.customer) !== String(req.user._id)) {
+      return res.status(403).json({
+        success: false,
+        message: "Not allowed"
+      });
+    }
+
+    await Booking.findByIdAndDelete(id);
+
+    res.json({
+      success: true,
+      message: "Booking deleted permanently"
+    });
+
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
     });
   }
 };

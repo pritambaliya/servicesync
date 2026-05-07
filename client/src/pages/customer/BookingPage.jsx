@@ -96,6 +96,7 @@ export default function BookingPage() {
 
       await API.post("/bookings/create", {
         providerId: providerid,
+        service: provider.service,
         date,
         time,
         note,

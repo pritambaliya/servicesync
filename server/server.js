@@ -32,7 +32,8 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: false 
+      secure: false ,
+      sameSite: "lax"
     }
   })
 );
@@ -48,9 +49,6 @@ app.use("/admin", adminRoutes);
 app.use("/bookings", bookingRoutes);
 app.use("/reviews", reviewRoutes);
 
-app.get("/api/test", (req, res) => {
-  res.json({ success: true, message: "API working" });
-});
 
 app.get("/", (req, res) => {
   res.send("Server is running 🚀");
@@ -61,6 +59,14 @@ app.get("/me", (req, res) => {
     return res.json({ user: req.user });
   }
   res.status(401).json({ message: "Not logged in" });
+});
+
+app.get("/check-auth", (req, res) => {
+  res.json({
+    auth: req.isAuthenticated(),
+    user: req.user,
+    session: req.session
+  });
 });
 
 

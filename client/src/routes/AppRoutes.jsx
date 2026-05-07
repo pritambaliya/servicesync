@@ -14,13 +14,14 @@ import RegisterProvider from "../pages/provider/RegisterProvider";
 
 import AdminDashboard from "../pages/admin/AdminDashboard";
 import PendingProviders from "../pages/admin/PendingProviders";
-import Logout from "../pages/auth/Logout";
 import Footer from "../components/Footer";
 import AdminLayout from "../layout/AdminLayout";
 import CustomerLayout from "../layout/customerLayout";
 import ServiceProviderList from "../pages/customer/ServiceProviderList";
 import Profile from "../pages/customer/Profile";
 import BookingPage from "../pages/customer/BookingPage";
+import Logout from "../pages/auth/Logout";
+import View from "../pages/customer/View";
 
 export default function AppRoutes() {
   return (
@@ -47,8 +48,9 @@ export default function AppRoutes() {
           <Route path="/customer/service/:type" element={<ServiceProviderList />} />
           <Route path="/customer/profile" element={<Profile />} />
           <Route path="/customer/service/booking/:providerid" element={<BookingPage />} />
+          <Route path="/customer/bookings" element={<View />} />
         </Route>
-
+        
       </Routes>
     </BrowserRouter>
   );

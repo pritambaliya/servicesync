@@ -1,15 +1,24 @@
 const isLoggedIn = (req, res, next) => {
-  if (req.isAuthenticated()) return next();
+  if (req.isAuthenticated && req.isAuthenticated()) {
+    return next();
+  }
 
-  req.flash("error", "Login required"); 
+  req.flash("error", "Login required");
 
-  res.status(401).json({
-    message: req.flash("error")
+  return res.status(401).json({
+    success: false,
+    message: req.flash("error")[0],
+    data: null
   });
 };
 
 const isCustomer = (req, res, next) => {
-  if (req.user && req.user.role === "customer") {
+  if (
+    req.isAuthenticated &&
+    req.isAuthenticated() &&
+    req.user &&
+    req.user.role === "customer"
+  ) {
     return next();
   }
 
@@ -20,10 +29,15 @@ const isCustomer = (req, res, next) => {
     message: req.flash("error")[0],
     data: null
   });
-  };
+};
 
 const isProvider = (req, res, next) => {
-  if (req.user && req.user.role === "provider") {
+  if (
+    req.isAuthenticated &&
+    req.isAuthenticated() &&
+    req.user &&
+    req.user.role === "provider"
+  ) {
     return next();
   }
 
@@ -36,4 +50,4 @@ const isProvider = (req, res, next) => {
   });
 };
 
-export {isLoggedIn, isCustomer, isProvider};
+export { isLoggedIn, isCustomer, isProvider };

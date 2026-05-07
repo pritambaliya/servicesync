@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiUser, FiLogOut, FiMenu, FiX } from "react-icons/fi";
+import API from "../api/axios";
 
 export default function Customerbar() {
   const navigate = useNavigate();
@@ -40,12 +41,12 @@ export default function Customerbar() {
 
           <button
             onClick={() => {
-              localStorage.clear();
-              navigate("/login");
+              setOpen(false);
+              navigate("/logout");
             }}
             className="bg-red-500 px-3 py-1 rounded flex items-center gap-1 hover:bg-red-600"
           >
-            <FiLogOut size={16} /> Logout
+            <FiLogOut /> Logout
           </button>
 
         </div>
@@ -95,11 +96,10 @@ export default function Customerbar() {
 
           <button
             onClick={() => {
-              localStorage.clear();
-              navigate("/login");
               setOpen(false);
+              navigate("/logout");
             }}
-            className="bg-red-500 px-5 py-2 rounded flex items-center gap-2"
+            className="bg-red-500 px-3 py-1 rounded flex items-center gap-1 hover:bg-red-600"
           >
             <FiLogOut /> Logout
           </button>
