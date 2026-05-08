@@ -22,6 +22,8 @@ import Profile from "../pages/customer/Profile";
 import BookingPage from "../pages/customer/BookingPage";
 import Logout from "../pages/auth/Logout";
 import View from "../pages/customer/View";
+import EditBooking from "../pages/customer/EditBooking";
+import Review from "../pages/customer/Review";
 
 export default function AppRoutes() {
   return (
@@ -49,6 +51,8 @@ export default function AppRoutes() {
           <Route path="/customer/profile" element={<Profile />} />
           <Route path="/customer/service/booking/:providerid" element={<BookingPage />} />
           <Route path="/customer/bookings" element={<View />} />
+          <Route path="/customer/bookings/edit/:id" element={<EditBooking />} />
+          <Route path="/customer/bookings/review" element={<Review />} />
         </Route>
         
       </Routes>

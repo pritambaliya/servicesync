@@ -5,7 +5,8 @@ import {
   getCustomerBookings,
   getProviderBookings,
   cancelBookingByCustomer,
-  deleteBooking
+  deleteBooking,
+  updateBooking
 } from "../controllers/booking.controller.js";
 
 import {
@@ -19,6 +20,8 @@ const router = express.Router();
 router.post("/create",isLoggedIn, isCustomer, createBooking); //Customer Side
 
 router.delete("/delete/:id", isLoggedIn, isCustomer, deleteBooking);
+
+router.put("/update/:id", isLoggedIn, isCustomer, updateBooking);
 
 router.put("/:id/status", isLoggedIn, isProvider, updateBookingStatus); //Provider Side
 

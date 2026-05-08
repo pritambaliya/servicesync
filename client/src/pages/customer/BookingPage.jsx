@@ -9,6 +9,7 @@ export default function BookingPage() {
   const navigate = useNavigate();
 
   const [provider, setProvider] = useState(state || null);
+  const [user, setUser] = useState(null);
 
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
@@ -38,12 +39,22 @@ export default function BookingPage() {
   }, [providerid]);
 
   useEffect(() => {
-    if (provider?.location) {
-      setAddress(provider.location.address || "");
-      setCity(provider.location.city || "");
-      setStateName(provider.location.state || "");
+    const currentUser = JSON.parse(localStorage.getItem("user"));
+
+    console.log("Current Login User:", currentUser);
+
+    setUser(currentUser);
+  }, []);
+
+  useEffect(() => {
+    if (user?.location) {
+      setAddress(user.location.address || "");
+      setCity(user.location.city || "");
+      setStateName(user.location.state || "");
     }
-  }, [provider]);
+  }, [user]);
+
+
 
   const getCurrentLocation = () => {
     if (!navigator.geolocation) {

@@ -3,7 +3,7 @@ import Provider from "../model/provider.model.js";
 
 export const createBooking = async (req, res) => {
   try {
-    const { providerId, service, date, time, address, city, state, lat, lng, note } = req.body;
+    const { providerId, service, date, time, note, location } = req.body;
 
     if (!providerId || !date || !time) {
       req.flash("error", "Missing required fields");
@@ -24,8 +24,6 @@ export const createBooking = async (req, res) => {
       });
     }
 
-    console.log(req.user);
-    console.log(req.isAuthenticated());
     const booking = await Booking.create({
       customer: req.user._id,
       provider: providerId,
@@ -33,15 +31,7 @@ export const createBooking = async (req, res) => {
       date,
       time,
       note,
-      location: {
-        address,
-        city,
-        state,
-        coordinates: {
-          type: "Point",
-          coordinates: [lng, lat]
-        }
-      }
+      location
     });
 
     req.flash("success", "Booking created");
@@ -311,6 +301,82 @@ export const deleteBooking = async (req, res) => {
     });
 
   } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
+  }
+};
+
+
+export const updateBooking = async (req, res) => {
+
+  try {
+
+    const { id } = req.params;
+
+    const booking = await Booking.findById(id);
+
+    if (!booking) {
+      return res.status(404).json({
+        success: false,
+        message: "Booking not found"
+      });
+    }
+
+    if (
+      String(booking.customer) !==
+      String(req.user._id)
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Unauthorized"
+      });
+    }
+
+    if (booking.status !== "pending") {
+      return res.status(400).json({
+        success: false,
+        message: "Only pending booking editable"
+      });
+    }
+
+    const {
+      date,
+      time,
+      note,
+      address,
+      city,
+      state,
+      lat,
+      lng
+    } = req.body;
+
+    booking.date = date;
+    booking.time = time;
+    booking.note = note;
+
+    booking.location = {
+      address,
+      city,
+      state,
+
+      coordinates: {
+        type: "Point",
+        coordinates: [lng, lat]
+      }
+    };
+
+    await booking.save();
+
+    res.json({
+      success: true,
+      message: "Booking updated",
+      data: booking
+    });
+
+  } catch (err) {
+
     res.status(500).json({
       success: false,
       message: err.message

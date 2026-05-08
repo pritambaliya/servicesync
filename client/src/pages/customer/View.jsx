@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import API from "../../api/axios";
 import Loader from "../../components/Loader";
 import { X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function CustomerBookings() {
 
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedProvider, setSelectedProvider] = useState(null);
-
+  const navigate = useNavigate();
   // 🔥 FETCH BOOKINGS
   const fetchBookings = async () => {
     try {
@@ -156,7 +157,6 @@ export default function CustomerBookings() {
               "
             >
 
-              {/* ❌ DELETE BUTTON */}
               {b.status !== "pending" && (
                 <button
                   onClick={() => removeCard(b._id)}
@@ -238,11 +238,11 @@ export default function CustomerBookings() {
               </div>
 
               {/* DETAILS */}
-              <div className="mt-5 grid md:grid-cols-2 gap-4 text-gray-200 text-sm">
+              <div className="mt-5 grid md:grid-cols-2 gap-4 text-white text-sm">
 
                 <p>
                   📅 <span className="font-semibold">Date:</span>{" "}
-                  {new Date(b.date).toLocaleDateString()}
+                  {new Date(b.date).toLocaleDateString("en-GB")}
                 </p>
 
                 <p>
@@ -309,6 +309,9 @@ export default function CustomerBookings() {
                 {b.status === "pending" && (
                   <>
                     <button
+                      onClick={() =>
+                          navigate(`/customer/bookings/edit/${b._id}`)
+                        }
                       className="
                         flex-1
                         bg-blue-600
@@ -316,7 +319,7 @@ export default function CustomerBookings() {
                         text-white
                         py-2
                         rounded-lg
-                      "
+                      "              
                     >
                       Edit Booking
                     </button>
@@ -341,6 +344,7 @@ export default function CustomerBookings() {
                 {b.status === "accepted" && (
                   <>
                     <button
+                    onClick={()=>navigate("/customer/bookings/review")}
                       className="
                         flex-1
                         bg-yellow-500

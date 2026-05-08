@@ -1,0 +1,443 @@
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import API from "../../api/axios";
+import Loader from "../../components/Loader";
+import { ArrowLeft, X } from "lucide-react";
+
+export default function EditBooking() {
+
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
+
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [note, setNote] = useState("");
+
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [stateName, setStateName] = useState("");
+
+  const [flash, setFlash] = useState({
+    type: "",
+    message: ""
+  });
+
+  const [lat, setLat] = useState("");
+  const [lng, setLng] = useState("");
+
+  // FETCH BOOKING
+  const fetchBooking = async () => {
+
+    try {
+
+      setLoading(true);
+
+      const { data } = await API.get(
+        "/bookings/customer",
+        {
+          withCredentials: true
+        }
+      );
+
+      const booking = data.data.find(
+        (b) => b._id === id
+      );
+
+      if (!booking) {
+
+        setFlash({
+          type: "error",
+          message: "Booking not found"
+        });
+
+        setTimeout(() => {
+          navigate(-1);
+        }, 1500);
+
+        return;
+      }
+
+      setDate(
+        booking.date
+          ? new Date(booking.date)
+              .toISOString()
+              .split("T")[0]
+          : ""
+      );
+
+      setTime(booking.time || "");
+      setNote(booking.note || "");
+
+      setAddress(booking.location?.address || "");
+      setCity(booking.location?.city || "");
+      setStateName(booking.location?.state || "");
+
+      setLng(
+        booking.location?.coordinates?.coordinates?.[0] || ""
+      );
+
+      setLat(
+        booking.location?.coordinates?.coordinates?.[1] || ""
+      );
+
+    } catch (err) {
+
+      console.log(err);
+
+      setFlash({
+        type: "error",
+        message: "Failed to fetch booking"
+      });
+
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchBooking();
+  }, []);
+
+  // GET CURRENT LOCATION
+  const getCurrentLocation = () => {
+
+    if (!navigator.geolocation) {
+
+      setFlash({
+        type: "error",
+        message: "Geolocation not supported"
+      });
+
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+
+      (position) => {
+
+        setLat(position.coords.latitude);
+        setLng(position.coords.longitude);
+
+        setFlash({
+          type: "success",
+          message: "Location fetched successfully 📍"
+        });
+      },
+
+      () => {
+
+        setFlash({
+          type: "error",
+          message: "Location permission denied ❌"
+        });
+      }
+    );
+  };
+
+  // UPDATE BOOKING
+  const handleUpdate = async () => {
+
+    try {
+
+      if (!date || !time) {
+
+        setFlash({
+          type: "error",
+          message: "Date & Time required"
+        });
+
+        return;
+      }
+
+      setLoading(true);
+
+      await API.put(
+
+        `/bookings/update/${id}`,
+
+        {
+          date,
+          time,
+          note,
+
+          address,
+          city,
+          state: stateName,
+
+          lat,
+          lng
+        },
+
+        {
+          withCredentials: true
+        }
+      );
+
+      setFlash({
+        type: "success",
+        message: "Booking updated successfully 🎉"
+      });
+
+      setTimeout(() => {
+        navigate("/customer/bookings");
+      }, 1500);
+
+    } catch (err) {
+
+      console.log(err);
+
+      setFlash({
+        type: "error",
+        message:
+          err.response?.data?.message ||
+          "Update failed"
+      });
+
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+
+    <div className="
+      min-h-screen
+      bg-gradient-to-r
+      from-[#081c3a]
+      to-[#0b3c78]
+      flex items-center justify-center
+      p-4
+    ">
+
+      {/* FLASH MESSAGE */}
+      {flash.message && (
+
+        <div
+          className={`fixed top-0 left-0 w-full flex justify-between items-center px-4 py-3 z-[9999]
+          ${flash.type === "success"
+            ? "bg-green-500"
+            : "bg-red-500"} text-white`}
+        >
+
+          <span>{flash.message}</span>
+
+          <X
+            className="cursor-pointer"
+            onClick={() =>
+              setFlash({
+                type: "",
+                message: ""
+              })
+            }
+          />
+
+        </div>
+      )}
+
+      {loading && <Loader />}
+
+      <div className="
+        bg-white
+        w-full
+        max-w-2xl
+        rounded-2xl
+        p-6 md:p-8
+        shadow-2xl
+      ">
+
+        {/* TOP */}
+        <div className="flex items-center gap-3 mb-6">
+
+          <button
+            onClick={() => navigate(-1)}
+            className="
+              bg-gray-100
+              hover:bg-gray-200
+              p-2
+              rounded-full
+            "
+          >
+            <ArrowLeft size={20} />
+          </button>
+
+          <h1 className="text-2xl font-bold">
+            Edit Booking
+          </h1>
+
+        </div>
+
+        {/* DATE */}
+        <div className="mb-4">
+
+          <label className="font-semibold">
+            Date
+          </label>
+
+          <input
+            type="date"
+            value={date}
+            min={new Date().toISOString().split("T")[0]}
+            onChange={(e) => setDate(e.target.value)}
+            className="
+              w-full
+              border
+              p-3
+              rounded-lg
+              mt-2
+            "
+          />
+
+        </div>
+
+        {/* TIME */}
+        <div className="mb-4">
+
+          <label className="font-semibold">
+            Time
+          </label>
+
+          <input
+            type="time"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+            className="
+              w-full
+              border
+              p-3
+              rounded-lg
+              mt-2
+            "
+          />
+
+        </div>
+
+        {/* NOTE */}
+        <div className="mb-4">
+
+          <label className="font-semibold">
+            Note
+          </label>
+
+          <textarea
+            rows={4}
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            className="
+              w-full
+              border
+              p-3
+              rounded-lg
+              mt-2
+            "
+          />
+
+        </div>
+
+        {/* ADDRESS */}
+        <div className="mb-4">
+
+          <label className="font-semibold">
+            Address
+          </label>
+
+          <input
+            type="text"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            className="
+              w-full
+              border
+              p-3
+              rounded-lg
+              mt-2
+            "
+          />
+
+        </div>
+
+        {/* CITY */}
+        <div className="mb-4">
+
+          <label className="font-semibold">
+            City
+          </label>
+
+          <input
+            type="text"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            className="
+              w-full
+              border
+              p-3
+              rounded-lg
+              mt-2
+            "
+          />
+
+        </div>
+
+        {/* STATE */}
+        <div className="mb-4">
+
+          <label className="font-semibold">
+            State
+          </label>
+
+          <input
+            type="text"
+            value={stateName}
+            onChange={(e) => setStateName(e.target.value)}
+            className="
+              w-full
+              border
+              p-3
+              rounded-lg
+              mt-2
+            "
+          />
+
+        </div>
+
+        {/* LOCATION BTN */}
+        <button
+          onClick={getCurrentLocation}
+          className="
+            w-full
+            bg-green-600
+            hover:bg-green-700
+            text-white
+            py-3
+            rounded-lg
+            mb-6
+          "
+        >
+          📍 Use Current Location
+        </button>
+
+        {/* UPDATE BTN */}
+        <button
+          onClick={handleUpdate}
+          disabled={loading}
+          className={`
+            w-full
+            text-white
+            py-3
+            rounded-lg
+            font-semibold
+            ${
+              loading
+                ? "bg-gray-400"
+                : "bg-blue-900 hover:bg-blue-950"
+            }
+          `}
+        >
+          {loading ? "Updating..." : "Update Booking"}
+        </button>
+
+      </div>
+    </div>
+  );
+}
