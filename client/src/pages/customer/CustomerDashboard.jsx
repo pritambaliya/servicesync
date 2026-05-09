@@ -21,7 +21,7 @@ export default function CustomerServices() {
     {
       name: "Carpenter",
       icon: <Hammer className="text-gray-400 w-10 h-10" />,
-      desc: "Furniture repair and wood work."
+      desc: "Furniture repair and professional wood crafting."
     },
     {
       name: "Painter",

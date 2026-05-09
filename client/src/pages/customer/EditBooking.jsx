@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import API from "../../api/axios";
 import Loader from "../../components/Loader";
 import { ArrowLeft, X } from "lucide-react";
+import Flash from "../../components/Flash";
 
 export default function EditBooking() {
 
@@ -161,11 +162,9 @@ export default function EditBooking() {
           date,
           time,
           note,
-
           address,
           city,
           state: stateName,
-
           lat,
           lng
         },
@@ -186,7 +185,6 @@ export default function EditBooking() {
 
     } catch (err) {
 
-      console.log(err);
 
       setFlash({
         type: "error",
@@ -213,29 +211,8 @@ export default function EditBooking() {
 
       {/* FLASH MESSAGE */}
       {flash.message && (
-
-        <div
-          className={`fixed top-0 left-0 w-full flex justify-between items-center px-4 py-3 z-[9999]
-          ${flash.type === "success"
-            ? "bg-green-500"
-            : "bg-red-500"} text-white`}
-        >
-
-          <span>{flash.message}</span>
-
-          <X
-            className="cursor-pointer"
-            onClick={() =>
-              setFlash({
-                type: "",
-                message: ""
-              })
-            }
-          />
-
-        </div>
+        <Flash flash={flash} setFlash={setFlash} success={false}/>
       )}
-
       {loading && <Loader />}
 
       <div className="

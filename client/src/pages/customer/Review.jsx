@@ -1,281 +1,215 @@
 import { useState } from "react";
+import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-import API from "../../api/axios";
-import { Star, X, ArrowLeft } from "lucide-react";
+import { X } from "lucide-react";
+import Flash from "../../components/Flash";
 
-export default function AddReviewPage() {
-
+const ReviewPage = () => {
   const navigate = useNavigate();
-  const { state } = useLocation();
+  const location = useLocation();
 
-  const booking = state?.booking;
+  const {
+    providerId,
+    bookingId,
+    providerName,
+    serviceName,
+  } = location.state || {};
 
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
-
   const [comment, setComment] = useState("");
-
   const [loading, setLoading] = useState(false);
 
   const [flash, setFlash] = useState({
     type: "",
-    message: ""
+    message: "",
   });
 
-  if (!booking) {
-    return (
-      <div className="text-center mt-10 text-red-500">
-        Booking data not found
-      </div>
-    );
-  }
+  const showFlash = (type, message) => {
+    setFlash({ type, message });
+  };
 
-  // SUBMIT REVIEW
-  const handleSubmitReview = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (rating === 0) {
+      return showFlash("error", "Please select rating");
+    }
 
     try {
-
-      if (!rating) {
-
-        setFlash({
-          type: "error",
-          message: "Please select rating"
-        });
-
-        return;
-      }
-
       setLoading(true);
 
-      await API.post(
+      const reviewData = {
+        providerId,
+        bookingId,
+        rating,
+        comment,
+      };
 
-        "/reviews/add",
-
+      const res = await axios.post(
+        "http://localhost:5000/reviews/add",
+        reviewData,
         {
-          providerId: booking.provider._id,
-          bookingId: booking._id,
-          rating,
-          comment
-        },
-
-        {
-          withCredentials: true
+          withCredentials: true,
         }
       );
 
-      setFlash({
-        type: "success",
-        message: "Review submitted successfully 🎉"
-      });
+      showFlash(
+        "success",
+        res.data.message || "Review Added Successfully"
+      );
 
       setTimeout(() => {
         navigate("/customer/bookings");
       }, 1500);
 
-    } catch (err) {
+    } catch (error) {
+      console.log(error);
 
-      console.log(err);
-
-      setFlash({
-        type: "error",
-        message:
-          err.response?.data?.message ||
+      showFlash(
+        "error",
+        error.response?.data?.message ||
           "Failed to submit review"
-      });
-
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
+    <div className="min-h-screen bg-gradient-to-r from-[#081c3a] to-[#0b3c78] flex items-center justify-center p-4">
 
-    <div className="
-      min-h-screen
-      bg-gradient-to-r
-      from-[#081c3a]
-      to-[#0b3c78]
-      flex
-      items-center
-      justify-center
-      p-4
-    ">
-
-      {/* FLASH MESSAGE */}
+      {/* Flash Message */}
       {flash.message && (
-
-        <div
-          className={`fixed top-0 left-0 w-full flex justify-between items-center px-4 py-3 z-[9999]
-          ${
-            flash.type === "success"
-              ? "bg-green-500"
-              : "bg-red-500"
-          } text-white`}
-        >
-
-          <span>{flash.message}</span>
-
-          <X
-            className="cursor-pointer"
-            onClick={() =>
-              setFlash({
-                type: "",
-                message: ""
-              })
-            }
-          />
-
-        </div>
+        <Flash flash={flash} setFlash={setFlash} success={false}/>
       )}
 
-      <div className="
-        bg-white
-        w-full
-        max-w-xl
-        rounded-2xl
-        shadow-2xl
-        p-6
-      ">
+      {/* Card */}
+      <div
+        className="
+          w-full
+          max-w-md
+          rounded-3xl
+          border
+          border-white/30
+          bg-white/10
+          backdrop-blur-lg
+          shadow-2xl
+          p-6
+        "
+      >
+        {/* Heading */}
+        <h2 className="text-3xl font-bold text-center text-white mb-6">
+          Rate Your Experience
+        </h2>
 
-        {/* TOP */}
-        <div className="
-          flex
-          items-center
-          gap-3
-          mb-6
-        ">
+        {/* Provider Details */}
+        <div
+          className="
+            bg-white/10
+            border
+            border-white/20
+            p-4
+            rounded-2xl
+            mb-6
+          "
+        >
+          <h3 className="text-xl font-semibold text-white">
+            {providerName}
+          </h3>
 
-          <button
-            onClick={() => navigate(-1)}
-            className="
-              bg-gray-100
-              hover:bg-gray-200
-              p-2
-              rounded-full
-            "
-          >
-            <ArrowLeft size={20} />
-          </button>
-
-          <h1 className="text-2xl font-bold">
-            Add Review
-          </h1>
-
-        </div>
-
-        {/* PROVIDER INFO */}
-        <div className="
-          bg-gray-100
-          rounded-xl
-          p-4
-          mb-6
-        ">
-
-          <h2 className="
-            text-xl
-            font-bold
-          ">
-            {booking.provider?.name}
-          </h2>
-
-          <p className="text-gray-600">
-            {booking.service}
+          <p className="text-gray-300 mt-1">
+            Service: {serviceName}
           </p>
-
         </div>
 
-        {/* STAR RATING */}
-        <div className="mb-6">
-
-          <label className="
-            block
-            font-semibold
-            mb-3
-          ">
-            Rating
-          </label>
-
-          <div className="flex gap-2">
-
+        <form onSubmit={handleSubmit}>
+          {/* Stars */}
+          <div className="flex justify-center gap-3 mb-5">
             {[1, 2, 3, 4, 5].map((star) => (
-
-              <Star
+              <button
+                type="button"
                 key={star}
-                size={35}
+                onClick={() => setRating(star)}
                 onMouseEnter={() => setHover(star)}
                 onMouseLeave={() => setHover(0)}
-                onClick={() => setRating(star)}
                 className={`
-                  cursor-pointer
+                  text-5xl
                   transition-all
+                  duration-300
+                  transform
                   ${
                     star <= (hover || rating)
-                      ? "fill-yellow-400 text-yellow-400"
-                      : "text-gray-300"
+                      ? "text-yellow-400 scale-125 drop-shadow-[0_0_15px_rgba(250,204,21,0.9)]"
+                      : "text-gray-400"
                   }
+                  hover:rotate-12
                 `}
-              />
-
+              >
+                ★
+              </button>
             ))}
-
           </div>
 
-        </div>
+          {/* Rating Text */}
+          <p className="text-center text-gray-300 mb-5">
+            {hover || rating
+              ? `${hover || rating} Star Rating`
+              : "Select Your Rating"}
+          </p>
 
-        {/* COMMENT */}
-        <div className="mb-6">
+          {/* Comment */}
+          <div className="mb-5">
+            <textarea
+              rows="5"
+              placeholder="Write your feedback..."
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              required
+              className="
+                w-full
+                rounded-2xl
+                border
+                border-white/20
+                bg-white/10
+                text-white
+                placeholder-gray-300
+                p-4
+                outline-none
+                focus:border-yellow-400
+                focus:ring-2
+                focus:ring-yellow-400/40
+                resize-none
+              "
+            />
+          </div>
 
-          <label className="
-            block
-            font-semibold
-            mb-3
-          ">
-            Comment
-          </label>
-
-          <textarea
-            rows={5}
-            value={comment}
-            onChange={(e) =>
-              setComment(e.target.value)
-            }
-            placeholder="Write your experience..."
+          {/* Submit */}
+          <button
+            type="submit"
+            disabled={loading}
             className="
               w-full
-              border
-              rounded-xl
-              p-3
-              outline-none
-              focus:ring-2
-              focus:ring-blue-400
+              bg-yellow-400
+              hover:bg-yellow-500
+              text-black
+              font-bold
+              py-3
+              rounded-2xl
+              transition-all
+              duration-300
+              hover:scale-[1.02]
+              disabled:opacity-50
             "
-          />
-
-        </div>
-
-        {/* SUBMIT BUTTON */}
-        <button
-          onClick={handleSubmitReview}
-          disabled={loading}
-          className={`
-            w-full
-            py-3
-            rounded-xl
-            text-white
-            font-semibold
-            ${
-              loading
-                ? "bg-gray-400"
-                : "bg-blue-900 hover:bg-blue-950"
-            }
-          `}
-        >
-          {loading
-            ? "Submitting..."
-            : "Submit Review"}
-        </button>
-
+          >
+            {loading
+              ? "Submitting..."
+              : "Submit Review"}
+          </button>
+        </form>
       </div>
     </div>
   );
-}
+};
+
+export default ReviewPage;

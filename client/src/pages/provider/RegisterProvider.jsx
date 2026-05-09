@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import API from "../../api/axios";
 import { X } from "lucide-react";
 import Loader from "../../components/Loader";
+import Flash from "../../components/Flash";
 
 export default function RegisterProvider() {
   const navigate = useNavigate();
@@ -228,16 +229,7 @@ const handleFileChange = (e) => {
 
       {/* 🔥 FLASH */}
       {flash.message && (
-        <div
-          className={`fixed top-0 left-0 w-full flex justify-between px-4 py-4 z-[9999] shadow-md
-          ${flash.type === "success" ? "bg-green-500" : "bg-red-500"} text-white`}
-        >
-          <span>{flash.message}</span>
-          <X
-            onClick={() => setFlash({ type: "", message: "" })}
-            className="cursor-pointer"
-          />
-        </div>
+        <Flash flash={flash} setFlash={setFlash} />
       )}
 
     {loading && <Loader/>}

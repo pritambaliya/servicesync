@@ -25,8 +25,8 @@ export const addReview = async (req, res) => {
       });
     }
 
-    if (booking.status !== "completed") {
-      req.flash("error", "Review allowed only after completion");
+    if (booking.status === "pending") {
+      req.flash("error", "Review allowed after accept, completion or rejected");
       return res.status(400).json({
         success: false,
         message: req.flash("error")[0],

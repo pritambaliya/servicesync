@@ -8,6 +8,7 @@ const router = express.Router();
 // ✅ GET PROVIDERS BY SERVICE
 router.get("/by-service", async (req, res) => {
   try {
+
     let { service } = req.query;
 
     if (!service) {
@@ -17,13 +18,14 @@ router.get("/by-service", async (req, res) => {
       });
     }
 
-    // 🔥 fix "ac-technician" → "ac technician"
+    // fix "ac-technician" → "ac technician"
     service = service.replace(/-/g, " ");
 
     const providers = await Provider.find({
       service: new RegExp(`^${service}$`, "i"),
       status: "approved"
-    });
+    })
+    .populate("reviews.customer", "name profileImage");
 
     res.json({
       success: true,
@@ -31,12 +33,14 @@ router.get("/by-service", async (req, res) => {
     });
 
   } catch (err) {
+
     console.log("ERROR:", err);
 
     res.status(500).json({
       success: false,
       message: "Server error"
     });
+
   }
 });
 

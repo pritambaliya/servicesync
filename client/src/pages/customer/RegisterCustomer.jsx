@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import API from "../../api/axios";
 import { X } from "lucide-react";
 import Loader from "../../components/Loader";
+import Flash from "../../components/Flash";
 
 export default function RegisterCustomer() {
   const navigate = useNavigate();
@@ -131,21 +132,7 @@ export default function RegisterCustomer() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#081c3a] to-[#0b3c78] px-4 py-10">
 
       {flash.message && (
-        <div
-          className={`fixed top-0 left-0 w-full flex items-center justify-between px-4 py-3 z-[9999] shadow-md
-          ${flash.type === "success"
-              ? "bg-green-500 text-white"
-              : "bg-red-500 text-white"}`}
-        >
-          <span className="text-sm md:text-base font-medium">
-            {flash.message}
-          </span>
-
-          <X
-            onClick={() => setFlash({ type: "", message: "" })}
-            className="cursor-pointer hover:opacity-70"
-          />
-        </div>
+        <Flash flash={flash} setFlash={setFlash} success={false}/>
       )}
 
       {loading && <Loader/>}

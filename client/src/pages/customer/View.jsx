@@ -344,7 +344,16 @@ export default function CustomerBookings() {
                 {b.status === "accepted" && (
                   <>
                     <button
-                    onClick={()=>navigate("/customer/bookings/review")}
+                   onClick={() =>
+                    navigate("/customer/bookings/review", {
+                      state: {
+                        providerId: b.provider._id,
+                        bookingId: b._id,
+                        providerName: b.provider.name,
+                        serviceName: b.service,
+                      },
+                    })
+                  }
                       className="
                         flex-1
                         bg-yellow-500

@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const navigate = useNavigate();
-
+  localStorage.clear();
   const services = [
     { name: "Plumber", icon: "🔧" },
     { name: "Electrician", icon: "⚡" },

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import API from "../../api/axios";
 import { X } from "lucide-react";
+import Flash from "../../components/Flash";
 
 export default function BookingPage() {
   const { providerid } = useParams();
@@ -138,11 +139,7 @@ export default function BookingPage() {
 
       {/* FLASH */}
       {flash.message && (
-        <div className={`fixed top-0 left-0 w-full flex justify-between px-4 py-3 z-[9999]
-          ${flash.type === "success" ? "bg-green-500" : "bg-red-500"} text-white`}>
-          <span>{flash.message}</span>
-          <X onClick={() => setFlash({ type: "", message: "" })} />
-        </div>
+        <Flash flash={flash} setFlash={setFlash} />
       )}
 
       <div className="bg-white p-6 rounded-2xl shadow-lg w-[90%] max-w-md my-10">
