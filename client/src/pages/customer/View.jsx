@@ -36,35 +36,7 @@ export default function CustomerBookings() {
     fetchBookings();
   }, []);
 
-  // ❌ CANCEL BOOKING
-  const cancelBooking = async (id) => {
 
-    const confirmCancel = window.confirm(
-      "Are you sure you want to cancel this booking?"
-    );
-
-    if (!confirmCancel) return;
-
-    try {
-
-      setLoading(true);
-
-      await API.put(
-        `/bookings/cancel/${id}`,
-        {},
-        {
-          withCredentials: true
-        }
-      );
-
-      fetchBookings();
-
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   // ❌ DELETE BOOKING
   const removeCard = async (id) => {
@@ -275,15 +247,7 @@ export default function CustomerBookings() {
                     </p>
                   )}
 
-                {/* CANCELLED */}
-                {b.status === "cancelled" && (
-                  <p className="text-red-300 md:col-span-2">
-                    ❌ Cancelled by{" "}
-                    {b.cancelledBy === "provider"
-                      ? "provider"
-                      : "me"}
-                  </p>
-                )}
+
 
               </div>
 
@@ -324,19 +288,6 @@ export default function CustomerBookings() {
                       Edit Booking
                     </button>
 
-                    <button
-                      onClick={() => cancelBooking(b._id)}
-                      className="
-                        flex-1
-                        bg-red-600
-                        hover:bg-red-700
-                        text-white
-                        py-2
-                        rounded-lg
-                      "
-                    >
-                      Cancel
-                    </button>
                   </>
                 )}
 
@@ -366,25 +317,22 @@ export default function CustomerBookings() {
                       Review & Rating
                     </button>
 
-                    <button
-                      onClick={() => cancelBooking(b._id)}
-                      className="
-                        flex-1
-                        bg-red-600
-                        hover:bg-red-700
-                        text-white
-                        py-2
-                        rounded-lg
-                      "
-                    >
-                      Cancel
-                    </button>
                   </>
                 )}
 
                 {/* COMPLETED */}
                 {b.status === "completed" && (
                   <button
+                  onClick={() =>
+                    navigate("/customer/bookings/review", {
+                      state: {
+                        providerId: b.provider._id,
+                        bookingId: b._id,
+                        providerName: b.provider.name,
+                        serviceName: b.service,
+                      },
+                    })
+                  }
                     className="
                       flex-1
                       bg-yellow-500
@@ -401,6 +349,16 @@ export default function CustomerBookings() {
                 {/* CANCELLED */}
                 {b.status === "cancelled" && (
                   <button
+                  onClick={() =>
+                    navigate("/customer/bookings/review", {
+                      state: {
+                        providerId: b.provider._id,
+                        bookingId: b._id,
+                        providerName: b.provider.name,
+                        serviceName: b.service,
+                      },
+                    })
+                  }
                     className="
                       flex-1
                       bg-yellow-500

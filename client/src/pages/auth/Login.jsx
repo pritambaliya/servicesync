@@ -98,7 +98,7 @@ export default function Login() {
         const userRole = data.user?.role;
 
         if (userRole === "customer") navigate("/customer");
-        else if (userRole === "provider") navigate("/provider");
+        else if (userRole === "provider") navigate("/provider/bookings");
         else if (userRole === "admin") navigate("/admin");
         else navigate("/");
       }, 1500);

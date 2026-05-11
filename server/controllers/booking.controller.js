@@ -172,32 +172,25 @@ export const getCustomerBookings = async (req, res) => {
 
 export const getProviderBookings = async (req, res) => {
   try {
-    const bookings = await Booking.find({ provider: req.user._id })
-      .populate("customer");
 
-    const result = bookings.map(b => {
-      const customerData = { ...b.customer._doc };
+    const bookings = await Booking.find({
+      provider: req.user._id
+    })
+    .populate("customer");
 
-      if (b.status !== "accepted") {
-        delete customerData.mobile;
-        delete customerData.email;
-      }
-
-      return {
-        ...b._doc,
-        customer: customerData
-      };
-    });
-
-    req.flash("success", "Provider bookings fetched");
+    req.flash(
+      "success",
+      "Provider bookings fetched"
+    );
 
     res.json({
       success: true,
       message: req.flash("success")[0],
-      data: result
+      data: bookings
     });
 
   } catch (err) {
+
     req.flash("error", err.message);
 
     res.status(500).json({
@@ -205,6 +198,7 @@ export const getProviderBookings = async (req, res) => {
       message: req.flash("error")[0],
       data: null
     });
+
   }
 };
 

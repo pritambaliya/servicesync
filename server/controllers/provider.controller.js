@@ -88,4 +88,50 @@ const registerProvider = async (req, res) => {
   }
 };
 
-export { registerProvider };
+const getProviderProfile = async (
+  req,
+  res
+) => {
+  try {
+
+    const provider = await Provider.findById(
+      req.user._id
+    )
+    .populate(
+      "reviews.customer",
+      "name profileImage"
+    );
+
+    if (!provider) {
+      return res.status(404).json({
+        success: false,
+        message: "Provider not found",
+      });
+    }
+
+    req.flash(
+      "success",
+      "Profile fetched successfully"
+    );
+
+    res.json({
+      success: true,
+      message: req.flash("success")[0],
+      data: provider,
+    });
+
+  } catch (err) {
+
+    console.log(err);
+
+    req.flash("error", err.message);
+
+    res.status(500).json({
+      success: false,
+      message: req.flash("error")[0],
+    });
+
+  }
+};
+
+export { getProviderProfile, registerProvider };

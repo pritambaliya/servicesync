@@ -26,6 +26,9 @@ import EditBooking from "../pages/customer/EditBooking";
 import Review from "../pages/customer/Review";
 import ContactSupportPage from "../pages/customer/ContactSupportPage";
 import ProtectedRoute from "../components/ProtectedRoute";
+import ProviderLayout from "../layout/ProviderLayout";
+import ProviderBookings from "../pages/provider/ProviderBookings";
+import ProviderProfile from "../pages/provider/ProviderProfile";
 
 export default function AppRoutes() {
   return (
@@ -58,6 +61,11 @@ export default function AppRoutes() {
           <Route path="/contactsupport" element={<ContactSupportPage />} />
         </Route>
         
+        <Route element={<ProviderLayout/>}>
+          <Route path="/provider/bookings" element={<ProtectedRoute><ProviderBookings /></ProtectedRoute>} />
+          <Route path="/provider/profile" element={<ProtectedRoute><ProviderProfile /></ProtectedRoute>} />
+        </Route>
+
       </Routes>
     </BrowserRouter>
   );

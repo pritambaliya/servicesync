@@ -1,11 +1,11 @@
 import express from "express";
 import upload from "../middleware/upload.middleware.js";
-import { registerProvider } from "../controllers/provider.controller.js";
+import { getProviderProfile, registerProvider } from "../controllers/provider.controller.js";
 import Provider from "../model/provider.model.js";
+import { isLoggedIn, isProvider} from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-// ✅ GET PROVIDERS BY SERVICE
 router.get("/by-service", async (req, res) => {
   try {
 
@@ -18,7 +18,6 @@ router.get("/by-service", async (req, res) => {
       });
     }
 
-    // fix "ac-technician" → "ac technician"
     service = service.replace(/-/g, " ");
 
     const providers = await Provider.find({
@@ -52,6 +51,13 @@ router.post(
     { name: "idProof" }
   ]),
   registerProvider
+);
+
+router.get(
+  "/profile",
+  isLoggedIn,
+  isProvider,
+  getProviderProfile
 );
 
 export default router;
