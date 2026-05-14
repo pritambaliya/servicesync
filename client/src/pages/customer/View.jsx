@@ -3,6 +3,7 @@ import API from "../../api/axios";
 import Loader from "../../components/Loader";
 import { X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { MessageCircle } from "lucide-react";
 
 export default function CustomerBookings() {
 
@@ -317,11 +318,50 @@ export default function CustomerBookings() {
                       Review & Rating
                     </button>
 
+                    <button
+                      onClick={() =>
+                        navigate(
+                          `/customer/chat/${b._id}`,
+                          {
+                            state: {
+                              bookingId: b._id,
+                              provider: b.provider,
+                            },
+                          }
+                        )
+                      }
+                      className="
+                        flex-1
+                        flex
+                        items-center
+                        justify-center
+                        gap-2
+                        bg-gradient-to-r
+                        from-green-500
+                        to-emerald-600
+                        hover:from-green-600
+                        hover:to-emerald-700
+                        text-white
+                        py-2
+                        rounded-xl
+                        font-semibold
+                        shadow-lg
+                        transition-all
+                        duration-300
+                        hover:scale-[1.02]
+                      "
+                    >
+                      <MessageCircle size={18} />
+
+                      Chat Now
+                    </button>
+
                   </>
                 )}
 
                 {/* COMPLETED */}
                 {b.status === "completed" && (
+                  <>
                   <button
                   onClick={() =>
                     navigate("/customer/bookings/review", {
@@ -344,6 +384,46 @@ export default function CustomerBookings() {
                   >
                     Review & Rating
                   </button>
+
+
+                    <button
+                      onClick={() =>
+                        navigate(
+                          `/customer/chat/${b._id}`,
+                          {
+                            state: {
+                              bookingId: b._id,
+                              provider: b.provider,
+                            },
+                          }
+                        )
+                      }
+                      className="
+                        flex-1
+                        flex
+                        items-center
+                        justify-center
+                        gap-2
+                        bg-gradient-to-r
+                        from-green-500
+                        to-emerald-600
+                        hover:from-green-600
+                        hover:to-emerald-700
+                        text-white
+                        py-2
+                        rounded-xl
+                        font-semibold
+                        shadow-lg
+                        transition-all
+                        duration-300
+                        hover:scale-[1.02]
+                      "
+                    >
+                      <MessageCircle size={18} />
+
+                      Chat Now
+                    </button>
+                  </>
                 )}
 
                 {/* CANCELLED */}

@@ -1,20 +1,25 @@
 import express from 'express';
 import mongoose from "mongoose";
+import http from "http";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import flash from "connect-flash";
 import passport from "./config/passport.js";
-
 import authRoutes from "./routes/auth.routes.js";
 import customerRoutes from "./routes/customer.routes.js";
 import providerRoutes from "./routes/provider.routes.js";
 import adminRoutes from "./routes/admin.routes.js";
 import bookingRoutes from "./routes/booking.routes.js";
 import reviewRoutes from "./routes/review.routes.js";
+import chatRoutes from "./routes/chat.routes.js"
 import dotenv from "dotenv";
 import cors from "cors";
+import { initSocket } from './config/socket.js';
+
 dotenv.config();
 const app = express();
+const server = http.createServer(app);
+initSocket(server);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -48,6 +53,7 @@ app.use("/provider", providerRoutes);
 app.use("/admin", adminRoutes);
 app.use("/bookings", bookingRoutes);
 app.use("/reviews", reviewRoutes);
+app.use("/chat", chatRoutes);
 
 
 app.get("/", (req, res) => {

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import API from "../../api/axios";
 import Loader from "../../components/Loader";
+import { useNavigate } from "react-router-dom";
 
 export default function ProviderBookings() {
 
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   // FETCH BOOKINGS
   const fetchBookings = async () => {
     try {
@@ -367,7 +368,27 @@ const formatTime = (time) => {
                 )}
 
                 {/* COMPLETE */}
-                {booking.status === "accepted" && (
+               
+              {booking.status === "accepted" && (
+                <>
+                  <button
+                    onClick={() =>
+                      navigate(`provider/chat/${booking._id}`)
+                    }
+                    className="
+                      flex-1
+                      bg-purple-500
+                      hover:bg-purple-600
+                      text-white
+                      py-3
+                      rounded-2xl
+                      font-semibold
+                      transition
+                    "
+                  >
+                    Chat Now
+                  </button>
+
                   <button
                     onClick={() =>
                       updateStatus(
@@ -376,7 +397,7 @@ const formatTime = (time) => {
                       )
                     }
                     className="
-                      w-full
+                      flex-1
                       bg-blue-500
                       hover:bg-blue-600
                       text-white
@@ -388,8 +409,28 @@ const formatTime = (time) => {
                   >
                     Mark as Completed
                   </button>
-                )}
-
+                </>
+              )}
+                {/* COMPLETED ACTIONS */}
+              {booking.status === "completed" && (
+                <button
+                  onClick={() =>
+                    navigate(`provider/chat/${booking._id}`)
+                  }
+                  className="
+                    w-full
+                    bg-purple-500
+                    hover:bg-purple-600
+                    text-white
+                    py-3
+                    rounded-2xl
+                    font-semibold
+                    transition
+                  "
+                >
+                  Open Chat
+                </button>
+              )}
               </div>
 
             </div>

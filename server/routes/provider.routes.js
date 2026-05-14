@@ -39,7 +39,6 @@ router.get("/by-service", async (req, res) => {
       success: false,
       message: "Server error"
     });
-
   }
 });
 

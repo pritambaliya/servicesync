@@ -88,6 +88,24 @@ export const updateBookingStatus = async (req, res) => {
       });
     }
 
+    if (status === "accepted") {
+
+    const existingChat = await Chat.findOne({
+      booking: booking._id,
+    });
+
+    if (!existingChat) {
+
+      await Chat.create({
+        booking: booking._id,
+        customer: booking.customer,
+        provider: booking.provider,
+        messages: [],
+      });
+
+    }
+  }
+
     booking.status = status;
     await booking.save();
 

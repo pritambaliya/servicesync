@@ -29,6 +29,7 @@ import ProtectedRoute from "../components/ProtectedRoute";
 import ProviderLayout from "../layout/ProviderLayout";
 import ProviderBookings from "../pages/provider/ProviderBookings";
 import ProviderProfile from "../pages/provider/ProviderProfile";
+import Chat from "../pages/Chat";
 
 export default function AppRoutes() {
   return (
@@ -59,11 +60,13 @@ export default function AppRoutes() {
           <Route path="/customer/bookings/edit/:id" element={<ProtectedRoute><EditBooking /></ProtectedRoute>} />
           <Route path="/customer/bookings/review" element={<ProtectedRoute><Review /></ProtectedRoute>} />
           <Route path="/contactsupport" element={<ContactSupportPage />} />
+          <Route path="/customer/chat/:bookingId" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
         </Route>
         
         <Route element={<ProviderLayout/>}>
           <Route path="/provider/bookings" element={<ProtectedRoute><ProviderBookings /></ProtectedRoute>} />
           <Route path="/provider/profile" element={<ProtectedRoute><ProviderProfile /></ProtectedRoute>} />
+          <Route path="/provider/chat/:bookingId" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
         </Route>
 
       </Routes>
