@@ -373,7 +373,7 @@ const formatTime = (time) => {
                 <>
                   <button
                     onClick={() =>
-                      navigate(`provider/chat/${booking._id}`)
+                      navigate(`/provider/chat/${booking._id}`)
                     }
                     className="
                       flex-1
@@ -415,7 +415,7 @@ const formatTime = (time) => {
               {booking.status === "completed" && (
                 <button
                   onClick={() =>
-                    navigate(`provider/chat/${booking._id}`)
+                    navigate(`/provider/chat/${booking._id}`)
                   }
                   className="
                     w-full

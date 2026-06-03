@@ -100,16 +100,15 @@ const getChat = async (req, res) => {
         messages: [],
       });
     }
+    await chat.populate([
+    { path: "customer", select: "name profileImage" },
+    { path: "provider", select: "name profileImage" },
+      ]);
 
     res.json({
       success: true,
       data: chat,
     });
-
-      await chat.populate([
-    { path: "customer", select: "name profileImage" },
-    { path: "provider", select: "name profileImage" },
-      ]);
 
   } catch (err) {
     res.status(500).json({
@@ -119,4 +118,33 @@ const getChat = async (req, res) => {
   }
 };
 
-export {sendMessage, getChat}; 
+const deleteMessage = async (
+  req,
+  res
+) => {
+  const { messageId } = req.params;
+
+  const chat = await Chat.findOne({
+    "messages._id": messageId,
+  });
+
+  if (!chat) {
+    return res.status(404).json({
+      success: false,
+    });
+  }
+
+  chat.messages =
+    chat.messages.filter(
+      (m) =>
+        m._id.toString() !== messageId
+    );
+
+  await chat.save();
+
+  res.json({
+    success: true,
+  });
+};
+
+export {sendMessage, getChat, deleteMessage}; 
