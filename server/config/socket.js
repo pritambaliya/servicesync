@@ -29,7 +29,7 @@ export const initSocket = (server) => {
     // SEND MESSAGE
     socket.on("send_message", (data) => {
 
-      io.to(data.chatId).emit(
+      socket.to(data.chatId).emit(
         "receive_message",
         data
       );

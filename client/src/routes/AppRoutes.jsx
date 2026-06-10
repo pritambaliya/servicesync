@@ -44,6 +44,7 @@ export default function AppRoutes() {
           <Route path="/register/customer" element={<RegisterCustomer />} />
           <Route path="/register/provider" element={<RegisterProvider />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/contactsupport" element={<ContactSupportPage />} />
         </Route>
 
         <Route element={<AdminLayout />}>
@@ -59,7 +60,6 @@ export default function AppRoutes() {
           <Route path="/customer/bookings" element={<ProtectedRoute><View /></ProtectedRoute>} />
           <Route path="/customer/bookings/edit/:id" element={<ProtectedRoute><EditBooking /></ProtectedRoute>} />
           <Route path="/customer/bookings/review" element={<ProtectedRoute><Review /></ProtectedRoute>} />
-          <Route path="/contactsupport" element={<ContactSupportPage />} />
           <Route path="/customer/chat/:bookingId" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
         </Route>
         
