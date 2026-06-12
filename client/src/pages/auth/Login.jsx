@@ -119,15 +119,12 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#081c3a] to-[#0b3c78] flex flex-col">
 
-      {/* 🔥 FLASH */}
       {flash.message && (
-        <Flash flash={flash} setFlash={setFlash} success={false}/>
+        <Flash flash={flash} setFlash={setFlash} success={false} />
       )}
 
-      {/* 🔄 LOADER */}
       {loading && <Loader />}
 
-      {/* FORM */}
       <div className="flex flex-1 items-center justify-center px-6">
 
         <div className="bg-white w-full max-w-md rounded-2xl shadow-lg p-10">
@@ -140,7 +137,6 @@ export default function Login() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
 
-            {/* ROLE */}
             <select
               value={role}
               onChange={(e) => setRole(e.target.value)}
@@ -152,7 +148,6 @@ export default function Login() {
               <option value="admin">Admin</option>
             </select>
 
-            {/* MOBILE */}
             <div className="flex items-center border rounded-lg overflow-hidden">
               <span className="px-3 text-gray-700">+91</span>
               <input
@@ -165,7 +160,6 @@ export default function Login() {
               />
             </div>
 
-            {/* PASSWORD */}
             <input
               type="password"
               value={password}
@@ -174,14 +168,12 @@ export default function Login() {
               className="w-full p-3 border rounded-lg"
             />
 
-            {/* SUBMIT */}
             <button className="w-full bg-[#081c3a] text-white py-3 rounded-lg hover:bg-[#0b3c78] transition">
               Login
             </button>
 
           </form>
 
-          {/* EXTRA */}
           <p className="text-center mt-4 text-sm">
             New user?{" "}
             <span

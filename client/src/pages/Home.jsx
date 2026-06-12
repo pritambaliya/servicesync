@@ -17,8 +17,6 @@ export default function Home() {
   return (
     <div className="bg-gray-200 min-h-screen">
 
-      
-      
       <div className="bg-gradient-to-r from-[#081c3a] to-[#0b3c78] text-white py-20 text-center text-white text-center py-20 px-6">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
           Find Trusted Services Near You
@@ -45,8 +43,7 @@ export default function Home() {
           {services.map((service, index) => (
             <div
               key={index}
-              className="bg-gray-100 rounded-xl shadow-md p-6 flex items-center gap-3 
-                         hover:shadow-lg hover:-translate-y-1 transition cursor-pointer"
+              className="bg-gray-100 rounded-xl shadow-md p-6 flex items-center gap-3 hover:shadow-lg hover:-translate-y-1 transition cursor-pointer"
             >
               <span className="text-2xl">{service.icon}</span>
               <p className="text-lg text-gray-700">

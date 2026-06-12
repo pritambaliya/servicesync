@@ -25,12 +25,10 @@ export default function Profile() {
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#081c3a] to-[#0b3c78]">
 
-      {/* 🔥 PROFILE CONTENT */}
       <div className="flex justify-center items-center px-4 py-10">
 
         <div className="w-full max-w-2xl bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-xl p-8 text-white">
 
-          {/* PROFILE IMAGE */}
           <div className="flex justify-center mb-6">
             {user.profileImage ? (
               <img
@@ -45,7 +43,6 @@ export default function Profile() {
             )}
           </div>
 
-          {/* NAME */}
           <h2 className="text-2xl font-bold text-center mb-2">
             {user.name || "No Name"}
           </h2>
@@ -54,7 +51,6 @@ export default function Profile() {
             {user.role?.toUpperCase()}
           </p>
 
-          {/* DETAILS */}
           <div className="space-y-4 text-sm md:text-base">
 
             {user.mobile && (
@@ -87,7 +83,6 @@ export default function Profile() {
 
           </div>
 
-          {/* ACTION BUTTONS */}
           <div className="mt-8 flex gap-4">
 
             <button

@@ -55,8 +55,6 @@ export default function BookingPage() {
     }
   }, [user]);
 
-
-
   const getCurrentLocation = () => {
     if (!navigator.geolocation) {
       setFlash({ type: "error", message: "Geolocation not supported" });
@@ -98,10 +96,10 @@ export default function BookingPage() {
         address,
         city,
         state: stateName,
-        ...( !isNaN(latNum) && !isNaN(lngNum) && {
+        ...(!isNaN(latNum) && !isNaN(lngNum) && {
           coordinates: {
             type: "Point",
-            coordinates: [lngNum, latNum] 
+            coordinates: [lngNum, latNum]
           }
         })
       };
@@ -137,7 +135,6 @@ export default function BookingPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#081c3a] to-[#0b3c78]">
 
-      {/* FLASH */}
       {flash.message && (
         <Flash flash={flash} setFlash={setFlash} />
       )}
@@ -148,7 +145,6 @@ export default function BookingPage() {
           Book Service
         </h1>
 
-        {/* PROVIDER */}
         <div className="bg-gray-100 p-4 rounded mb-4 text-sm">
           <p><b>{provider.name}</b></p>
           <p>{provider.service}</p>
@@ -213,13 +209,11 @@ export default function BookingPage() {
           </p>
         )}
 
-        {/* SUBMIT */}
         <button
           onClick={handleBooking}
           disabled={loading}
-          className={`w-full py-3 rounded text-white ${
-            loading ? "bg-gray-400" : "bg-blue-900"
-          }`}
+          className={`w-full py-3 rounded text-white ${loading ? "bg-gray-400" : "bg-blue-900"
+            }`}
         >
           {loading ? "Booking..." : "Confirm Booking"}
         </button>

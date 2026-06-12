@@ -8,27 +8,22 @@ export default function ProviderBookings() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  // FETCH BOOKINGS
   const fetchBookings = async () => {
     try {
 
       setLoading(true);
-
       const { data } = await API.get(
         "/bookings/provider",
         {
           withCredentials: true,
         }
       );
-
       setBookings(data.data || []);
 
     } catch (error) {
-
       console.log(error);
 
     } finally {
-
       setLoading(false);
 
     }
@@ -38,7 +33,6 @@ export default function ProviderBookings() {
     fetchBookings();
   }, []);
 
-  // UPDATE STATUS
   const updateStatus = async (id, status) => {
     try {
 
@@ -66,36 +60,35 @@ export default function ProviderBookings() {
   };
 
   const formatDate = (date) => {
-  return new Date(date).toLocaleDateString(
-    "en-GB"
-  );
-};
+    return new Date(date).toLocaleDateString(
+      "en-GB"
+    );
+  };
 
-const formatTime = (time) => {
+  const formatTime = (time) => {
 
-  const [hour, minute] = time.split(":");
+    const [hour, minute] = time.split(":");
 
-  const date = new Date();
+    const date = new Date();
 
-  date.setHours(hour);
-  date.setMinutes(minute);
+    date.setHours(hour);
+    date.setMinutes(minute);
 
-  return date.toLocaleTimeString(
-    "en-US",
-    {
-      hour: "numeric",
-      minute: "2-digit",
-      hour12: true,
-    }
-  );
-};
+    return date.toLocaleTimeString(
+      "en-US",
+      {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      }
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#081c3a] to-[#0b3c78] p-6">
 
       {loading && <Loader />}
 
-      {/* TITLE */}
       <div className="max-w-7xl mx-auto mb-8">
 
         <h1 className="text-4xl font-bold text-white">
@@ -108,7 +101,6 @@ const formatTime = (time) => {
 
       </div>
 
-      {/* NO BOOKINGS */}
       {bookings.length === 0 ? (
 
         <div className="text-center text-gray-300 mt-20">
@@ -134,51 +126,31 @@ const formatTime = (time) => {
               "
             >
 
-              {/* TOP */}
               <div className="flex items-center justify-between mb-6">
 
                 <div className="flex items-center gap-4">
 
-                  {/* CUSTOMER IMAGE */}
                   {booking.customer?.profileImage?.url ? (
-
                     <img
                       src={
                         booking.customer.profileImage.url
                       }
                       alt="customer"
-                      className="
-                        w-16
-                        h-16
-                        rounded-full
-                        object-cover
-                        border-2
-                        border-white/30
+                      className="w-16 h-16 rounded-full object-cover border-2 border-white/30
                       "
                     />
 
                   ) : (
 
                     <div
-                      className="
-                        w-16
-                        h-16
-                        rounded-full
-                        bg-white/20
-                        flex
-                        items-center
-                        justify-center
-                        text-2xl
-                      "
+                      className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center text-2xl"
                     >
                       👤
                     </div>
 
                   )}
 
-                  {/* CUSTOMER */}
                   <div>
-
                     <h2 className="text-xl font-bold text-white">
                       {booking.customer?.name}
                     </h2>
@@ -186,24 +158,13 @@ const formatTime = (time) => {
                     <p className="text-gray-300 text-sm">
                       {booking.customer?.email}
                     </p>
-
                   </div>
                 </div>
 
-                {/* STATUS */}
                 <div>
-
                   {booking.status === "pending" && (
                     <span
-                      className="
-                        bg-yellow-400/20
-                        text-yellow-300
-                        px-4
-                        py-2
-                        rounded-full
-                        text-sm
-                        font-medium
-                      "
+                      className="bg-yellow-400/20 text-yellow-300 px-4 py-2 rounded-full text-sm font-medium"
                     >
                       Pending
                     </span>
@@ -211,15 +172,7 @@ const formatTime = (time) => {
 
                   {booking.status === "accepted" && (
                     <span
-                      className="
-                        bg-green-400/20
-                        text-green-300
-                        px-4
-                        py-2
-                        rounded-full
-                        text-sm
-                        font-medium
-                      "
+                      className="bg-green-400/20 text-green-300 px-4 py-2 rounded-full text-sm font-medium"
                     >
                       Accepted
                     </span>
@@ -227,15 +180,7 @@ const formatTime = (time) => {
 
                   {booking.status === "cancelled" && (
                     <span
-                      className="
-                        bg-red-400/20
-                        text-red-300
-                        px-4
-                        py-2
-                        rounded-full
-                        text-sm
-                        font-medium
-                      "
+                      className="bg-red-400/20 text-red-300 px-4 py-2 rounded-full text-sm font-medium"
                     >
                       Cancelled
                     </span>
@@ -243,15 +188,7 @@ const formatTime = (time) => {
 
                   {booking.status === "completed" && (
                     <span
-                      className="
-                        bg-blue-400/20
-                        text-blue-300
-                        px-4
-                        py-2
-                        rounded-full
-                        text-sm
-                        font-medium
-                      "
+                      className="bg-blue-400/20 text-blue-300 px-4 py-2 rounded-full text-sm font-medium"
                     >
                       Completed
                     </span>
@@ -260,7 +197,6 @@ const formatTime = (time) => {
                 </div>
               </div>
 
-              {/* DETAILS */}
               <div className="space-y-3 text-gray-200">
 
                 <p>
@@ -316,10 +252,8 @@ const formatTime = (time) => {
 
               </div>
 
-              {/* BUTTONS */}
               <div className="flex flex-wrap gap-3 mt-8">
 
-                {/* ACCEPT */}
                 {booking.status === "pending" && (
                   <button
                     onClick={() =>
@@ -328,22 +262,12 @@ const formatTime = (time) => {
                         "accepted"
                       )
                     }
-                    className="
-                      flex-1
-                      bg-green-500
-                      hover:bg-green-600
-                      text-white
-                      py-3
-                      rounded-2xl
-                      font-semibold
-                      transition
-                    "
+                    className="flex-1 bg-green-500 hover:bg-green-600 text-white py-3 rounded-2xl font-semibold transition"
                   >
                     Accept
                   </button>
                 )}
 
-                {/* REJECT */}
                 {booking.status === "pending" && (
                   <button
                     onClick={() =>
@@ -352,85 +276,47 @@ const formatTime = (time) => {
                         "cancelled"
                       )
                     }
-                    className="
-                      flex-1
-                      bg-red-500
-                      hover:bg-red-600
-                      text-white
-                      py-3
-                      rounded-2xl
-                      font-semibold
-                      transition
-                    "
+                    className="flex-1 bg-red-500 hover:bg-red-600 text-white py-3 rounded-2xl font-semibold transition"
                   >
                     Cancelled
                   </button>
                 )}
 
-                {/* COMPLETE */}
-               
-              {booking.status === "accepted" && (
-                <>
+                {booking.status === "accepted" && (
+                  <>
+                    <button
+                      onClick={() =>
+                        navigate(`/provider/chat/${booking._id}`)
+                      }
+                      className="flex-1 bg-purple-500 hover:bg-purple-600 text-white py-3 rounded-2xl font-semibold transition"
+                    >
+                      Chat Now
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        updateStatus(
+                          booking._id,
+                          "completed"
+                        )
+                      }
+                      className="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-2xl font-semibold transition"
+                    >
+                      Mark as Completed
+                    </button>
+                  </>
+                )}
+
+                {booking.status === "completed" && (
                   <button
                     onClick={() =>
                       navigate(`/provider/chat/${booking._id}`)
                     }
-                    className="
-                      flex-1
-                      bg-purple-500
-                      hover:bg-purple-600
-                      text-white
-                      py-3
-                      rounded-2xl
-                      font-semibold
-                      transition
-                    "
+                    className="w-fullbg-purple-500hover:bg-purple-600text-whitepy-3rounded-2xlfont-semiboldtransition"
                   >
-                    Chat Now
+                    Open Chat
                   </button>
-
-                  <button
-                    onClick={() =>
-                      updateStatus(
-                        booking._id,
-                        "completed"
-                      )
-                    }
-                    className="
-                      flex-1
-                      bg-blue-500
-                      hover:bg-blue-600
-                      text-white
-                      py-3
-                      rounded-2xl
-                      font-semibold
-                      transition
-                    "
-                  >
-                    Mark as Completed
-                  </button>
-                </>
-              )}
-                {/* COMPLETED ACTIONS */}
-              {booking.status === "completed" && (
-                <button
-                  onClick={() =>
-                    navigate(`/provider/chat/${booking._id}`)
-                  }
-                  className="
-                    w-full
-                    bg-purple-500
-                    hover:bg-purple-600
-                    text-white
-                    py-3
-                    rounded-2xl
-                    font-semibold
-                    transition
-                  "
-                >
-                  Open Chat
-                </button>
-              )}
+                )}
               </div>
 
             </div>

@@ -13,11 +13,9 @@ export default function ServiceProviderList() {
 
   const navigate = useNavigate();
 
-  // SELECTED PROVIDER
   const [selectedProvider, setSelectedProvider] =
     useState(null);
 
-  // FETCH PROVIDERS
   const fetchProviders = async () => {
     try {
       setLoading(true);
@@ -42,7 +40,6 @@ export default function ServiceProviderList() {
     fetchProviders();
   }, [type]);
 
-  // FILTER CITY
   useEffect(() => {
 
     if (!searchCity) {
@@ -65,12 +62,10 @@ export default function ServiceProviderList() {
 
       {loading && <Loader />}
 
-      {/* TITLE */}
       <h1 className="text-3xl font-bold text-white mb-6 capitalize text-center">
         {type} Services
       </h1>
 
-      {/* SEARCH */}
       <div className="max-w-xl mx-auto mb-8">
 
         <input
@@ -97,7 +92,6 @@ export default function ServiceProviderList() {
 
       </div>
 
-      {/* NO PROVIDER */}
       {filteredProviders.length === 0 ? (
 
         <p className="text-gray-300 text-center">
@@ -110,16 +104,15 @@ export default function ServiceProviderList() {
 
           {filteredProviders.map((p) => {
 
-            // AVG RATING
             const avgRating =
               p.reviews?.length > 0
                 ? (
-                    p.reviews.reduce(
-                      (sum, review) =>
-                        sum + review.rating,
-                      0
-                    ) / p.reviews.length
-                  ).toFixed(1)
+                  p.reviews.reduce(
+                    (sum, review) =>
+                      sum + review.rating,
+                    0
+                  ) / p.reviews.length
+                ).toFixed(1)
                 : null;
 
             return (
@@ -142,7 +135,6 @@ export default function ServiceProviderList() {
                 "
               >
 
-                {/* TOP */}
                 <div className="flex items-center gap-4">
 
                   {p.profileImage?.url && (
@@ -172,7 +164,6 @@ export default function ServiceProviderList() {
                   </div>
                 </div>
 
-                {/* DETAILS */}
                 <div className="text-sm text-gray-300 mt-4">
 
                   {p.location?.city && (
@@ -188,17 +179,14 @@ export default function ServiceProviderList() {
         </div>
       )}
 
-      {/* MODAL */}
       {selectedProvider && (
 
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto">
 
           <div className="relative w-full max-w-2xl rounded-3xl overflow-hidden border border-white/20 bg-white shadow-2xl">
 
-            {/* HEADER */}
             <div className="bg-gradient-to-r from-[#081c3a] to-[#0b3c78] p-6 text-white relative">
 
-              {/* CLOSE */}
               <button
                 onClick={() =>
                   setSelectedProvider(null)
@@ -217,18 +205,17 @@ export default function ServiceProviderList() {
                 ✖
               </button>
 
-              {/* PROFILE */}
               <div className="flex items-center gap-5">
 
                 {selectedProvider.profileImage
                   ?.url && (
-                  <img
-                    src={
-                      selectedProvider.profileImage
-                        .url
-                    }
-                    alt="profile"
-                    className="
+                    <img
+                      src={
+                        selectedProvider.profileImage
+                          .url
+                      }
+                      alt="profile"
+                      className="
                       w-28
                       h-28
                       rounded-full
@@ -237,8 +224,8 @@ export default function ServiceProviderList() {
                       border-white
                       shadow-lg
                     "
-                  />
-                )}
+                    />
+                  )}
 
                 <div>
 
@@ -251,7 +238,6 @@ export default function ServiceProviderList() {
                     {selectedProvider.service}
                   </p>
 
-                  {/* AVG RATING */}
                   <div className="flex items-center gap-2 mt-3">
 
                     <div className="text-yellow-400 text-xl">
@@ -263,18 +249,18 @@ export default function ServiceProviderList() {
                       {selectedProvider.reviews
                         ?.length > 0
                         ? (
-                            selectedProvider.reviews.reduce(
-                              (
-                                sum,
-                                review
-                              ) =>
-                                sum +
-                                review.rating,
-                              0
-                            ) /
-                            selectedProvider
-                              .reviews.length
-                          ).toFixed(1)
+                          selectedProvider.reviews.reduce(
+                            (
+                              sum,
+                              review
+                            ) =>
+                              sum +
+                              review.rating,
+                            0
+                          ) /
+                          selectedProvider
+                            .reviews.length
+                        ).toFixed(1)
                         : "No rating"}
 
                     </p>
@@ -288,7 +274,6 @@ export default function ServiceProviderList() {
 
                   </div>
 
-                  {/* STATUS */}
                   <div className="mt-3">
 
                     {selectedProvider.isAvailable ? (
@@ -310,10 +295,8 @@ export default function ServiceProviderList() {
               </div>
             </div>
 
-            {/* BODY */}
             <div className="p-6 max-h-[70vh] overflow-y-auto">
 
-              {/* DETAILS */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
 
                 <div className="bg-gray-100 rounded-2xl p-4">
@@ -333,36 +316,36 @@ export default function ServiceProviderList() {
 
                 <div className="bg-gray-100 rounded-2xl p-4">
 
-  <p className="text-gray-500 text-sm">
-    Price
-  </p>
+                  <p className="text-gray-500 text-sm">
+                    Price
+                  </p>
 
-  <h3 className="font-semibold text-lg">
-    💰{" "}
-    {selectedProvider.priceRange > 0
-      ? `₹${selectedProvider.priceRange}/hr`
-      : "None"}
-  </h3>
+                  <h3 className="font-semibold text-lg">
+                    💰{" "}
+                    {selectedProvider.priceRange > 0
+                      ? `₹${selectedProvider.priceRange}/hr`
+                      : "None"}
+                  </h3>
 
-</div>
+                </div>
 
-<div className="bg-gray-100 rounded-2xl p-4">
+                <div className="bg-gray-100 rounded-2xl p-4">
 
-  <p className="text-gray-500 text-sm">
-    Location
-  </p>
+                  <p className="text-gray-500 text-sm">
+                    Location
+                  </p>
 
-  <h3 className="font-semibold text-sm leading-6">
-    📍 {selectedProvider.location?.address || "No Address"}
-    <br />
+                  <h3 className="font-semibold text-sm leading-6">
+                    📍 {selectedProvider.location?.address || "No Address"}
+                    <br />
 
-    🏙 {selectedProvider.location?.city || "No City"}
-    <br />
+                    🏙 {selectedProvider.location?.city || "No City"}
+                    <br />
 
-    🌎 {selectedProvider.location?.state || "No State"}
-  </h3>
+                    🌎 {selectedProvider.location?.state || "No State"}
+                  </h3>
 
-</div>
+                </div>
 
                 <div className="bg-gray-100 rounded-2xl p-4">
 
@@ -376,11 +359,10 @@ export default function ServiceProviderList() {
 
                 </div>
 
-                
+
 
               </div>
 
-              {/* REVIEWS */}
               <div>
 
                 <div className="flex items-center justify-between mb-4">
@@ -402,101 +384,70 @@ export default function ServiceProviderList() {
 
                   <div className="space-y-4">
 
-                   {selectedProvider.reviews.map((review) => (
+                    {selectedProvider.reviews.map((review) => (
 
-  <div
-    key={review._id}
-    className="
-      border
-      border-gray-200
-      rounded-2xl
-      p-4
-      hover:shadow-md
-      transition
-      bg-gray-50
-    "
-  >
+                      <div
+                        key={review._id}
+                        className="border border-gray-200 rounded-2xl p-4 hover:shadow-md transition bg-gray-50"
+                      >
 
-    {/* TOP */}
-    <div className="flex items-start justify-between mb-3">
+                        <div className="flex items-start justify-between mb-3">
 
-      {/* LEFT */}
-      <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-3">
 
-        {/* PROFILE IMAGE */}
-        {review.customer?.profileImage?.url ? (
+                            {review.customer?.profileImage?.url ? (
 
-          <img
-            src={review.customer.profileImage.url}
-            alt="customer"
-            className="
-              w-12
-              h-12
-              rounded-full
-              object-cover
-              border-2
-              border-gray-200
-            "
-          />
+                              <img
+                                src={review.customer.profileImage.url}
+                                alt="customer"
+                                className="w-12 h-12 rounded-full object-cover border-2 border-gray-200"
+                              />
 
-        ) : (
+                            ) : (
 
-          <div
-            className="
-              w-12
-              h-12
-              rounded-full
-              bg-gray-300
-              flex
-              items-center
-              justify-center
-              text-lg
-            "
-          >
-            👤
-          </div>
+                              <div
+                                className=" w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-lg"
+                              >
+                                👤
+                              </div>
 
-        )}
+                            )}
 
-        {/* NAME */}
-        <div>
+                            <div>
 
-          <h4 className="font-semibold text-gray-800">
-            {review.customer?.name || "Customer"}
-          </h4>
-        </div>
+                              <h4 className="font-semibold text-gray-800">
+                                {review.customer?.name || "Customer"}
+                              </h4>
+                            </div>
 
-      </div>
+                          </div>
 
-      {/* STARS */}
-      <div className="flex items-center gap-1">
+                          <div className="flex items-center gap-1">
 
-        {[1, 2, 3, 4, 5].map((star) => (
+                            {[1, 2, 3, 4, 5].map((star) => (
 
-          <span
-            key={star}
-            className={`text-xl ${
-              star <= review.rating
-                ? "text-yellow-500"
-                : "text-gray-400"
-            }`}
-          >
-            ★
-          </span>
+                              <span
+                                key={star}
+                                className={`text-xl ${star <= review.rating
+                                    ? "text-yellow-500"
+                                    : "text-gray-400"
+                                  }`}
+                              >
+                                ★
+                              </span>
 
-        ))}
+                            ))}
 
-      </div>
+                          </div>
 
-    </div>
+                        </div>
 
-    {/* COMMENT */}
-    <p className="text-gray-600 leading-relaxed">
-      {review.comment}
-    </p>
+                        <p className="text-gray-600 leading-relaxed">
+                          {review.comment}
+                        </p>
 
-  </div>
-))}
+                      </div>
+                    ))}
 
                   </div>
 
@@ -510,22 +461,10 @@ export default function ServiceProviderList() {
 
               </div>
 
-              {/* BUTTON */}
               {selectedProvider.isAvailable ? (
 
                 <button
-                  className="
-                    w-full
-                    mt-8
-                    bg-gradient-to-r
-                    from-[#081c3a]
-                    to-[#0b3c78]
-                    text-white
-                    py-3
-                    rounded-2xl
-                    font-semibold
-                    hover:opacity-90
-                    transition
+                  className="w-full mt-8 bg-gradient-to-r from-[#081c3a] to-[#0b3c78] text-white py-3 rounded-2xl font-semibold hover:opacity-90 transition
                   "
                   onClick={() => {
 
@@ -544,14 +483,7 @@ export default function ServiceProviderList() {
               ) : (
 
                 <button
-                  className="
-                    w-full
-                    mt-8
-                    bg-gray-300
-                    text-white
-                    py-3
-                    rounded-2xl
-                    cursor-not-allowed
+                  className="w-full mt-8 bg-gray-300 text-white py-3 rounded-2xl cursor-not-allowed
                   "
                 >
                   Currently Unavailable

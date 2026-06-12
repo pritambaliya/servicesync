@@ -1,19 +1,9 @@
-import {
-  FaPhoneAlt,
-  FaEnvelope,
-  FaMapMarkerAlt,
-  FaClock,
-  FaHeadset,
-  FaQuestionCircle,
-  FaTools,
-  FaShieldAlt,
-} from "react-icons/fa";
+import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaClock, FaHeadset, FaQuestionCircle, FaTools, FaShieldAlt } from "react-icons/fa";
 
 export default function ContactSupportPage() {
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#081c3a] to-[#0b3c78] text-white px-6 py-16">
 
-      {/* HEADER */}
       <div className="max-w-4xl mx-auto text-center mb-16">
 
         <h1 className="text-5xl font-bold mb-5">
@@ -28,10 +18,8 @@ export default function ContactSupportPage() {
 
       </div>
 
-      {/* TOP SECTION */}
       <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 mb-16">
 
-        {/* CONTACT INFO */}
         <div className="bg-white/10 border border-white/20 rounded-3xl p-8 backdrop-blur-md shadow-2xl">
 
           <h2 className="text-3xl font-bold mb-8">
@@ -115,7 +103,6 @@ export default function ContactSupportPage() {
           </div>
         </div>
 
-        {/* CONTACT FORM */}
         <div className="bg-white/10 border border-white/20 rounded-3xl p-8 backdrop-blur-md shadow-2xl">
 
           <h2 className="text-3xl font-bold mb-8">
@@ -159,7 +146,6 @@ export default function ContactSupportPage() {
         </div>
       </div>
 
-      {/* SUPPORT CARDS */}
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
 
         <div className="bg-white/10 border border-white/20 rounded-3xl p-6 backdrop-blur-md hover:scale-105 transition">
@@ -228,7 +214,6 @@ export default function ContactSupportPage() {
 
       </div>
 
-      {/* FAQ */}
       <div className="max-w-5xl mx-auto bg-white/10 border border-white/20 rounded-3xl p-8 backdrop-blur-md">
 
         <h2 className="text-3xl font-bold mb-8 text-center">

@@ -5,14 +5,13 @@ export default function AdminNavbar() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.clear();   // 🔥 clear login data
-    navigate("/login");     // redirect to login
+    localStorage.clear();
+    navigate("/login");
   };
 
   return (
     <nav className="bg-[#081c3a] text-white px-6 py-4 flex justify-between items-center shadow-md">
 
-      {/* 🔥 Logo */}
       <div
         className="text-2xl font-bold cursor-pointer tracking-wide"
         onClick={() => navigate("/admin")}
@@ -21,7 +20,6 @@ export default function AdminNavbar() {
         <span className="text-blue-400">Sync</span>
       </div>
 
-      {/* 💻 Menu */}
       <div className="flex gap-6 items-center text-lg">
 
         <button

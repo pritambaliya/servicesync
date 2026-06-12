@@ -10,11 +10,9 @@ export default function ProviderProfile() {
 
   const navigate = useNavigate();
 
-  // FETCH PROFILE
   const fetchProfile = async () => {
 
     try {
-
       setLoading(true);
 
       const { data } = await API.get(
@@ -23,17 +21,12 @@ export default function ProviderProfile() {
           withCredentials: true,
         }
       );
-
       setProvider(data.data);
 
     } catch (error) {
-
       console.log(error);
-
     } finally {
-
       setLoading(false);
-
     }
   };
 
@@ -41,15 +34,14 @@ export default function ProviderProfile() {
     fetchProfile();
   }, []);
 
-  // AVG RATING
   const avgRating =
     provider?.reviews?.length > 0
       ? (
-          provider.reviews.reduce(
-            (sum, r) => sum + r.rating,
-            0
-          ) / provider.reviews.length
-        ).toFixed(1)
+        provider.reviews.reduce(
+          (sum, r) => sum + r.rating,
+          0
+        ) / provider.reviews.length
+      ).toFixed(1)
       : null;
 
   return (
@@ -67,33 +59,16 @@ export default function ProviderProfile() {
 
         <div className="max-w-5xl mx-auto">
 
-          {/* TOP CARD */}
           <div
-            className="
-              bg-white/10
-              backdrop-blur-md
-              border
-              border-white/20
-              rounded-3xl
-              shadow-2xl
-              overflow-hidden
-            "
+            className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl shadow-2xl overflow-hidden"
           >
 
-            {/* COVER */}
             <div
-              className="
-                h-40
-                bg-gradient-to-r
-                from-blue-500
-                to-cyan-400
-              "
+              className="h-40 bg-gradient-to-r from-blue-500 to-cyan-400"
             />
 
-            {/* PROFILE SECTION */}
             <div className="px-8 pb-8">
 
-              {/* IMAGE */}
               <div className="-mt-16 flex justify-between items-end flex-wrap gap-4">
 
                 <div className="flex items-end gap-5">
@@ -103,33 +78,11 @@ export default function ProviderProfile() {
                     <img
                       src={provider.profileImage.url}
                       alt="profile"
-                      className="
-                        w-32
-                        h-32
-                        rounded-full
-                        border-4
-                        border-white
-                        object-cover
-                        shadow-xl
-                      "
+                      className="w-32 h-32 rounded-full border-4 border-white object-cover shadow-xl"
                     />
-
                   ) : (
-
                     <div
-                      className="
-                        w-32
-                        h-32
-                        rounded-full
-                        bg-white/20
-                        border-4
-                        border-white
-                        flex
-                        items-center
-                        justify-center
-                        text-5xl
-                        text-white
-                      "
+                      className="w-32 h-32 rounded-full bg-white/20 border-4 border-white flex items-center justify-center text-5xl text-white"
                     >
                       👤
                     </div>
@@ -154,11 +107,10 @@ export default function ProviderProfile() {
                         {[1, 2, 3, 4, 5].map((star) => (
                           <span
                             key={star}
-                            className={`text-xl ${
-                              star <= Math.round(avgRating)
+                            className={`text-xl ${star <= Math.round(avgRating)
                                 ? "text-yellow-400"
                                 : "text-gray-400"
-                            }`}
+                              }`}
                           >
                             ★
                           </span>
@@ -174,39 +126,21 @@ export default function ProviderProfile() {
                   </div>
                 </div>
 
-                {/* EDIT BUTTON */}
                 <button
                   onClick={() =>
                     navigate("/provider/edit-profile")
                   }
-                  className="
-                    bg-yellow-400
-                    hover:bg-yellow-500
-                    text-black
-                    px-6
-                    py-3
-                    rounded-2xl
-                    font-semibold
-                    transition
-                  "
+                  className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-3 rounded-2xl font-semibold transition"
                 >
                   Edit Profile
                 </button>
 
               </div>
 
-              {/* DETAILS */}
               <div className="grid md:grid-cols-2 gap-6 mt-10">
 
-                {/* LEFT */}
                 <div
-                  className="
-                    bg-white/10
-                    border
-                    border-white/10
-                    rounded-2xl
-                    p-6
-                  "
+                  className="bg-white/10 border border-white/10 rounded-2xl p-6"
                 >
 
                   <h2 className="text-xl font-bold text-white mb-5">
@@ -263,15 +197,8 @@ export default function ProviderProfile() {
 
                 </div>
 
-                {/* RIGHT */}
                 <div
-                  className="
-                    bg-white/10
-                    border
-                    border-white/10
-                    rounded-2xl
-                    p-6
-                  "
+                  className="bg-white/10 border border-white/10 rounded-2xl p-6"
                 >
 
                   <h2 className="text-xl font-bold text-white mb-5">
@@ -311,11 +238,10 @@ export default function ProviderProfile() {
                     <p>
                       ✅ Availability :
                       <span
-                        className={`ml-2 font-semibold ${
-                          provider.isAvailable
+                        className={`ml-2 font-semibold ${provider.isAvailable
                             ? "text-green-400"
                             : "text-red-400"
-                        }`}
+                          }`}
                       >
                         {provider.isAvailable
                           ? "Available"
@@ -336,16 +262,8 @@ export default function ProviderProfile() {
 
               </div>
 
-              {/* REVIEWS */}
               <div
-                className="
-                  mt-8
-                  bg-white/10
-                  border
-                  border-white/10
-                  rounded-2xl
-                  p-6
-                "
+                className="mt-8 bg-white/10 border border-white/10 rounded-2xl p-6"
               >
 
                 <div className="flex items-center justify-between mb-6">
@@ -368,13 +286,7 @@ export default function ProviderProfile() {
 
                       <div
                         key={review._id}
-                        className="
-                          bg-white/10
-                          border
-                          border-white/10
-                          rounded-2xl
-                          p-4
-                        "
+                        className="bg-white/10 border border-white/10 rounded-2xl p-4"
                       >
 
                         <div className="flex items-center justify-between">
@@ -388,26 +300,13 @@ export default function ProviderProfile() {
                                   review.customer.profileImage.url
                                 }
                                 alt="customer"
-                                className="
-                                  w-12
-                                  h-12
-                                  rounded-full
-                                  object-cover
-                                "
+                                className="w-12 h-12 rounded-full object-cover"
                               />
 
                             ) : (
 
                               <div
-                                className="
-                                  w-12
-                                  h-12
-                                  rounded-full
-                                  bg-white/20
-                                  flex
-                                  items-center
-                                  justify-center
-                                "
+                                className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center"
                               >
                                 👤
                               </div>
@@ -426,11 +325,10 @@ export default function ProviderProfile() {
                                 {[1, 2, 3, 4, 5].map((star) => (
                                   <span
                                     key={star}
-                                    className={`text-sm ${
-                                      star <= review.rating
+                                    className={`text-sm ${star <= review.rating
                                         ? "text-yellow-400"
                                         : "text-gray-500"
-                                    }`}
+                                      }`}
                                   >
                                     ★
                                   </span>
@@ -473,7 +371,6 @@ export default function ProviderProfile() {
           </div>
 
         </div>
-
       )}
 
     </div>

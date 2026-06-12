@@ -74,7 +74,7 @@ export default function PendingProviders() {
               key={p._id}
               className="bg-white p-5 rounded-xl shadow hover:shadow-lg transition space-y-3"
             >
-              {/* PROFILE IMAGE */}
+
               {p.profileImage?.url && (
                 <img
                   src={p.profileImage.url}
@@ -83,14 +83,12 @@ export default function PendingProviders() {
                 />
               )}
 
-              {/* BASIC INFO */}
               <div>
                 {p.name && <h2 className="font-bold text-lg">{p.name}</h2>}
                 {p.mobile && <p className="text-sm text-gray-500">📞 {p.mobile}</p>}
                 {p.email && <p className="text-sm text-gray-500">📧 {p.email}</p>}
               </div>
 
-              {/* SERVICE DETAILS */}
               {(p.service || p.experience || p.priceRange) && (
                 <div className="text-sm text-gray-600 space-y-1">
                   {p.service && <p><b>Service:</b> {p.service}</p>}
@@ -99,27 +97,25 @@ export default function PendingProviders() {
                 </div>
               )}
 
-              {/* LOCATION */}
               {(p.location?.address ||
                 p.location?.city ||
                 p.location?.state ||
                 p.location?.pincode) && (
-                <div className="text-sm text-gray-600">
-                  {p.location?.address && (
-                    <p><b>Address:</b> {p.location.address}</p>
-                  )}
+                  <div className="text-sm text-gray-600">
+                    {p.location?.address && (
+                      <p><b>Address:</b> {p.location.address}</p>
+                    )}
 
-                  {(p.location?.city || p.location?.state || p.location?.pincode) && (
-                    <p>
-                      {p.location?.city && `${p.location.city}, `}
-                      {p.location?.state && `${p.location.state} `}
-                      {p.location?.pincode && `- ${p.location.pincode}`}
-                    </p>
-                  )}
-                </div>
-              )}
+                    {(p.location?.city || p.location?.state || p.location?.pincode) && (
+                      <p>
+                        {p.location?.city && `${p.location.city}, `}
+                        {p.location?.state && `${p.location.state} `}
+                        {p.location?.pincode && `- ${p.location.pincode}`}
+                      </p>
+                    )}
+                  </div>
+                )}
 
-              {/* ID PROOF */}
               {p.idProof?.url && (
                 <div>
                   <p className="text-sm font-medium mb-1">ID Proof:</p>
@@ -134,7 +130,6 @@ export default function PendingProviders() {
                 </div>
               )}
 
-              {/* ACTION BUTTONS */}
               <div className="flex gap-3 pt-2">
 
                 <button

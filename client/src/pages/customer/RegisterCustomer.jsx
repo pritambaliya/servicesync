@@ -132,10 +132,10 @@ export default function RegisterCustomer() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#081c3a] to-[#0b3c78] px-4 py-10">
 
       {flash.message && (
-        <Flash flash={flash} setFlash={setFlash} success={false}/>
+        <Flash flash={flash} setFlash={setFlash} success={false} />
       )}
 
-      {loading && <Loader/>}
+      {loading && <Loader />}
 
       <form
         onSubmit={handleSubmit}

@@ -6,7 +6,6 @@ export default function About() {
   return (
     <div className="bg-gray-100">
 
-      {/* HERO */}
       <div className="bg-gradient-to-r from-[#081c3a] to-[#0b3c78] text-white py-20 px-6 text-center">
         <h1 className="text-3xl md:text-5xl font-bold mb-4">
           About ServiceSync
@@ -17,17 +16,14 @@ export default function About() {
         </p>
       </div>
 
-      {/* ABOUT SECTION */}
       <div className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-10 items-center">
 
-        {/* IMAGE */}
         <img
           src="https://images.unsplash.com/photo-1581578731548-c64695cc6952"
           alt="about"
           className="w-full h-[300px] object-cover rounded-xl shadow-md"
         />
 
-        {/* TEXT */}
         <div>
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-[#081c3a]">
             Who We Are
@@ -47,7 +43,6 @@ export default function About() {
         </div>
       </div>
 
-      {/* FEATURES */}
       <div className="bg-white py-16 px-6">
         <h2 className="text-center text-2xl md:text-3xl font-bold mb-12 text-[#081c3a]">
           Why Choose Us
@@ -79,10 +74,8 @@ export default function About() {
         </div>
       </div>
 
-      {/* EXTRA IMAGE SECTION */}
       <div className="max-w-6xl mx-auto px-6 py-16 grid md:grid-cols-2 gap-10 items-center">
 
-        {/* TEXT */}
         <div>
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-[#081c3a]">
             Our Vision
@@ -93,7 +86,6 @@ export default function About() {
           </p>
         </div>
 
-        {/* IMAGE */}
         <img
           src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c"
           alt="vision"
@@ -101,7 +93,6 @@ export default function About() {
         />
       </div>
 
-      {/* CTA */}
       <div className="bg-[#081c3a] text-white text-center py-14 px-6">
         <h2 className="text-2xl md:text-3xl font-bold mb-4">
           Ready to get started?

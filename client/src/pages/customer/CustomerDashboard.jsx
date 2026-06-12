@@ -42,7 +42,7 @@ export default function CustomerServices() {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#081c3a] to-[#0b3c78]">
-       {loading && <Loader/>}
+      {loading && <Loader />}
 
       <div className="text-center py-10 text-white">
         <h2 className="text-3xl font-bold">Our Services</h2>
@@ -56,19 +56,9 @@ export default function CustomerServices() {
         {services.map((s, i) => (
           <div
             key={i}
-            className="
-              bg-white/10 
-              backdrop-blur-md 
-              border border-white/20 
-              p-6 
-              rounded-2xl 
-              text-center 
-              shadow-lg 
-              hover:scale-105 
-              transition
-            "
+            className="bg-white/10 backdrop-blur-md border border-white/20 p-6 rounded-2xl text-center shadow-lg hover:scale-105 transition"
           >
-            {/* ICON */}
+
             <div className="flex justify-center mb-4">
               {s.icon}
             </div>
@@ -77,12 +67,10 @@ export default function CustomerServices() {
               {s.name}
             </h2>
 
-            {/* DESC */}
             <p className="text-sm text-gray-300 mb-4">
               {s.desc}
             </p>
 
-            {/* BUTTON */}
             <button
               onClick={() => navigate(`/customer/service/${s.name.toLowerCase()}`)}
               className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm"

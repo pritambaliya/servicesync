@@ -32,7 +32,7 @@ export default function Logout() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-[#081c3a] to-[#0b3c78]">
-        <Loader />
+      <Loader />
     </div>
   );
 }

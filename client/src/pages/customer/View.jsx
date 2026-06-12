@@ -11,7 +11,6 @@ export default function CustomerBookings() {
   const [loading, setLoading] = useState(false);
   const [selectedProvider, setSelectedProvider] = useState(null);
   const navigate = useNavigate();
-  // 🔥 FETCH BOOKINGS
   const fetchBookings = async () => {
     try {
 
@@ -37,9 +36,6 @@ export default function CustomerBookings() {
     fetchBookings();
   }, []);
 
-
-
-  // ❌ DELETE BOOKING
   const removeCard = async (id) => {
 
     const confirmDelete = window.confirm(
@@ -70,7 +66,6 @@ export default function CustomerBookings() {
     }
   };
 
-  // 🔥 FORMAT TIME
   const formatTime = (time) => {
 
     if (!time) return "N/A";
@@ -117,60 +112,31 @@ export default function CustomerBookings() {
 
             <div
               key={b._id}
-              className="
-                relative
-                bg-white/10
-                backdrop-blur-md
-                border border-white/20
-                rounded-2xl
-                p-4 md:p-6
-                md:pt-10
-                pt-10
-                shadow-lg
-              "
+              className="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 md:p-6 md:pt-10 pt-10 shadow-lg"
             >
 
               {b.status !== "pending" && (
                 <button
                   onClick={() => removeCard(b._id)}
-                  className="
-                    absolute
-                    top-2
-                    right-2
-                    bg-white/10
-                    hover:bg-red-500/20
-                    text-white
-                    hover:text-red-400
-                    p-2
-                    rounded-full
-                    transition
-                  "
+                  className="absolute top-2 right-2 bg-white/10 hover:bg-red-500/20 text-white hover:text-red-400 p-2 rounded-full transition"
                 >
                   <X size={18} />
                 </button>
               )}
 
-              {/* TOP */}
               <div className="flex justify-between items-start gap-4 flex-wrap">
 
                 <div className="flex items-center gap-4">
 
-                  {/* IMAGE */}
                   <img
                     src={
                       b.provider?.profileImage?.url ||
                       "https://via.placeholder.com/100"
                     }
                     alt="provider"
-                    className="
-                      w-16 h-16 md:w-20 md:h-20
-                      rounded-full
-                      object-cover
-                      border-2 border-white/30
-                    "
+                    className="w-16 h-16 md:w-20 md:h-20 rounded-full object-cover border-2 border-white/30"
                   />
 
-                  {/* INFO */}
                   <div>
 
                     <h2 className="text-lg md:text-xl font-bold text-white">
@@ -190,19 +156,17 @@ export default function CustomerBookings() {
                   </div>
                 </div>
 
-                {/* STATUS */}
                 <div
                   className={`
                     px-4 py-1 rounded-full text-sm font-semibold capitalize
 
-                    ${
-                      b.status === "pending"
-                        ? "bg-yellow-500 text-black"
-                        : b.status === "accepted"
+                    ${b.status === "pending"
+                      ? "bg-yellow-500 text-black"
+                      : b.status === "accepted"
                         ? "bg-blue-500 text-white"
                         : b.status === "completed"
-                        ? "bg-green-500 text-white"
-                        : "bg-red-500 text-white"
+                          ? "bg-green-500 text-white"
+                          : "bg-red-500 text-white"
                     }
                   `}
                 >
@@ -210,7 +174,6 @@ export default function CustomerBookings() {
                 </div>
               </div>
 
-              {/* DETAILS */}
               <div className="mt-5 grid md:grid-cols-2 gap-4 text-white text-sm">
 
                 <p>
@@ -237,7 +200,6 @@ export default function CustomerBookings() {
                   </p>
                 )}
 
-                {/* PHONE */}
                 {b.status === "accepted" &&
                   b.provider?.mobile && (
                     <p>
@@ -247,15 +209,10 @@ export default function CustomerBookings() {
                       {b.provider.mobile}
                     </p>
                   )}
-
-
-
               </div>
 
-              {/* ACTIONS */}
               <div className="flex flex-wrap gap-3 mt-6">
 
-                {/* MORE DETAILS */}
                 <button
                   onClick={() => setSelectedProvider(b.provider)}
                   className="
@@ -270,13 +227,12 @@ export default function CustomerBookings() {
                   More Details
                 </button>
 
-                {/* PENDING */}
                 {b.status === "pending" && (
                   <>
                     <button
                       onClick={() =>
-                          navigate(`/customer/bookings/edit/${b._id}`)
-                        }
+                        navigate(`/customer/bookings/edit/${b._id}`)
+                      }
                       className="
                         flex-1
                         bg-blue-600
@@ -284,7 +240,7 @@ export default function CustomerBookings() {
                         text-white
                         py-2
                         rounded-lg
-                      "              
+                      "
                     >
                       Edit Booking
                     </button>
@@ -292,20 +248,19 @@ export default function CustomerBookings() {
                   </>
                 )}
 
-                {/* ACCEPTED */}
                 {b.status === "accepted" && (
                   <>
                     <button
-                   onClick={() =>
-                    navigate("/customer/bookings/review", {
-                      state: {
-                        providerId: b.provider._id,
-                        bookingId: b._id,
-                        providerName: b.provider.name,
-                        serviceName: b.service,
-                      },
-                    })
-                  }
+                      onClick={() =>
+                        navigate("/customer/bookings/review", {
+                          state: {
+                            providerId: b.provider._id,
+                            bookingId: b._id,
+                            providerName: b.provider.name,
+                            serviceName: b.service,
+                          },
+                        })
+                      }
                       className="
                         flex-1
                         bg-yellow-500
@@ -330,25 +285,7 @@ export default function CustomerBookings() {
                           }
                         )
                       }
-                      className="
-                        flex-1
-                        flex
-                        items-center
-                        justify-center
-                        gap-2
-                        bg-gradient-to-r
-                        from-green-500
-                        to-emerald-600
-                        hover:from-green-600
-                        hover:to-emerald-700
-                        text-white
-                        py-2
-                        rounded-xl
-                        font-semibold
-                        shadow-lg
-                        transition-all
-                        duration-300
-                        hover:scale-[1.02]
+                      className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-2 rounded-xl font-semibold shadow-lg transition-all duration-300 hover:scale-[1.02]
                       "
                     >
                       <MessageCircle size={18} />
@@ -359,21 +296,20 @@ export default function CustomerBookings() {
                   </>
                 )}
 
-                {/* COMPLETED */}
                 {b.status === "completed" && (
                   <>
-                  <button
-                  onClick={() =>
-                    navigate("/customer/bookings/review", {
-                      state: {
-                        providerId: b.provider._id,
-                        bookingId: b._id,
-                        providerName: b.provider.name,
-                        serviceName: b.service,
-                      },
-                    })
-                  }
-                    className="
+                    <button
+                      onClick={() =>
+                        navigate("/customer/bookings/review", {
+                          state: {
+                            providerId: b.provider._id,
+                            bookingId: b._id,
+                            providerName: b.provider.name,
+                            serviceName: b.service,
+                          },
+                        })
+                      }
+                      className="
                       flex-1
                       bg-yellow-500
                       hover:bg-yellow-600
@@ -381,9 +317,9 @@ export default function CustomerBookings() {
                       py-2
                       rounded-lg
                     "
-                  >
-                    Review & Rating
-                  </button>
+                    >
+                      Review & Rating
+                    </button>
 
 
                     <button
@@ -398,26 +334,7 @@ export default function CustomerBookings() {
                           }
                         )
                       }
-                      className="
-                        flex-1
-                        flex
-                        items-center
-                        justify-center
-                        gap-2
-                        bg-gradient-to-r
-                        from-green-500
-                        to-emerald-600
-                        hover:from-green-600
-                        hover:to-emerald-700
-                        text-white
-                        py-2
-                        rounded-xl
-                        font-semibold
-                        shadow-lg
-                        transition-all
-                        duration-300
-                        hover:scale-[1.02]
-                      "
+                      className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white py-2 rounded-xl font-semibold shadow-lg transition-all duration-300 hover:scale-[1.02]"
                     >
                       <MessageCircle size={18} />
 
@@ -426,19 +343,18 @@ export default function CustomerBookings() {
                   </>
                 )}
 
-                {/* CANCELLED */}
                 {b.status === "cancelled" && (
                   <button
-                  onClick={() =>
-                    navigate("/customer/bookings/review", {
-                      state: {
-                        providerId: b.provider._id,
-                        bookingId: b._id,
-                        providerName: b.provider.name,
-                        serviceName: b.service,
-                      },
-                    })
-                  }
+                    onClick={() =>
+                      navigate("/customer/bookings/review", {
+                        state: {
+                          providerId: b.provider._id,
+                          bookingId: b._id,
+                          providerName: b.provider.name,
+                          serviceName: b.service,
+                        },
+                      })
+                    }
                     className="
                       flex-1
                       bg-yellow-500
@@ -458,7 +374,6 @@ export default function CustomerBookings() {
         </div>
       )}
 
-      {/* 🔥 PROVIDER MODAL */}
       {selectedProvider && (
 
         <div className="
@@ -480,7 +395,6 @@ export default function CustomerBookings() {
             overflow-y-auto
           ">
 
-            {/* CLOSE */}
             <button
               onClick={() => setSelectedProvider(null)}
               className="
@@ -493,7 +407,6 @@ export default function CustomerBookings() {
               <X size={18} />
             </button>
 
-            {/* IMAGE */}
             <img
               src={
                 selectedProvider.profileImage?.url ||

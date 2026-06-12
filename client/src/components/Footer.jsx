@@ -1,12 +1,4 @@
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
-  FaTwitter,
-  FaMapMarkerAlt,
-  FaPhoneAlt,
-  FaEnvelope,
-} from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 
 import { Link } from "react-router-dom";
 
@@ -15,22 +7,10 @@ export default function Footer() {
     <>
       <footer className="bg-gradient-to-r from-[#081c3a] to-[#0b3c78] text-white">
         <div className="w-full h-[1px] bg-white/20"></div>
-        {/* TOP */}
         <div
-          className="
-            max-w-7xl
-            mx-auto
-            px-6
-            py-14
-            grid
-            grid-cols-1
-            sm:grid-cols-2
-            md:grid-cols-4
-            gap-10
-          "
+          className=" max-w-7xl mx-auto px-6 py-14 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10"
         >
 
-          {/* BRAND */}
           <div>
 
             <h2 className="text-3xl font-bold mb-4">
@@ -44,77 +24,32 @@ export default function Footer() {
               electrical services and more.
             </p>
 
-            {/* SOCIAL */}
             <div className="flex items-center gap-4 mt-6">
 
               <a
                 href="#"
-                className="
-                  w-10
-                  h-10
-                  rounded-full
-                  bg-white/10
-                  hover:bg-yellow-400
-                  hover:text-black
-                  flex
-                  items-center
-                  justify-center
-                  transition
-                "
+                className=" w-10 h-10 rounded-full bg-white/10 hover:bg-yellow-400 hover:text-black flex items-center justify-center transition"
               >
                 <FaFacebookF />
               </a>
 
               <a
                 href="#"
-                className="
-                  w-10
-                  h-10
-                  rounded-full
-                  bg-white/10
-                  hover:bg-yellow-400
-                  hover:text-black
-                  flex
-                  items-center
-                  justify-center
-                  transition
-                "
+                className=" w-10 h-10 rounded-full bg-white/10 hover:bg-yellow-400 hover:text-black flex items-center justify-center transition"
               >
                 <FaInstagram />
               </a>
 
               <a
                 href="#"
-                className="
-                  w-10
-                  h-10
-                  rounded-full
-                  bg-white/10
-                  hover:bg-yellow-400
-                  hover:text-black
-                  flex
-                  items-center
-                  justify-center
-                  transition
-                "
+                className=" w-10 h-10 rounded-full bg-white/10 hover:bg-yellow-400 hover:text-black flex items-center justify-center transition"
               >
                 <FaTwitter />
               </a>
 
               <a
                 href="#"
-                className="
-                  w-10
-                  h-10
-                  rounded-full
-                  bg-white/10
-                  hover:bg-yellow-400
-                  hover:text-black
-                  flex
-                  items-center
-                  justify-center
-                  transition
-                "
+                className=" w-10 h-10 rounded-full bg-white/10 hover:bg-yellow-400 hover:text-black flex items-center justify-center transition"
               >
                 <FaLinkedinIn />
               </a>
@@ -122,7 +57,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* QUICK LINKS */}
           <div>
 
             <h3 className="text-xl font-semibold mb-5">
@@ -178,7 +112,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* SERVICES */}
           <div>
 
             <h3 className="text-xl font-semibold mb-5">
@@ -210,7 +143,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* CONTACT */}
           <div>
 
             <h3 className="text-xl font-semibold mb-5">
@@ -249,7 +181,6 @@ export default function Footer() {
 
             </div>
 
-            {/* NEWSLETTER */}
             <div className="mt-6">
 
               <p className="text-sm text-gray-300 mb-3">
@@ -261,18 +192,7 @@ export default function Footer() {
                 <input
                   type="email"
                   placeholder="Your Email"
-                  className="
-                    w-full
-                    px-4
-                    py-3
-                    rounded-l-xl
-                    bg-white/10
-                    border
-                    border-white/20
-                    outline-none
-                    text-white
-                    placeholder-gray-300
-                  "
+                  className=" w-full px-4 py-3 rounded-l-xl bg-white/10 border border-white/20 outline-none text-white placeholder-gray-300"
                 />
 
                 <button
@@ -296,22 +216,9 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* BOTTOM */}
+        {/* bottom */}
         <div
-          className="
-            border-t
-            border-white/10
-            py-5
-            px-6
-            flex
-            flex-col
-            md:flex-row
-            items-center
-            justify-between
-            text-sm
-            text-gray-300
-            max-w-7xl
-            mx-auto
+          className=" border-t border-white/10 py-5 px-6 flex flex-col md:flex-row items-center justify-between text-sm text-gray-300 max-w-7xl mx-auto
           "
         >
 
@@ -322,14 +229,14 @@ export default function Footer() {
           <div className="flex items-center gap-6 mt-3 md:mt-0">
 
             <Link
-             
+
               className="hover:text-yellow-400 transition"
             >
               Privacy Policy
             </Link>
 
             <Link
-              
+
               className="hover:text-yellow-400 transition"
             >
               Terms & Conditions

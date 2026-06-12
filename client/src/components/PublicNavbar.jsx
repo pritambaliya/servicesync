@@ -9,7 +9,6 @@ export default function PublicNavbar() {
   return (
     <nav className="bg-[#081c3a] text-white px-6 py-4 flex justify-between items-center shadow-md relative">
 
-      {/* 🔥 Logo */}
       <div
         className="text-2xl font-bold cursor-pointer tracking-wide"
         onClick={() => navigate("/")}
@@ -18,7 +17,6 @@ export default function PublicNavbar() {
         <span className="text-blue-400">Sync</span>
       </div>
 
-      {/* 💻 Desktop Menu */}
       <div className="hidden md:flex gap-8 items-center text-lg">
         <button onClick={() => navigate("/")} className="hover:text-blue-300 transition">
           Home
@@ -36,17 +34,15 @@ export default function PublicNavbar() {
         </button>
       </div>
 
-      {/* 📱 Mobile Menu Button */}
       <div className="md:hidden ">
         <button onClick={() => setOpen(!open)}>
           {open ? <FiX size={26} /> : <FiMenu size={26} />}
         </button>
       </div>
 
-      {/* 📱 Mobile Dropdown */}
       {open && (
         <div className="absolute top-16 left-0 w-full bg-[#081c3a] flex flex-col items-center gap-5 py-6 md:hidden z-50 shadow-lg">
-          
+
           <button
             onClick={() => {
               navigate("/");

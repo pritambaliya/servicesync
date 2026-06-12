@@ -28,7 +28,6 @@ export default function EditBooking() {
   const [lat, setLat] = useState("");
   const [lng, setLng] = useState("");
 
-  // FETCH BOOKING
   const fetchBooking = async () => {
 
     try {
@@ -63,8 +62,8 @@ export default function EditBooking() {
       setDate(
         booking.date
           ? new Date(booking.date)
-              .toISOString()
-              .split("T")[0]
+            .toISOString()
+            .split("T")[0]
           : ""
       );
 
@@ -101,7 +100,7 @@ export default function EditBooking() {
     fetchBooking();
   }, []);
 
-  // GET CURRENT LOCATION
+  // get current location
   const getCurrentLocation = () => {
 
     if (!navigator.geolocation) {
@@ -137,7 +136,7 @@ export default function EditBooking() {
     );
   };
 
-  // UPDATE BOOKING
+  // update booking
   const handleUpdate = async () => {
 
     try {
@@ -154,20 +153,16 @@ export default function EditBooking() {
 
       setLoading(true);
 
-      await API.put(
-
-        `/bookings/update/${id}`,
-
-        {
-          date,
-          time,
-          note,
-          address,
-          city,
-          state: stateName,
-          lat,
-          lng
-        },
+      await API.put(`/bookings/update/${id}`, {
+        date,
+        time,
+        note,
+        address,
+        city,
+        state: stateName,
+        lat,
+        lng
+      },
 
         {
           withCredentials: true
@@ -209,9 +204,8 @@ export default function EditBooking() {
       p-4
     ">
 
-      {/* FLASH MESSAGE */}
       {flash.message && (
-        <Flash flash={flash} setFlash={setFlash} success={false}/>
+        <Flash flash={flash} setFlash={setFlash} success={false} />
       )}
       {loading && <Loader />}
 
@@ -224,7 +218,6 @@ export default function EditBooking() {
         shadow-2xl
       ">
 
-        {/* TOP */}
         <div className="flex items-center gap-3 mb-6">
 
           <button
@@ -245,7 +238,6 @@ export default function EditBooking() {
 
         </div>
 
-        {/* DATE */}
         <div className="mb-4">
 
           <label className="font-semibold">
@@ -257,18 +249,11 @@ export default function EditBooking() {
             value={date}
             min={new Date().toISOString().split("T")[0]}
             onChange={(e) => setDate(e.target.value)}
-            className="
-              w-full
-              border
-              p-3
-              rounded-lg
-              mt-2
-            "
+            className=" w-full border p-3 rounded-lg mt-2"
           />
 
         </div>
 
-        {/* TIME */}
         <div className="mb-4">
 
           <label className="font-semibold">
@@ -290,7 +275,6 @@ export default function EditBooking() {
 
         </div>
 
-        {/* NOTE */}
         <div className="mb-4">
 
           <label className="font-semibold">
@@ -312,7 +296,6 @@ export default function EditBooking() {
 
         </div>
 
-        {/* ADDRESS */}
         <div className="mb-4">
 
           <label className="font-semibold">
@@ -334,7 +317,6 @@ export default function EditBooking() {
 
         </div>
 
-        {/* CITY */}
         <div className="mb-4">
 
           <label className="font-semibold">
@@ -356,7 +338,6 @@ export default function EditBooking() {
 
         </div>
 
-        {/* STATE */}
         <div className="mb-4">
 
           <label className="font-semibold">
@@ -378,7 +359,6 @@ export default function EditBooking() {
 
         </div>
 
-        {/* LOCATION BTN */}
         <button
           onClick={getCurrentLocation}
           className="
@@ -394,7 +374,6 @@ export default function EditBooking() {
           📍 Use Current Location
         </button>
 
-        {/* UPDATE BTN */}
         <button
           onClick={handleUpdate}
           disabled={loading}
@@ -404,10 +383,9 @@ export default function EditBooking() {
             py-3
             rounded-lg
             font-semibold
-            ${
-              loading
-                ? "bg-gray-400"
-                : "bg-blue-900 hover:bg-blue-950"
+            ${loading
+              ? "bg-gray-400"
+              : "bg-blue-900 hover:bg-blue-950"
             }
           `}
         >

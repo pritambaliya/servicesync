@@ -10,10 +10,8 @@ export default function Providerbar() {
   return (
     <div className="bg-[#081c3a] text-white shadow-md relative">
 
-      {/* 🔥 TOP BAR */}
       <div className="flex justify-between items-center px-6 py-4">
-        
-        {/* LOGO */}
+
         <h1
           className="text-2xl font-bold cursor-pointer"
           onClick={() => navigate("/")}
@@ -21,7 +19,6 @@ export default function Providerbar() {
           Service<span className="text-blue-400">Sync</span>
         </h1>
 
-        {/* 💻 DESKTOP MENU */}
         <div className="hidden md:flex items-center gap-6 text-sm md:text-base">
 
 
@@ -48,7 +45,6 @@ export default function Providerbar() {
 
         </div>
 
-        {/* 📱 MOBILE ICON */}
         <div className="md:hidden">
           <button onClick={() => setOpen(!open)}>
             {open ? <FiX size={26} /> : <FiMenu size={26} />}
@@ -57,7 +53,6 @@ export default function Providerbar() {
 
       </div>
 
-      {/* 📱 MOBILE MENU */}
       {open && (
         <div className="md:hidden bg-[#081c3a] flex flex-col items-center gap-5 py-6 shadow-lg">
 

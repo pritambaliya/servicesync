@@ -62,8 +62,8 @@ export default function AppRoutes() {
           <Route path="/customer/bookings/review" element={<ProtectedRoute><Review /></ProtectedRoute>} />
           <Route path="/customer/chat/:bookingId" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
         </Route>
-        
-        <Route element={<ProviderLayout/>}>
+
+        <Route element={<ProviderLayout />}>
           <Route path="/provider/bookings" element={<ProtectedRoute><ProviderBookings /></ProtectedRoute>} />
           <Route path="/provider/profile" element={<ProtectedRoute><ProviderProfile /></ProtectedRoute>} />
           <Route path="/provider/chat/:bookingId" element={<ProtectedRoute><Chat /></ProtectedRoute>} />

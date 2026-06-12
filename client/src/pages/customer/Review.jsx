@@ -46,8 +46,7 @@ const ReviewPage = () => {
         comment,
       };
 
-      const res = await axios.post(
-        "http://localhost:5000/reviews/add",
+      const res = await axios.post("http://localhost:5000/reviews/add",
         reviewData,
         {
           withCredentials: true,
@@ -69,7 +68,7 @@ const ReviewPage = () => {
       showFlash(
         "error",
         error.response?.data?.message ||
-          "Failed to submit review"
+        "Failed to submit review"
       );
     } finally {
       setLoading(false);
@@ -79,31 +78,18 @@ const ReviewPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#081c3a] to-[#0b3c78] flex items-center justify-center p-4">
 
-      {/* Flash Message */}
       {flash.message && (
-        <Flash flash={flash} setFlash={setFlash} success={false}/>
+        <Flash flash={flash} setFlash={setFlash} success={false} />
       )}
 
-      {/* Card */}
       <div
-        className="
-          w-full
-          max-w-md
-          rounded-3xl
-          border
-          border-white/30
-          bg-white/10
-          backdrop-blur-lg
-          shadow-2xl
-          p-6
-        "
+        className=" w-full max-w-md rounded-3xl border border-white/30 bg-white/10 backdrop-blur-lg shadow-2xl p-6"
       >
-        {/* Heading */}
+
         <h2 className="text-3xl font-bold text-center text-white mb-6">
           Rate Your Experience
         </h2>
 
-        {/* Provider Details */}
         <div
           className="
             bg-white/10
@@ -124,7 +110,6 @@ const ReviewPage = () => {
         </div>
 
         <form onSubmit={handleSubmit}>
-          {/* Stars */}
           <div className="flex justify-center gap-3 mb-5">
             {[1, 2, 3, 4, 5].map((star) => (
               <button
@@ -133,15 +118,10 @@ const ReviewPage = () => {
                 onClick={() => setRating(star)}
                 onMouseEnter={() => setHover(star)}
                 onMouseLeave={() => setHover(0)}
-                className={`
-                  text-5xl
-                  transition-all
-                  duration-300
-                  transform
-                  ${
-                    star <= (hover || rating)
-                      ? "text-yellow-400 scale-125 drop-shadow-[0_0_15px_rgba(250,204,21,0.9)]"
-                      : "text-gray-400"
+                className={`text-5xl transition-all duration-300 transform
+                  ${star <= (hover || rating)
+                    ? "text-yellow-400 scale-125 drop-shadow-[0_0_15px_rgba(250,204,21,0.9)]"
+                    : "text-gray-400"
                   }
                   hover:rotate-12
                 `}
@@ -151,14 +131,12 @@ const ReviewPage = () => {
             ))}
           </div>
 
-          {/* Rating Text */}
           <p className="text-center text-gray-300 mb-5">
             {hover || rating
               ? `${hover || rating} Star Rating`
               : "Select Your Rating"}
           </p>
 
-          {/* Comment */}
           <div className="mb-5">
             <textarea
               rows="5"
@@ -166,25 +144,10 @@ const ReviewPage = () => {
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               required
-              className="
-                w-full
-                rounded-2xl
-                border
-                border-white/20
-                bg-white/10
-                text-white
-                placeholder-gray-300
-                p-4
-                outline-none
-                focus:border-yellow-400
-                focus:ring-2
-                focus:ring-yellow-400/40
-                resize-none
-              "
+              className="w-full rounded-2xl border border-white/20 bg-white/10 text-white placeholder-gray-300 p-4 outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/40 resize-none"
             />
           </div>
 
-          {/* Submit */}
           <button
             type="submit"
             disabled={loading}

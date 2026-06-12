@@ -39,12 +39,12 @@ export default function RegisterProvider() {
   });
 
   const indianStates = [
-    "Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh",
-    "Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka",
-    "Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram",
-    "Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana",
-    "Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Delhi",
-    "Jammu and Kashmir","Ladakh"
+    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
+    "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka",
+    "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram",
+    "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana",
+    "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal", "Delhi",
+    "Jammu and Kashmir", "Ladakh"
   ];
 
   const services = [
@@ -60,67 +60,63 @@ export default function RegisterProvider() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-const handleFileChange = (e) => {
-  const file = e.target.files[0];
-  const field = e.target.name;
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    const field = e.target.name;
 
-  if (!file) return;
+    if (!file) return;
 
-  const allowedTypes = [
-    "image/jpeg",
-    "image/jpg",
-    "image/png",
-    "application/pdf"
-  ];
+    const allowedTypes = [
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+      "application/pdf"
+    ];
 
-  const imageTypes = ["image/jpeg", "image/jpg", "image/png"];
+    const imageTypes = ["image/jpeg", "image/jpg", "image/png"];
 
-  const maxSize = 5 * 1024 * 1024; // 5MB
+    const maxSize = 5 * 1024 * 1024; // 5MB
 
-  let errorMsg = "";
+    let errorMsg = "";
 
-  // TYPE VALIDATION
-  if (!allowedTypes.includes(file.type)) {
-    errorMsg = "Only JPG, JPEG, PNG, PDF allowed";
-  }
+    if (!allowedTypes.includes(file.type)) {
+      errorMsg = "Only JPG, JPEG, PNG, PDF allowed";
+    }
 
-  // PROFILE IMAGE ONLY IMAGES
-  if (field === "profileImage" && !imageTypes.includes(file.type)) {
-    errorMsg = "Profile image must be JPG or PNG";
-  }
+    if (field === "profileImage" && !imageTypes.includes(file.type)) {
+      errorMsg = "Profile image must be JPG or PNG";
+    }
 
-  // SIZE VALIDATION
-  if (file.size > maxSize) {
-    errorMsg = "File must be less than 5MB";
-  }
+    if (file.size > maxSize) {
+      errorMsg = "File must be less than 5MB";
+    }
 
-  if (errorMsg) {
+    if (errorMsg) {
+      setFileErrors((prev) => ({
+        ...prev,
+        [field]: errorMsg
+      }));
+
+      // reset file
+      setForm((prev) => ({
+        ...prev,
+        [field]: null
+      }));
+
+      e.target.value = "";
+      return;
+    }
+
     setFileErrors((prev) => ({
       ...prev,
-      [field]: errorMsg
+      [field]: ""
     }));
 
-    // reset file
     setForm((prev) => ({
       ...prev,
-      [field]: null
+      [field]: file
     }));
-
-    e.target.value = "";
-    return;
-  }
-
-  // CLEAR ERROR
-  setFileErrors((prev) => ({
-    ...prev,
-    [field]: ""
-  }));
-
-  setForm((prev) => ({
-    ...prev,
-    [field]: file
-  }));
-};
+  };
 
   const getLocation = () => {
     if (!navigator.geolocation) {
@@ -154,85 +150,82 @@ const handleFileChange = (e) => {
     );
   };
 
-  // 🚀 SUBMIT
+  //submit data
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!form.name || !form.mobile || !form.password || !form.service) {
-    setFlash({
-      type: "error",
-      message: "Please fill all required fields"
-    });
-    return;
-  }
+    if (!form.name || !form.mobile || !form.password || !form.service) {
+      setFlash({
+        type: "error",
+        message: "Please fill all required fields"
+      });
+      return;
+    }
 
-  if (!form.latitude || !form.longitude) {
-    setFlash({
-      type: "error",
-      message: "Please allow location access"
-    });
-    return;
-  }
+    if (!form.latitude || !form.longitude) {
+      setFlash({
+        type: "error",
+        message: "Please allow location access"
+      });
+      return;
+    }
 
-  try {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const formData = new FormData();
+      const formData = new FormData();
 
-    // BASIC
-    formData.append("name", form.name);
-    formData.append("mobile", form.mobile);
-    formData.append("email", form.email);
-    formData.append("password", form.password);
-    formData.append("service", form.service);
-    formData.append("experience", form.experience);
-    formData.append("priceRange", form.priceRange);
+      formData.append("name", form.name);
+      formData.append("mobile", form.mobile);
+      formData.append("email", form.email);
+      formData.append("password", form.password);
+      formData.append("service", form.service);
+      formData.append("experience", form.experience);
+      formData.append("priceRange", form.priceRange);
 
-    // LOCATION
-    formData.append("address", form.address);
-    formData.append("city", form.city);
-    formData.append("state", form.state);
-    formData.append("pincode", form.pincode);
-    formData.append("latitude", String(form.latitude));
-    formData.append("longitude", String(form.longitude));
+      formData.append("address", form.address);
+      formData.append("city", form.city);
+      formData.append("state", form.state);
+      formData.append("pincode", form.pincode);
+      formData.append("latitude", String(form.latitude));
+      formData.append("longitude", String(form.longitude));
 
-    if (form.idProof) formData.append("idProof", form.idProof);
-    if (form.profileImage) formData.append("profileImage", form.profileImage);
+      if (form.idProof) formData.append("idProof", form.idProof);
+      if (form.profileImage) formData.append("profileImage", form.profileImage);
 
-    const { data } = await API.post("/provider/register", formData);
+      const { data } = await API.post("/provider/register", formData);
 
-    
-    setFlash({
-      type: "success",
-      message: data.message || "Registered successfully"
-    });
 
-    setLoading(false);
+      setFlash({
+        type: "success",
+        message: data.message || "Registered successfully"
+      });
 
-    setTimeout(() => navigate("/login"), 1200);
+      setLoading(false);
 
-  } catch (err) {
-    console.log("ERROR FULL:", err);
-    console.log("SERVER ERROR:", err.response?.data);
+      setTimeout(() => navigate("/login"), 1200);
 
-    setLoading(false);
+    } catch (err) {
+      console.log("ERROR FULL:", err);
+      console.log("SERVER ERROR:", err.response?.data);
 
-    setFlash({
-      type: "error",
-      message: err.response?.data?.message || "Registration failed"
-    });
-  }
-};
+      setLoading(false);
+
+      setFlash({
+        type: "error",
+        message: err.response?.data?.message || "Registration failed"
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-[#081c3a] to-[#0b3c78] px-4 py-10">
 
-      {/* 🔥 FLASH */}
       {flash.message && (
         <Flash flash={flash} setFlash={setFlash} />
       )}
 
-    {loading && <Loader/>}
+      {loading && <Loader />}
 
       <form
         onSubmit={handleSubmit}
@@ -243,7 +236,6 @@ const handleFileChange = (e) => {
           Service Provider Registration
         </h2>
 
-        {/* SERVICE */}
         <select
           name="service"
           value={form.service}
@@ -280,7 +272,6 @@ const handleFileChange = (e) => {
           </div>
         </div>
 
-        {/* EMAIL + PASSWORD */}
         <div className="grid md:grid-cols-2 gap-4">
           <input
             name="email"
@@ -298,7 +289,6 @@ const handleFileChange = (e) => {
           />
         </div>
 
-        {/* EXPERIENCE + PRICE */}
         <div className="grid md:grid-cols-2 gap-4">
           <input
             name="experience"
@@ -316,7 +306,6 @@ const handleFileChange = (e) => {
           />
         </div>
 
-        {/* ADDRESS */}
         <input
           name="address"
           placeholder="Address"
@@ -324,7 +313,6 @@ const handleFileChange = (e) => {
           className="p-3 border rounded w-full"
         />
 
-        {/* CITY STATE PIN */}
         <div className="grid md:grid-cols-3 gap-4">
           <input name="city" placeholder="City" onChange={handleChange} className="p-3 border rounded" />
 
@@ -338,7 +326,6 @@ const handleFileChange = (e) => {
           <input name="pincode" placeholder="Pincode" onChange={handleChange} className="p-3 border rounded" />
         </div>
 
-        {/* FILE UPLOADS */}
         <div>
           <label className="text-sm font-medium">Upload ID Proof</label>
 
@@ -375,7 +362,6 @@ const handleFileChange = (e) => {
           )}
         </div>
 
-        {/* LOCATION */}
         <button
           type="button"
           onClick={getLocation}
@@ -384,7 +370,6 @@ const handleFileChange = (e) => {
           {loading ? "Getting Location..." : "📍 Allow Location Access"}
         </button>
 
-        {/* SUBMIT */}
         <button
           type="submit"
           disabled={loading}
