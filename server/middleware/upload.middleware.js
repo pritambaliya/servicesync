@@ -26,9 +26,10 @@ const upload = multer({
     if (allowedTypes.includes(file.mimetype)) {
       cb(null, true);
     } else {
-      const err = new Error("Only JPG, PNG, PDF files are allowed");
-      req.flash("error", err.message);  
-      cb(err, false);
+      cb(
+      new Error("Only JPG, PNG, PDF files are allowed"),
+      false
+    );
     }
   }
 });

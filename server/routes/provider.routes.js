@@ -2,7 +2,7 @@ import express from "express";
 import upload from "../middleware/upload.middleware.js";
 import { getProviderProfile, registerProvider } from "../controllers/provider.controller.js";
 import Provider from "../model/provider.model.js";
-import { isLoggedIn, isProvider} from "../middleware/auth.middleware.js";
+import { isLoggedIn, isProvider } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
@@ -24,7 +24,7 @@ router.get("/by-service", async (req, res) => {
       service: new RegExp(`^${service}$`, "i"),
       status: "approved"
     })
-    .populate("reviews.customer", "name profileImage");
+      .populate("reviews.customer", "name profileImage");
 
     res.json({
       success: true,
@@ -42,7 +42,7 @@ router.get("/by-service", async (req, res) => {
   }
 });
 
-// ✅ REGISTER
+// REGISTER
 router.post(
   "/register",
   upload.fields([

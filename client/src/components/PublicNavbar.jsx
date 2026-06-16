@@ -30,7 +30,7 @@ export default function PublicNavbar() {
           onClick={() => navigate("/login")}
           className="bg-blue-500 hover:bg-blue-600 px-4 py-1 rounded transition"
         >
-          Login or SignUp
+          Login/SignUp
         </button>
       </div>
 

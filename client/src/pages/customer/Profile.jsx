@@ -30,9 +30,9 @@ export default function Profile() {
         <div className="w-full max-w-2xl bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-xl p-8 text-white">
 
           <div className="flex justify-center mb-6">
-            {user.profileImage ? (
+            {user?.profileImage?.url ? (
               <img
-                src={user.profileImage}
+                src={user?.profileImage?.url}
                 alt="profile"
                 className="w-28 h-28 rounded-full object-cover border"
               />
@@ -94,7 +94,7 @@ export default function Profile() {
 
             <button
               onClick={() => {
-                navigate("/profile/edit");
+                navigate("/customer/profile/edit");
               }}
               className="flex-1 bg-green-500 py-2 rounded-lg hover:bg-green-600"
             >
