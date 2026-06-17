@@ -32,6 +32,7 @@ import ProviderProfile from "../pages/provider/ProviderProfile";
 import Chat from "../pages/Chat";
 import EditProfile from "../pages/customer/EditProfile";
 import ForgotPassword from "../pages/auth/ForgotPassword ";
+import EditProviderProfile from "../pages/provider/EditProviderProfile";
 
 export default function AppRoutes() {
   return (
@@ -71,7 +72,7 @@ export default function AppRoutes() {
           <Route path="/provider/bookings" element={<ProtectedRoute><ProviderBookings /></ProtectedRoute>} />
           <Route path="/provider/profile" element={<ProtectedRoute><ProviderProfile /></ProtectedRoute>} />
           <Route path="/provider/chat/:bookingId" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
-          
+          <Route path="/provider/profile/edit" element={<ProtectedRoute><EditProviderProfile /></ProtectedRoute>} />
         </Route>
 
       </Routes>

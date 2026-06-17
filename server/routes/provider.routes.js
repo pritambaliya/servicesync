@@ -1,6 +1,6 @@
 import express from "express";
 import upload from "../middleware/upload.middleware.js";
-import { getProviderProfile, registerProvider } from "../controllers/provider.controller.js";
+import { getProviderProfile, registerProvider, updateProviderProfile } from "../controllers/provider.controller.js";
 import Provider from "../model/provider.model.js";
 import { isLoggedIn, isProvider } from "../middleware/auth.middleware.js";
 
@@ -57,6 +57,13 @@ router.get(
   isLoggedIn,
   isProvider,
   getProviderProfile
+);
+
+router.put(
+  "/profile/update",
+  isProvider,
+  upload.single("profileImage"),
+  updateProviderProfile
 );
 
 export default router;

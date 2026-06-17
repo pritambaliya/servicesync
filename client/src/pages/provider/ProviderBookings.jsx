@@ -312,7 +312,7 @@ export default function ProviderBookings() {
                     onClick={() =>
                       navigate(`/provider/chat/${booking._id}`)
                     }
-                    className="w-fullbg-purple-500hover:bg-purple-600text-whitepy-3rounded-2xlfont-semiboldtransition"
+                    className="w-full bg-purple-500 hover:bg-purple-600 text-white py-3 rounded-2xl font-semibold transition"
                   >
                     Open Chat
                   </button>

@@ -134,4 +134,68 @@ const getProviderProfile = async (
   }
 };
 
-export { getProviderProfile, registerProvider };
+const updateProviderProfile = async (req, res) => {
+  try {
+    const providerId = req.user._id;
+
+    const provider = await Provider.findById(providerId);
+
+    if (!provider) {
+      return res.status(404).json({
+        success: false,
+        message: "Provider not found",
+      });
+    }
+
+    provider.name =
+      req.body.name || provider.name;
+
+    provider.experience =
+      req.body.experience || provider.experience;
+
+    provider.priceRange =
+      req.body.priceRange || provider.priceRange;
+
+    provider.isAvailable =
+      req.body.isAvailable === "true";
+
+    if (!provider.location) {
+      provider.location = {};
+    }
+
+    provider.location.address =
+      req.body.address || "";
+
+    provider.location.city =
+      req.body.city || "";
+
+    provider.location.state =
+      req.body.state || "";
+
+    provider.location.pincode =
+      req.body.pincode || "";
+
+    if (req.file) {
+      provider.profileImage = {
+        url: req.file.path,
+        public_id: req.file.filename,
+      };
+    }
+
+    await provider.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      provider,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export { getProviderProfile, registerProvider, updateProviderProfile };

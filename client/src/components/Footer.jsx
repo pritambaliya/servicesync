@@ -156,7 +156,7 @@ export default function Footer() {
                 <FaMapMarkerAlt className="mt-1 text-yellow-400" />
 
                 <p>
-                  Bhavnagar, Gujarat, India
+                  Rajkot, Gujarat, India
                 </p>
 
               </div>

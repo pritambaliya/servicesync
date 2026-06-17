@@ -128,7 +128,7 @@ export default function ProviderProfile() {
 
                 <button
                   onClick={() =>
-                    navigate("/provider/edit-profile")
+                    navigate("/provider/profile/edit")
                   }
                   className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-3 rounded-2xl font-semibold transition"
                 >
