@@ -31,6 +31,7 @@ import ProviderBookings from "../pages/provider/ProviderBookings";
 import ProviderProfile from "../pages/provider/ProviderProfile";
 import Chat from "../pages/Chat";
 import EditProfile from "../pages/customer/EditProfile";
+import ForgotPassword from "../pages/auth/ForgotPassword ";
 
 export default function AppRoutes() {
   return (
@@ -46,6 +47,7 @@ export default function AppRoutes() {
           <Route path="/register/provider" element={<RegisterProvider />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/contactsupport" element={<ContactSupportPage />} />
+          <Route path="/login/forgot-password" element={<ForgotPassword />} />
         </Route>
 
         <Route element={<AdminLayout />}>

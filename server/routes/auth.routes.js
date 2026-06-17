@@ -1,6 +1,6 @@
 import express from "express";
 import passport from "passport";
-import { logoutUser } from "../controllers/auth.controller.js";
+import { logoutUser, sendForgotOtp, resetPassword } from "../controllers/auth.controller.js";
 
 const router = express.Router();
 
@@ -40,5 +40,15 @@ router.post("/login", (req, res, next) => {
 });
 
 router.get("/logout", logoutUser);
+
+router.post(
+  "/forgot-password",
+  sendForgotOtp
+);
+
+router.post(
+  "/reset-password",
+  resetPassword
+);
 
 export default router;

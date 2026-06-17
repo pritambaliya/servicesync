@@ -45,7 +45,15 @@ const customerSchema = new mongoose.Schema({
   profileImage: {
     url: String,
     public_id: String
-  }
+  },
+
+  resetOtp: {
+    type: String,
+  },
+
+  resetOtpExpire: {
+    type: Date,
+  },
 
 }, { timestamps: true });
 

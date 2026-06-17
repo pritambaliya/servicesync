@@ -86,6 +86,14 @@ const providerSchema = new mongoose.Schema({
     default: "provider"
   },
 
+  resetOtp: {
+    type: String,
+  },
+
+  resetOtpExpire: {
+    type: Date,
+  },
+
   reviews: [
   {
     customer: {
@@ -100,7 +108,7 @@ const providerSchema = new mongoose.Schema({
     comment: String
   }
 ]
-}, 
+},
 { 
     timestamps: true 
 });

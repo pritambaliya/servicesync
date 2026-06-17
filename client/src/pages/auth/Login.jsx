@@ -184,6 +184,15 @@ export default function Login() {
             </span>
           </p>
 
+          <div className="flex justify-center">
+            <span
+              onClick={() => navigate("/login/forgot-password")}
+              className="text-sm text-blue-600 cursor-pointer hover:underline"
+            >
+              Forgot Password?
+            </span>
+          </div>
+
           <p className="text-center text-xs text-gray-500 mt-2">
             Location access may be required after login
           </p>
