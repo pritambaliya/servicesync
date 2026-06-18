@@ -407,10 +407,6 @@ export default function RegisterProvider() {
 
           <LocationPicker
             location={{
-              address: form.address,
-              city: form.city,
-              state: form.state,
-              pincode: form.pincode,
               coordinates: {
                 type: "Point",
                 coordinates: [
@@ -422,10 +418,6 @@ export default function RegisterProvider() {
             setLocation={(loc) =>
               setForm((prev) => ({
                 ...prev,
-                address: loc.address || prev.address,
-                city: loc.city || prev.city,
-                state: loc.state || prev.state,
-                pincode: loc.pincode || prev.pincode,
                 longitude: loc.coordinates?.coordinates[0] || prev.longitude,
                 latitude: loc.coordinates?.coordinates[1] || prev.latitude,
               }))

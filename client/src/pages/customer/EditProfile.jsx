@@ -5,7 +5,7 @@ import axios from "axios";
 import Loader from "../../components/Loader";
 import Customerbar from "../../components/Customerbar";
 import Flash from "../../components/Flash";
-import LocationPicker from "../../components/LocationPicker";
+import EditLocationPicker from "../../components/EditLocationPicker";
 
 export default function EditProfile() {
     const navigate = useNavigate();
@@ -14,6 +14,7 @@ export default function EditProfile() {
     const [saving, setSaving] = useState(false);
 
     const [flash, setFlash] = useState({
+        type: "",
         message: "",
         success: "",
     });
@@ -34,8 +35,8 @@ export default function EditProfile() {
         city: "",
         state: "",
         pincode: "",
-        latitude: "",
-        longitude: "",
+        latitude: null,
+        longitude: null,
     });
 
     const indianStates = [
@@ -155,9 +156,8 @@ export default function EditProfile() {
             data.append("city", formData.city);
             data.append("state", formData.state);
             data.append("pincode", formData.pincode);
-            data.append("latitude",formData.latitude);
-
-            data.append( "longitude",formData.longitude);
+            data.append("latitude", String(formData.latitude));
+            data.append("longitude", String(formData.longitude));
 
             data.append(
                 "removeProfileImage",
@@ -367,49 +367,35 @@ export default function EditProfile() {
 
                         </div>
 
-                        <div className="space-y-3">
-  <h3 className="font-semibold text-xl">
-    Change Location
-  </h3>
+                        <div className="mt-6">
+                            <h3 className="text-lg font-semibold mb-3">
+                                Select Your Location
+                            </h3>
 
-  <LocationPicker
-    location={{
-      address: formData.address,
-      city: formData.city,
-      state: formData.state,
-      pincode: formData.pincode,
-      coordinates: {
-        type: "Point",
-        coordinates: [
-          Number(formData.longitude),
-          Number(formData.latitude),
-        ],
-      },
-    }}
-    setLocation={(loc) => {
-      setFormData((prev) => ({
-        ...prev,
-        address: loc.address,
-        city: loc.city,
-        state: loc.state,
-        pincode: loc.pincode,
-        longitude:
-          loc.coordinates.coordinates[0],
-        latitude:
-          loc.coordinates.coordinates[1],
-      }));
+                            <EditLocationPicker
+                                location={{
+                                    coordinates: {
+                                        type: "Point",
+                                        coordinates: [
+                                            formData.longitude,
+                                            formData.latitude,
+                                        ],
+                                    },
+                                }}
+                                setLocation={(locationData) => {
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        longitude:
+                                            locationData.coordinates.coordinates[0],
+                                        latitude:
+                                            locationData.coordinates.coordinates[1],
+                                    }));
 
-      setIsChanged(true);
-    }}
-  />
+                                    setIsChanged(true);
+                                }}
+                            />
 
-  <div className="bg-white/10 p-3 rounded-lg">
-    <p>
-      <strong>Address:</strong>{" "}
-      {formData.address || "No address selected"}
-    </p>
-  </div>
-</div>
+                        </div>
 
                         <div className="flex gap-4 pt-4">
 
@@ -423,14 +409,12 @@ export default function EditProfile() {
                                 Cancel
                             </button>
 
-
-
                             <button
                                 type="submit"
                                 disabled={saving || !isChanged}
                                 className={`flex-1 py-3 rounded-lg transition ${saving || !isChanged
-                                        ? "bg-gray-500 cursor-not-allowed"
-                                        : "bg-green-500 hover:bg-green-600"
+                                    ? "bg-gray-500 cursor-not-allowed"
+                                    : "bg-green-500 hover:bg-green-600"
                                     }`}
                             >
                                 {saving

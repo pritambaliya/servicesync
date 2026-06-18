@@ -67,6 +67,13 @@ export default function Profile() {
               </div>
             )}
 
+            {user.location?.address && (
+              <div className="flex justify-between border-b border-white/20 pb-2">
+                <span className="text-gray-300">🏠 Address</span>
+                <span>{user.location.address}</span>
+              </div>
+            )}
+
             {user.location?.city && (
               <div className="flex justify-between border-b border-white/20 pb-2">
                 <span className="text-gray-300">📍 City</span>

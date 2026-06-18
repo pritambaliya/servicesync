@@ -215,7 +215,7 @@ export default function ProviderProfile() {
                     </p>
 
                     <p>
-                      🏙 City :
+                      📍 City :
                       <span className="text-white ml-2">
                         {provider.location?.city}
                       </span>

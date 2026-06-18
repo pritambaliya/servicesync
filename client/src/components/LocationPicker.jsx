@@ -43,10 +43,6 @@ export default function LocationPicker({
         setCenter({ lat, lng });
 
         setLocation({
-          address: "",
-          city: "",
-          state: "",
-          pincode: "",
           coordinates: {
             type: "Point",
             coordinates: [lng, lat],
@@ -69,49 +65,8 @@ export default function LocationPicker({
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}`
       );
 
-      const data = await res.json();
-
-      let address = "";
-      let city = "";
-      let state = "";
-      let pincode = "";
-
-      if (data.results.length > 0) {
-        address =
-          data.results[0]
-            .formatted_address;
-
-        data.results[0].address_components.forEach(
-          (item) => {
-            if (
-              item.types.includes(
-                "locality"
-              )
-            )
-              city = item.long_name;
-
-            if (
-              item.types.includes(
-                "administrative_area_level_1"
-              )
-            )
-              state = item.long_name;
-
-            if (
-              item.types.includes(
-                "postal_code"
-              )
-            )
-              pincode = item.long_name;
-          }
-        );
-      }
-
+     
       setLocation({
-        address,
-        city,
-        state,
-        pincode,
         coordinates: {
           type: "Point",
           coordinates: [lng, lat],
@@ -180,17 +135,6 @@ export default function LocationPicker({
           />
         )}
       </GoogleMap>
-
-      {location?.address && (
-        <div className="bg-gray-100 p-3 rounded">
-          <p>
-            <strong>
-              Selected Address:
-            </strong>
-          </p>
-          <p>{location.address}</p>
-        </div>
-      )}
     </div>
   );
 }
