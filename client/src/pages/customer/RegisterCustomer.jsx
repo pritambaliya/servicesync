@@ -4,6 +4,7 @@ import API from "../../api/axios";
 import { X } from "lucide-react";
 import Loader from "../../components/Loader";
 import Flash from "../../components/Flash";
+import LocationPicker from "../../components/LocationPicker";
 
 export default function RegisterCustomer() {
   const navigate = useNavigate();
@@ -180,7 +181,7 @@ export default function RegisterCustomer() {
 
           <input
             name="email"
-            placeholder="Email (optional)"
+            placeholder="Email"
             onChange={handleChange}
             className="p-3 border rounded w-full"
           />
@@ -232,13 +233,42 @@ export default function RegisterCustomer() {
 
         </div>
 
-        <button
-          type="button"
-          onClick={getLocation}
-          className="w-full bg-green-600 text-white py-3 rounded"
-        >
-          {loading ? "Getting Location..." : "📍 Allow Location Access"}
-        </button>
+        <div className="space-y-3">
+          <h3 className="font-semibold text-black text-xl text-center">
+            Select Location
+          </h3>
+
+          <LocationPicker
+            location={{
+              address: form.address,
+              city: form.city,
+              state: form.state,
+              pincode: form.pincode,
+              coordinates: {
+                type: "Point",
+                coordinates: [
+                  form.longitude,
+                  form.latitude,
+                ],
+              },
+            }}
+            setLocation={(loc) =>
+              setForm((prev) => ({
+                ...prev,
+                address: loc.address,
+                city: loc.city,
+                state: loc.state,
+                pincode: loc.pincode,
+                longitude:
+                  loc.coordinates.coordinates[0],
+                latitude:
+                  loc.coordinates.coordinates[1],
+              }))
+            }
+          />
+
+        </div>
+
 
         <button
           type="submit"

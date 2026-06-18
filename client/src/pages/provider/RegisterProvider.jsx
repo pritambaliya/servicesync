@@ -4,6 +4,7 @@ import API from "../../api/axios";
 import { X } from "lucide-react";
 import Loader from "../../components/Loader";
 import Flash from "../../components/Flash";
+import LocationPicker from "../../components/LocationPicker";
 
 export default function RegisterProvider() {
   const navigate = useNavigate();
@@ -97,7 +98,6 @@ export default function RegisterProvider() {
         [field]: errorMsg
       }));
 
-      // reset file
       setForm((prev) => ({
         ...prev,
         [field]: null
@@ -150,7 +150,6 @@ export default function RegisterProvider() {
     );
   };
 
-  //submit data
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -162,10 +161,26 @@ export default function RegisterProvider() {
       return;
     }
 
+    if (!/^\d{10}$/.test(form.mobile)) {
+      setFlash({
+        type: "error",
+        message: "Enter a valid 10-digit mobile number"
+      });
+      return;
+    }
+
+    if (!form.address || !form.city || !form.state) {
+      setFlash({
+        type: "error",
+        message: "Please fill address, city, and state"
+      });
+      return;
+    }
+
     if (!form.latitude || !form.longitude) {
       setFlash({
         type: "error",
-        message: "Please allow location access"
+        message: "Please select location"
       });
       return;
     }
@@ -193,8 +208,11 @@ export default function RegisterProvider() {
       if (form.idProof) formData.append("idProof", form.idProof);
       if (form.profileImage) formData.append("profileImage", form.profileImage);
 
-      const { data } = await API.post("/provider/register", formData);
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
+      }
 
+      const { data } = await API.post("/provider/register", formData);
 
       setFlash({
         type: "success",
@@ -220,7 +238,6 @@ export default function RegisterProvider() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-[#081c3a] to-[#0b3c78] px-4 py-10">
-
       {flash.message && (
         <Flash flash={flash} setFlash={setFlash} />
       )}
@@ -231,7 +248,6 @@ export default function RegisterProvider() {
         onSubmit={handleSubmit}
         className="bg-white w-full max-w-2xl p-6 md:p-10 rounded-xl shadow-lg space-y-4"
       >
-
         <h2 className="text-2xl font-bold text-center text-blue-700">
           Service Provider Registration
         </h2>
@@ -254,6 +270,7 @@ export default function RegisterProvider() {
             placeholder="Full Name"
             onChange={handleChange}
             className="p-3 border rounded"
+            required
           />
 
           <div className="flex items-center border rounded w-full overflow-hidden">
@@ -268,6 +285,7 @@ export default function RegisterProvider() {
               }}
               className="p-3 w-full outline-none"
               placeholder="Mobile Number"
+              required
             />
           </div>
         </div>
@@ -278,6 +296,7 @@ export default function RegisterProvider() {
             placeholder="Email"
             onChange={handleChange}
             className="p-3 border rounded"
+            required
           />
 
           <input
@@ -286,6 +305,7 @@ export default function RegisterProvider() {
             placeholder="Password"
             onChange={handleChange}
             className="p-3 border rounded"
+            required
           />
         </div>
 
@@ -311,23 +331,40 @@ export default function RegisterProvider() {
           placeholder="Address"
           onChange={handleChange}
           className="p-3 border rounded w-full"
+          required
         />
 
         <div className="grid md:grid-cols-3 gap-4">
-          <input name="city" placeholder="City" onChange={handleChange} className="p-3 border rounded" />
+          <input
+            name="city"
+            placeholder="City"
+            onChange={handleChange}
+            className="p-3 border rounded"
+            required
+          />
 
-          <select name="state" value={form.state} onChange={handleChange} className="p-3 border rounded">
+          <select
+            name="state"
+            value={form.state}
+            onChange={handleChange}
+            className="p-3 border rounded"
+          >
             <option value="">State</option>
             {indianStates.map((s, i) => (
-              <option key={i}>{s}</option>
+              <option key={i} value={s}>{s}</option>
             ))}
           </select>
 
-          <input name="pincode" placeholder="Pincode" onChange={handleChange} className="p-3 border rounded" />
+          <input
+            name="pincode"
+            placeholder="Pincode"
+            onChange={handleChange}
+            className="p-3 border rounded"
+          />
         </div>
 
         <div>
-          <label className="text-sm font-medium">Upload ID Proof</label>
+          <label className="text-sm font-medium">Upload ID Proof *</label>
 
           <input
             type="file"
@@ -335,6 +372,7 @@ export default function RegisterProvider() {
             accept=".jpg,.jpeg,.png,.pdf"
             onChange={handleFileChange}
             className="w-full p-2 border rounded"
+            required
           />
 
           {fileErrors.idProof && (
@@ -362,13 +400,38 @@ export default function RegisterProvider() {
           )}
         </div>
 
-        <button
-          type="button"
-          onClick={getLocation}
-          className="w-full bg-green-600 text-white py-3 rounded"
-        >
-          {loading ? "Getting Location..." : "📍 Allow Location Access"}
-        </button>
+        <div className="space-y-3">
+          <h3 className="font-semibold text-lg">
+            Select Location
+          </h3>
+
+          <LocationPicker
+            location={{
+              address: form.address,
+              city: form.city,
+              state: form.state,
+              pincode: form.pincode,
+              coordinates: {
+                type: "Point",
+                coordinates: [
+                  form.longitude,
+                  form.latitude,
+                ],
+              },
+            }}
+            setLocation={(loc) =>
+              setForm((prev) => ({
+                ...prev,
+                address: loc.address || prev.address,
+                city: loc.city || prev.city,
+                state: loc.state || prev.state,
+                pincode: loc.pincode || prev.pincode,
+                longitude: loc.coordinates?.coordinates[0] || prev.longitude,
+                latitude: loc.coordinates?.coordinates[1] || prev.latitude,
+              }))
+            }
+          />
+        </div>
 
         <button
           type="submit"
@@ -384,7 +447,6 @@ export default function RegisterProvider() {
             Login
           </span>
         </p>
-
       </form>
     </div>
   );

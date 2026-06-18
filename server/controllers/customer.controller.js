@@ -141,6 +141,14 @@ const updateProfile = async (req, res) => {
         public_id: "",
       };
     }
+    
+    customer.location.coordinates = {
+      type: "Point",
+      coordinates: [
+        Number(req.body.longitude),
+        Number(req.body.latitude),
+      ],
+    };
 
     await customer.save();
 

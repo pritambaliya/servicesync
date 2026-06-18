@@ -44,7 +44,7 @@ const providerSchema = new mongoose.Schema({
         type: String, 
         default: "Point" 
       },
-      coordinates: [Number]
+      coordinates: [Number],
     }
   },
 

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import API from "../../api/axios";
 import Loader from "../../components/Loader";
 import { useParams, useNavigate } from "react-router-dom";
+import ProviderLocationMap from "../provider/ProviderLocationMap";
 
 export default function ServiceProviderList() {
   const { type } = useParams();
@@ -359,13 +360,17 @@ export default function ServiceProviderList() {
 
                 </div>
 
+              </div>
 
-
+              <div className="bg-white rounded-xl p-5 shadow">
+                <ProviderLocationMap
+                  provider={selectedProvider}
+                />
               </div>
 
               <div>
 
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-4 mt-5">
 
                   <h3 className="text-2xl font-bold text-gray-800">
                     Customer Reviews
@@ -429,8 +434,8 @@ export default function ServiceProviderList() {
                               <span
                                 key={star}
                                 className={`text-xl ${star <= review.rating
-                                    ? "text-yellow-500"
-                                    : "text-gray-400"
+                                  ? "text-yellow-500"
+                                  : "text-gray-400"
                                   }`}
                               >
                                 ★

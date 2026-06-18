@@ -5,6 +5,7 @@ import axios from "axios";
 import Loader from "../../components/Loader";
 import Customerbar from "../../components/Customerbar";
 import Flash from "../../components/Flash";
+import LocationPicker from "../../components/LocationPicker";
 
 export default function EditProfile() {
     const navigate = useNavigate();
@@ -33,6 +34,8 @@ export default function EditProfile() {
         city: "",
         state: "",
         pincode: "",
+        latitude: "",
+        longitude: "",
     });
 
     const indianStates = [
@@ -87,6 +90,10 @@ export default function EditProfile() {
             city: user.location?.city || "",
             state: user.location?.state || "",
             pincode: user.location?.pincode || "",
+            longitude:
+                user.location?.coordinates?.coordinates?.[0] || 70.8022,
+            latitude:
+                user.location?.coordinates?.coordinates?.[1] || 22.3039,
         });
 
         setPreview(user.profileImage?.url || "");
@@ -148,6 +155,9 @@ export default function EditProfile() {
             data.append("city", formData.city);
             data.append("state", formData.state);
             data.append("pincode", formData.pincode);
+            data.append("latitude",formData.latitude);
+
+            data.append( "longitude",formData.longitude);
 
             data.append(
                 "removeProfileImage",
@@ -356,6 +366,50 @@ export default function EditProfile() {
                             </select>
 
                         </div>
+
+                        <div className="space-y-3">
+  <h3 className="font-semibold text-xl">
+    Change Location
+  </h3>
+
+  <LocationPicker
+    location={{
+      address: formData.address,
+      city: formData.city,
+      state: formData.state,
+      pincode: formData.pincode,
+      coordinates: {
+        type: "Point",
+        coordinates: [
+          Number(formData.longitude),
+          Number(formData.latitude),
+        ],
+      },
+    }}
+    setLocation={(loc) => {
+      setFormData((prev) => ({
+        ...prev,
+        address: loc.address,
+        city: loc.city,
+        state: loc.state,
+        pincode: loc.pincode,
+        longitude:
+          loc.coordinates.coordinates[0],
+        latitude:
+          loc.coordinates.coordinates[1],
+      }));
+
+      setIsChanged(true);
+    }}
+  />
+
+  <div className="bg-white/10 p-3 rounded-lg">
+    <p>
+      <strong>Address:</strong>{" "}
+      {formData.address || "No address selected"}
+    </p>
+  </div>
+</div>
 
                         <div className="flex gap-4 pt-4">
 

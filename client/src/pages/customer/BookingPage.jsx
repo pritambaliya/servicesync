@@ -16,12 +16,6 @@ export default function BookingPage() {
   const [time, setTime] = useState("");
   const [note, setNote] = useState("");
 
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [stateName, setStateName] = useState("");
-
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
 
   const [flash, setFlash] = useState({ type: "", message: "" });
   const [loading, setLoading] = useState(false);
@@ -47,39 +41,6 @@ export default function BookingPage() {
     setUser(currentUser);
   }, []);
 
-  useEffect(() => {
-    if (user?.location) {
-      setAddress(user.location.address || "");
-      setCity(user.location.city || "");
-      setStateName(user.location.state || "");
-    }
-  }, [user]);
-
-  const getCurrentLocation = () => {
-    if (!navigator.geolocation) {
-      setFlash({ type: "error", message: "Geolocation not supported" });
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setLatitude(pos.coords.latitude);
-        setLongitude(pos.coords.longitude);
-
-        setFlash({
-          type: "success",
-          message: "Location fetched successfully 📍"
-        });
-      },
-      () => {
-        setFlash({
-          type: "error",
-          message: "Location permission denied ❌"
-        });
-      }
-    );
-  };
-
   const handleBooking = async () => {
     try {
       if (!date || !time) {
@@ -89,13 +50,12 @@ export default function BookingPage() {
 
       setLoading(true);
 
-      const latNum = parseFloat(latitude);
-      const lngNum = parseFloat(longitude);
-
       const locationData = {
-        address,
-        city,
-        state: stateName,
+        address: user?.location?.address || "",
+        city: user?.location?.city || "",
+        state: user?.location?.state || "",
+        pincode: user?.location?.pincode || "",
+
         ...(!isNaN(latNum) && !isNaN(lngNum) && {
           coordinates: {
             type: "Point",
@@ -174,40 +134,37 @@ export default function BookingPage() {
           onChange={(e) => setNote(e.target.value)}
           className="w-full border p-2 rounded mb-3"
         />
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
 
-        <label>Address</label>
-        <input
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          className="w-full border p-2 rounded mb-2"
-        />
+  <div className="flex justify-between items-start gap-3">
 
-        <label>City</label>
-        <input
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-          className="w-full border p-2 rounded mb-2"
-        />
+    <div>
+      <h3 className="font-semibold text-blue-900">
+        Service Address
+      </h3>
 
-        <label>State</label>
-        <input
-          value={stateName}
-          onChange={(e) => setStateName(e.target.value)}
-          className="w-full border p-2 rounded mb-4"
-        />
+      <p className="text-sm text-gray-700 mt-1">
+        {user?.location?.address || "Address not available"}
+      </p>
 
-        <button
-          onClick={getCurrentLocation}
-          className="w-full mb-3 bg-green-600 text-white py-2 rounded hover:bg-green-700"
-        >
-          📍 Use Current Location
-        </button>
+      <p className="text-xs text-gray-500">
+        {user?.location?.city},{" "}
+        {user?.location?.state}
+      </p>
+    </div>
 
-        {latitude && longitude && (
-          <p className="text-xs text-gray-500 mb-3 text-center">
-            📍 {latitude}, {longitude}
-          </p>
-        )}
+    <button
+      onClick={() =>
+        navigate("/customer/profile/edit")
+      }
+      className="text-blue-600 text-sm font-medium hover:underline"
+    >
+      Change
+    </button>
+
+  </div>
+
+</div>
 
         <button
           onClick={handleBooking}
