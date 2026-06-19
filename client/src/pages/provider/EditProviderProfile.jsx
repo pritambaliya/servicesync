@@ -4,6 +4,7 @@ import API from "../../api/axios";
 
 import Loader from "../../components/Loader";
 import Flash from "../../components/Flash";
+import EditLocationPicker from "../../components/EditLocationPicker";
 
 export default function EditProviderProfile() {
   const navigate = useNavigate();
@@ -34,6 +35,8 @@ export default function EditProviderProfile() {
     state: "",
     pincode: "",
     isAvailable: true,
+    latitude: null,
+    longitude: null,
   });
 
   const indianStates = [
@@ -90,6 +93,10 @@ export default function EditProviderProfile() {
       state: user.location?.state || "",
       pincode: user.location?.pincode || "",
       isAvailable: user.isAvailable ?? true,
+      longitude:
+        user.location?.coordinates?.coordinates?.[0] || 70.8022,
+      latitude:
+        user.location?.coordinates?.coordinates?.[1] || 22.3039,
     };
 
     setFormData(data);
@@ -103,6 +110,8 @@ export default function EditProviderProfile() {
       state: data.state,
       pincode: data.pincode,
       isAvailable: data.isAvailable,
+      longitude: data.longitude,
+      latitude: data.latitude
     });
 
     setPreview(user?.profileImage?.url || "");
@@ -123,6 +132,8 @@ export default function EditProviderProfile() {
         state: formData.state,
         pincode: formData.pincode,
         isAvailable: formData.isAvailable,
+        longitude: formData.longitude,
+        latitude: formData.latitude,
       }) !== JSON.stringify(originalData) ||
       profileImage;
 
@@ -140,7 +151,7 @@ export default function EditProviderProfile() {
           : value,
     }));
   };
-
+  console.log(JSON.parse(localStorage.getItem("user")));
   const handleImage = (e) => {
     const file = e.target.files[0];
 
@@ -190,41 +201,18 @@ export default function EditProviderProfile() {
       const data = new FormData();
 
       data.append("name", formData.name);
-      data.append(
-        "experience",
-        formData.experience
-      );
-      data.append(
-        "priceRange",
-        formData.priceRange
-      );
-      data.append(
-        "isAvailable",
-        formData.isAvailable
-      );
-
-      data.append(
-        "address",
-        formData.address
-      );
-      data.append(
-        "city",
-        formData.city
-      );
-      data.append(
-        "state",
-        formData.state
-      );
-      data.append(
-        "pincode",
-        formData.pincode
-      );
+      data.append("experience", formData.experience);
+      data.append("priceRange", formData.priceRange);
+      data.append("isAvailable", formData.isAvailable);
+      data.append("address", formData.address);
+      data.append("city", formData.city);
+      data.append("state", formData.state);
+      data.append("pincode", formData.pincode);
+      data.append("latitude", formData.latitude);
+      data.append("longitude", formData.longitude);
 
       if (profileImage) {
-        data.append(
-          "profileImage",
-          profileImage
-        );
+        data.append("profileImage", profileImage);
       }
 
       const res = await API.put(
@@ -448,6 +436,41 @@ export default function EditProviderProfile() {
 
             </div>
 
+            <div className="mt-6">
+              <h3 className="text-lg font-semibold mb-3">
+                Change Your Location
+              </h3>
+
+              <EditLocationPicker
+                location={{
+                  coordinates: {
+                    type: "Point",
+                    coordinates: [
+                      formData.longitude,
+                      formData.latitude
+                    ]
+                  }
+
+                }}
+
+                setLocation={(locationData) => {
+
+                  const coords = locationData.coordinates.coordinates;
+
+                  setFormData(prev => ({
+                    ...prev,
+                    longitude: coords[0],
+                    latitude: coords[1]
+                  }));
+                }}
+              />
+
+            </div>
+            <>
+              <h1>{formData.longitude},
+                {formData.latitude}</h1>
+            </>
+
             <div className="flex gap-4 pt-4">
 
               <button
@@ -463,11 +486,10 @@ export default function EditProviderProfile() {
               <button
                 type="submit"
                 disabled={!hasChanges || saving}
-                className={`flex-1 py-3 rounded-lg transition ${
-                  !hasChanges
-                    ? "bg-gray-500 cursor-not-allowed"
-                    : "bg-green-500 hover:bg-green-600"
-                }`}
+                className={`flex-1 py-3 rounded-lg transition ${!hasChanges
+                  ? "bg-gray-500 cursor-not-allowed"
+                  : "bg-green-500 hover:bg-green-600"
+                  }`}
               >
                 {saving
                   ? "Updating..."

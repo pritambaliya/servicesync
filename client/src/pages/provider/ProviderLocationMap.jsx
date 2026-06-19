@@ -6,6 +6,7 @@ import {
 } from "@react-google-maps/api";
 
 import { useState } from "react";
+import locationIcon from "../../assets/placeholder.png"
 
 const containerStyle = {
   width: "100%",
@@ -50,6 +51,10 @@ export default function ProviderLocationMap({
     >
       <Marker
         position={{ lat, lng }}
+        icon={{
+          url: locationIcon,
+          scaledSize: new window.google.maps.Size(50, 50),
+        }}
         onClick={() =>
           setShowInfo(true)
         }

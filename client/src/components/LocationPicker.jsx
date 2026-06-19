@@ -6,6 +6,7 @@ import {
 } from "@react-google-maps/api";
 
 import { useEffect, useRef, useState } from "react";
+import userIcon from "../assets/user.png";
 
 const libraries = ["places"];
 
@@ -65,7 +66,7 @@ export default function LocationPicker({
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}`
       );
 
-     
+
       setLocation({
         coordinates: {
           type: "Point",
@@ -121,19 +122,17 @@ export default function LocationPicker({
       >
         {location?.coordinates
           ?.coordinates?.length === 2 && (
-          <Marker
-            position={{
-              lat: Number(
-                location.coordinates
-                  .coordinates[1]
-              ),
-              lng: Number(
-                location.coordinates
-                  .coordinates[0]
-              ),
-            }}
-          />
-        )}
+            <Marker
+              position={{
+                lat: Number(location.coordinates.coordinates[1]),
+                lng: Number(location.coordinates.coordinates[0]),
+              }}
+              icon={{
+                url: userIcon,
+                scaledSize: new window.google.maps.Size(50, 50),
+              }}
+            />
+          )}
       </GoogleMap>
     </div>
   );

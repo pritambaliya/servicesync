@@ -182,6 +182,16 @@ const updateProviderProfile = async (req, res) => {
       };
     }
 
+    if (req.body.latitude) {
+      provider.location.coordinates = {
+        type: "Point",
+        coordinates: [
+          Number(req.body.longitude),
+          Number(req.body.latitude)
+        ]
+      };
+    }
+
     await provider.save();
 
     res.status(200).json({

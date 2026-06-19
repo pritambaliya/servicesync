@@ -5,6 +5,7 @@ import {
 } from "@react-google-maps/api";
 
 import { useEffect, useState } from "react";
+import userIcon from "../assets/user.png";
 
 const mapContainerStyle = {
   width: "100%",
@@ -75,19 +76,23 @@ export default function EditLocationPicker({
       >
         {location?.coordinates
           ?.coordinates?.length === 2 && (
-          <Marker
-            position={{
-              lat: Number(
-                location.coordinates
-                  .coordinates[1]
-              ),
-              lng: Number(
-                location.coordinates
-                  .coordinates[0]
-              ),
-            }}
-          />
-        )}
+            <Marker
+              position={{
+                lat: Number(
+                  location.coordinates
+                    .coordinates[1]
+                ),
+                lng: Number(
+                  location.coordinates
+                    .coordinates[0]
+                ),
+              }}
+              icon={{
+                url: userIcon,
+                scaledSize: new window.google.maps.Size(50, 50),
+              }}
+            />
+          )}
       </GoogleMap>
     </div>
   );
