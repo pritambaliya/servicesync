@@ -234,9 +234,13 @@ export default function RegisterCustomer() {
         </div>
 
         <div className="space-y-3">
-          <h3 className="font-semibold text-black text-xl text-center">
-            Select Location
+          <h3 className="font-semibold text-lg">
+            Select Your Location
           </h3>
+
+          <p className="text-sm text-gray-500 mt-1">
+            Your location helps us connect you with nearby service providers and show more accurate results.
+          </p>
 
           <LocationPicker
             location={{

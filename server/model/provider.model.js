@@ -113,6 +113,5 @@ const providerSchema = new mongoose.Schema({
     timestamps: true 
 });
 
-providerSchema.index({ "location.coordinates": "2dsphere" });
 const Provider = mongoose.model("Provider", providerSchema);
 export default Provider;

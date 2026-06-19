@@ -364,7 +364,17 @@ export default function RegisterProvider() {
         </div>
 
         <div>
-          <label className="text-sm font-medium">Upload ID Proof *</label>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Upload ID Proof <span className="text-red-500">*</span>
+          </label>
+
+          <p className="text-xs text-blue-600 mb-2">
+            Upload a valid Aadhaar Card, PAN Card, Driving License, or Voter ID.
+          </p>
+
+          <p className="text-xs text-gray-500 mb-1">
+            Supported formats: JPG, PNG, PDF • Max size: 5 MB
+          </p>
 
           <input
             type="file"
@@ -385,6 +395,10 @@ export default function RegisterProvider() {
         <div>
           <label className="text-sm font-medium">Upload Profile Image</label>
 
+          <p className="text-xs text-gray-500 mb-1">
+            Supported formats: JPG, PNG, PDF • Max size: 5 MB
+          </p>
+
           <input
             type="file"
             name="profileImage"
@@ -402,8 +416,11 @@ export default function RegisterProvider() {
 
         <div className="space-y-3">
           <h3 className="font-semibold text-lg">
-            Select Location
+            Select Service Location
           </h3>
+          <p className="text-sm text-gray-500 mt-1">
+            Choose your service area so customers can find you nearby.
+          </p>
 
           <LocationPicker
             location={{
@@ -423,6 +440,18 @@ export default function RegisterProvider() {
               }))
             }
           />
+        </div>
+
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <h4 className="font-medium text-blue-800">
+            📢 Important Notice
+          </h4>
+
+          <p className="text-sm text-blue-700 mt-1">
+            Your account will be activated only after <b>admin approval</b>. You will receive
+            an email notification once your registration has been approved. Please use
+            a valid email address and check your inbox regularly.
+          </p>
         </div>
 
         <button
