@@ -16,7 +16,7 @@ import AdminDashboard from "../pages/admin/AdminDashboard.jsx";
 import PendingProviders from "../pages/admin/PendingProviders.jsx";
 import Footer from "../components/Footer.jsx";
 import AdminLayout from "../layout/AdminLayout.jsx";
-import CustomerLayout from "../layout/customerLayout.jsx";
+import CustomerLayout from "../layout/CustomerLayout.jsx";
 import ServiceProviderList from "../pages/customer/ServiceProviderList.jsx";
 import Profile from "../pages/customer/Profile.jsx";
 import BookingPage from "../pages/customer/BookingPage.jsx";
