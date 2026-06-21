@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios.js";
+import API from "../../api/axios.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
 import Flash from "../../components/Flash.jsx";
@@ -46,7 +46,7 @@ const ReviewPage = () => {
         comment,
       };
 
-      const res = await axios.post("http://localhost:5000/reviews/add",
+      const res = await API.post("/reviews/add",
         reviewData,
         {
           withCredentials: true,
