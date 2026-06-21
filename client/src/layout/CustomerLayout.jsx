@@ -1,4 +1,4 @@
-import Customerbar from "../components/customerbar.jsx";
+import Customerbar from "../components/Customerbar.jsx";
 import Footer from "../components/Footer.jsx";
 import { Outlet } from "react-router-dom";
 
