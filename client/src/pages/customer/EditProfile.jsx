@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios.js";
+import API from "../../api/axios.js";
 
 import Loader from "../../components/Loader.jsx";
 import Customerbar from "../../components/Customerbar.jsx";
@@ -171,9 +171,9 @@ export default function EditProfile() {
                 );
             }
 
-            const res = await axios.put(
-                "http://localhost:5000/customer/profile/update",
-                data,
+            const res = await API.put(
+                "/customer/profile/update",
+                data,    
                 {
                     withCredentials: true,
                 }
