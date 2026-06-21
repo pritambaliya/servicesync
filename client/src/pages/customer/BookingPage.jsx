@@ -49,6 +49,9 @@ export default function BookingPage() {
       }
 
       setLoading(true);
+      
+      const latNum = Number(user?.location?.coordinates?.coordinates?.[1]);
+      const lngNum = Number(user?.location?.coordinates?.coordinates?.[0]);
 
       const locationData = {
         address: user?.location?.address || "",
@@ -81,7 +84,7 @@ export default function BookingPage() {
 
     } catch (err) {
       console.log(err);
-      setFlash({
+      setFlash({  
         type: "error",
         message: err.response?.data?.message || "Booking failed"
       });

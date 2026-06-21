@@ -55,6 +55,25 @@ export default function PendingProviders() {
     }
   };
 
+  const openMap = (provider) => {
+
+    const coordinates =
+      provider.location?.coordinates?.coordinates;
+
+    if (!coordinates || coordinates.length < 2) {
+      alert("Provider location not available");
+      return;
+    }
+
+    const lng = coordinates[0];
+    const lat = coordinates[1];
+
+    window.open(
+      `https://www.google.com/maps?q=${lat},${lng}`,
+      "_blank"
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#081c3a] to-[#0b3c78] p-6">
 
@@ -130,6 +149,17 @@ export default function PendingProviders() {
                 </div>
               )}
 
+              <div>
+                <p className="text-sm font-medium mb-1">Provider Location:</p>
+                <a
+                  onClick={() => openMap(p)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-blue-600 underline text-sm cursor-pointer"
+                >
+                  View Location
+                </a>
+              </div>
               <div className="flex gap-3 pt-2">
 
                 <button

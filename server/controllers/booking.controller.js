@@ -1,5 +1,6 @@
 import Booking from "../model/booking.model.js";
 import Provider from "../model/provider.model.js";
+import Chat from "../model/chat.model.js";
 
 export const createBooking = async (req, res) => {
   try {

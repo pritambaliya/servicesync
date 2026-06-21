@@ -1,6 +1,8 @@
 import bcrypt from "bcrypt";
 import Customer from "../model/customer.model.js";
 import cloudinary from "../config/cloudanary.js";
+import Booking from "../model/booking.model.js";
+import Chat from "../model/chat.model.js";
 
 const registerCustomer = async (req, res) => {
   try {
@@ -164,4 +166,46 @@ const updateProfile = async (req, res) => {
   }
 };
 
-export { registerCustomer, updateProfile };
+const deleteAccount = async(req,res)=>{
+
+try{
+
+ const customerId = req.user._id;
+
+
+ // delete bookings
+ await Booking.deleteMany({
+   customer: customerId
+ });
+
+
+ // delete chats
+ await Chat.deleteMany({
+   customer: customerId
+ });
+
+
+ // delete customer
+ await Customer.findByIdAndDelete(
+   customerId
+ );
+
+
+ res.json({
+   success:true,
+   message:"Account deleted permanently"
+ });
+
+
+}catch(error){
+
+ res.status(500).json({
+  success:false,
+  message:error.message
+ });
+
+}
+
+};
+
+export { registerCustomer, updateProfile, deleteAccount };

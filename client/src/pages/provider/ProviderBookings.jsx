@@ -84,6 +84,25 @@ export default function ProviderBookings() {
     );
   };
 
+  const openMap = (booking) => {
+
+    const coordinates =
+      booking.location?.coordinates?.coordinates;
+
+    if (!coordinates) {
+      alert("Location not available");
+      return;
+    }
+
+    const lng = coordinates[0];
+    const lat = coordinates[1];
+
+    window.open(
+      `https://www.google.com/maps?q=${lat},${lng}`,
+      "_blank"
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#081c3a] to-[#0b3c78] p-6">
 
@@ -252,7 +271,14 @@ export default function ProviderBookings() {
 
               </div>
 
-              <div className="flex flex-wrap gap-3 mt-8">
+              <button
+                onClick={() => openMap(booking)}
+                className="mt-7 w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-3 rounded-xl font-semibold transition"
+              >
+                🗺️ View Customer Location
+              </button>
+
+              <div className="flex flex-wrap gap-3 mt-3">
 
                 {booking.status === "pending" && (
                   <button

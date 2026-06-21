@@ -466,10 +466,6 @@ export default function EditProviderProfile() {
               />
 
             </div>
-            <>
-              <h1>{formData.longitude},
-                {formData.latitude}</h1>
-            </>
 
             <div className="flex gap-4 pt-4">
 

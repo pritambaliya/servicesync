@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
-import Customerbar from "../../components/Customerbar";
+import API from "../../api/axios";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -19,6 +19,38 @@ export default function Profile() {
       setLoading(false);
     }
   }, []);
+
+  const handleDeleteAccount = async () => {
+
+    const confirmDelete = window.confirm(
+      "Are you sure? This will permanently delete your account and all bookings."
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+
+      await API.delete("/customer/delete-account", {
+        withCredentials: true
+      });
+
+
+      localStorage.removeItem("user");
+
+      navigate("/login");
+
+
+    } catch (error) {
+
+      console.log(error);
+      alert(
+        error.response?.data?.message ||
+        "Delete failed"
+      );
+
+    }
+
+  };
 
   if (loading) return <Loader />;
 
@@ -106,6 +138,13 @@ export default function Profile() {
               className="flex-1 bg-green-500 py-2 rounded-lg hover:bg-green-600"
             >
               Edit Profile
+            </button>
+
+            <button
+              onClick={handleDeleteAccount}
+              className="flex-1  bg-red-600  py-2  rounded-lg  hover:bg-red-700"
+            >
+              Delete Account
             </button>
 
           </div>
