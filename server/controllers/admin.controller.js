@@ -45,7 +45,7 @@ const approveProvider = async (req, res) => {
           <h2 style="color:#081c3a;">Welcome to ServiceSync 🚀</h2>
           <p>Hello <b>${provider.name}</b>,</p>
           <p>Your account has been <b style="color:green;">APPROVED</b>.</p>
-          <a href="http://localhost:5173/login"
+          <a href="https://servicesync-enrn.onrender.com/login"
             style="padding:10px 15px;background:#081c3a;color:white;text-decoration:none;border-radius:5px;">
             Login Now
           </a>
