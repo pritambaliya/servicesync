@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Wrench, X } from "lucide-react";
-import API from "../../api/axios";
-import Loader from "../../components/Loader";
-import Flash from "../../components/Flash";
+import API from "../../api/axios.js";
+import Loader from "../../components/Loader.jsx";
+import Flash from "../../components/Flash.jsx";
 
 
 export default function Login() {

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "axios.js";
 
-import Loader from "../../components/Loader";
-import Customerbar from "../../components/Customerbar";
-import Flash from "../../components/Flash";
-import EditLocationPicker from "../../components/EditLocationPicker";
+import Loader from "../../components/Loader.jsx";
+import Customerbar from "../../components/Customerbar.jsx";
+import Flash from "../../components/Flash.jsx";
+import EditLocationPicker from "../../components/EditLocationPicker.jsx";
 
 export default function EditProfile() {
     const navigate = useNavigate();

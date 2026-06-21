@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import API from "../../api/axios";
+import API from "../../api/axios.js";
 
-import Loader from "../../components/Loader";
-import Flash from "../../components/Flash";
+import Loader from "../../components/Loader.jsx";
+import Flash from "../../components/Flash.jsx";
 
 export default function ForgotPassword() {
   const navigate = useNavigate();

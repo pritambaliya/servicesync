@@ -1,38 +1,38 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import PublicLayout from "../layout/PublicLayout";
+import PublicLayout from "../layout/PublicLayout.jsx";
 
-import Home from "../pages/Home";
-import Login from "../pages/auth/Login";
+import Home from "../pages/Home.jsx";
+import Login from "../pages/auth/Login.jsx";
 
-import CustomerDashboard from "../pages/customer/CustomerDashboard";
+import CustomerDashboard from "../pages/customer/CustomerDashboard.jsx";
 
-import About from "../pages/About";
-import RegisterRole from "../pages/auth/RegisterRole";
-import RegisterCustomer from "../pages/customer/RegisterCustomer";
-import RegisterProvider from "../pages/provider/RegisterProvider";
+import About from "../pages/About.jsx";
+import RegisterRole from "../pages/auth/RegisterRole.jsx";
+import RegisterCustomer from "../pages/customer/RegisterCustomer.jsx";
+import RegisterProvider from "../pages/provider/RegisterProvider.jsx";
 
-import AdminDashboard from "../pages/admin/AdminDashboard";
-import PendingProviders from "../pages/admin/PendingProviders";
-import Footer from "../components/Footer";
-import AdminLayout from "../layout/AdminLayout";
-import CustomerLayout from "../layout/customerLayout";
-import ServiceProviderList from "../pages/customer/ServiceProviderList";
-import Profile from "../pages/customer/Profile";
-import BookingPage from "../pages/customer/BookingPage";
-import Logout from "../pages/auth/Logout";
-import View from "../pages/customer/View";
-import EditBooking from "../pages/customer/EditBooking";
-import Review from "../pages/customer/Review";
-import ContactSupportPage from "../pages/customer/ContactSupportPage";
-import ProtectedRoute from "../components/ProtectedRoute";
-import ProviderLayout from "../layout/ProviderLayout";
-import ProviderBookings from "../pages/provider/ProviderBookings";
-import ProviderProfile from "../pages/provider/ProviderProfile";
-import Chat from "../pages/Chat";
-import EditProfile from "../pages/customer/EditProfile";
-import ForgotPassword from "../pages/auth/ForgotPassword ";
-import EditProviderProfile from "../pages/provider/EditProviderProfile";
+import AdminDashboard from "../pages/admin/AdminDashboard.jsx";
+import PendingProviders from "../pages/admin/PendingProviders.jsx";
+import Footer from "../components/Footer.jsx";
+import AdminLayout from "../layout/AdminLayout.jsx";
+import CustomerLayout from "../layout/customerLayout.jsx";
+import ServiceProviderList from "../pages/customer/ServiceProviderList.jsx";
+import Profile from "../pages/customer/Profile.jsx";
+import BookingPage from "../pages/customer/BookingPage.jsx";
+import Logout from "../pages/auth/Logout.jsx";
+import View from "../pages/customer/View.jsx";
+import EditBooking from "../pages/customer/EditBooking.jsx";
+import Review from "../pages/customer/Review.jsx";
+import ContactSupportPage from "../pages/customer/ContactSupportPage.jsx";
+import ProtectedRoute from "../components/ProtectedRoute.jsx";
+import ProviderLayout from "../layout/ProviderLayout.jsx";
+import ProviderBookings from "../pages/provider/ProviderBookings.jsx";
+import ProviderProfile from "../pages/provider/ProviderProfile.jsx";
+import Chat from "../pages/Chat.jsx";
+import EditProfile from "../pages/customer/EditProfile.jsx";
+import ForgotPassword from "../pages/auth/ForgotPassword.jsx";
+import EditProviderProfile from "../pages/provider/EditProviderProfile.jsx";
 
 export default function AppRoutes() {
   return (

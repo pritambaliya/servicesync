@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Loader from "../../components/Loader";
-import API from "../../api/axios";
+import Loader from "../../components/Loader.jsx";
+import API from "../../api/axios.js";
 
 export default function Profile() {
   const navigate = useNavigate();

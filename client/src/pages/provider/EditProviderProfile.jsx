@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import API from "../../api/axios";
+import API from "../../api/axios.js";
 
-import Loader from "../../components/Loader";
-import Flash from "../../components/Flash";
-import EditLocationPicker from "../../components/EditLocationPicker";
+import Loader from "../../components/Loader.jsx";
+import Flash from "../../components/Flash.jsx";
+import EditLocationPicker from "../../components/EditLocationPicker.jsx";
 
 export default function EditProviderProfile() {
   const navigate = useNavigate();

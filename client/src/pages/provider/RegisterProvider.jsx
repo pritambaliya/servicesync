@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import API from "../../api/axios";
+import API from "../../api/axios.js";
 import { X } from "lucide-react";
-import Loader from "../../components/Loader";
-import Flash from "../../components/Flash";
-import LocationPicker from "../../components/LocationPicker";
+import Loader from "../../components/Loader.jsx";
+import Flash from "../../components/Flash.jsx";
+import LocationPicker from "../../components/LocationPicker.jsx";
 
 export default function RegisterProvider() {
   const navigate = useNavigate();

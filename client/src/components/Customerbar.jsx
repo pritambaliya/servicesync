@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiUser, FiLogOut, FiMenu, FiX } from "react-icons/fi";
-import API from "../api/axios";
+import API from "../api/axios.js";
 
 export default function Customerbar() {
   const navigate = useNavigate();

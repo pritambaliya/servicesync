@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import API from "../../api/axios";
-import Loader from "../../components/Loader";
+import API from "../../api/axios.js";
+import Loader from "../../components/Loader.jsx";
 import { ArrowLeft, X } from "lucide-react";
-import Flash from "../../components/Flash";
+import Flash from "../../components/Flash.jsx";
 
 export default function EditBooking() {
 

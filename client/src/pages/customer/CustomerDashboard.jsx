@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { User, LogOut, Wrench, Zap, Hammer, Paintbrush, Brush, Snowflake } from "lucide-react";
-import Loader from "../../components/Loader";
+import Loader from "../../components/Loader.jsx";
 import { useState } from "react";
 
 

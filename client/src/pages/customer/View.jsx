@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import API from "../../api/axios";
-import Loader from "../../components/Loader";
+import API from "../../api/axios.js";
+import Loader from "../../components/Loader.jsx";
 import { X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { MessageCircle } from "lucide-react";

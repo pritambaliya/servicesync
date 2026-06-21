@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import API from "../../api/axios.js";
-import Loader from "../../components/Loader";
+import Loader from "../../components/Loader.jsx";
 
 export default function PendingProviders() {
   const [providers, setProviders] = useState([]);

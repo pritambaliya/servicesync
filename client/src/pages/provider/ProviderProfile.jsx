@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import API from "../../api/axios";
-import Loader from "../../components/Loader";
+import API from "../../api/axios.js";
+import Loader from "../../components/Loader.jsx";
 import { useNavigate } from "react-router-dom";
 
 export default function ProviderProfile() {

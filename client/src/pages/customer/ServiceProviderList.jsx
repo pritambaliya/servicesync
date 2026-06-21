@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import API from "../../api/axios";
-import Loader from "../../components/Loader";
+import API from "../../api/axios.js";
+import Loader from "../../components/Loader.jsx";
 import { useParams, useNavigate } from "react-router-dom";
-import ProviderLocationMap from "../provider/ProviderLocationMap";
+import ProviderLocationMap from "../provider/ProviderLocationMap.jsx";
 
 export default function ServiceProviderList() {
   const { type } = useParams();

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import API from "../../api/axios";
+import API from "../../api/axios.js";
 import { X } from "lucide-react";
-import Flash from "../../components/Flash";
+import Flash from "../../components/Flash.jsx";
 
 export default function BookingPage() {
   const { providerid } = useParams();

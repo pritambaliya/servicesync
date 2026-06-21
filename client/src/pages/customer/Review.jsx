@@ -1,8 +1,8 @@
 import { useState } from "react";
-import axios from "axios";
+import axios from "axios.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import { X } from "lucide-react";
-import Flash from "../../components/Flash";
+import Flash from "../../components/Flash.jsx";
 
 const ReviewPage = () => {
   const navigate = useNavigate();

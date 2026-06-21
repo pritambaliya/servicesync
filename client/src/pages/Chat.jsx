@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import socket from "../socket/socket";
+import socket from "../socket/socket.js";
 
 import { Send, Image, Mic, Smile, CheckCheck, Copy } from "lucide-react";
 import EmojiPicker from "emoji-picker-react";
