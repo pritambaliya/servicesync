@@ -18,9 +18,6 @@ export default function CustomerBookings() {
 
       const { data } = await API.get(
         "/bookings/customer",
-        {
-          withCredentials: true
-        }
       );
 
       setBookings(data.data || []);
@@ -50,9 +47,6 @@ export default function CustomerBookings() {
 
       await API.delete(
         `/bookings/delete/${id}`,
-        {
-          withCredentials: true
-        }
       );
 
       setBookings((prev) =>

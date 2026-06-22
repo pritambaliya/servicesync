@@ -75,7 +75,7 @@ export default function Chat() {
   useEffect(() => {
     const fetchChat = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/chat/${bookingId}`, {
+        const res = await fetch(`https://servicesync-server.onrender.com/chat/${bookingId}`, {
           headers: { Authorization: `Bearer ${token}` },
           credentials: "include",
         });
@@ -174,7 +174,7 @@ export default function Chat() {
 
     try {
       const res = await fetch(
-        `http://localhost:5000/chat/send/${chat._id}`,
+        `https://servicesync-server.onrender.com/chat/send/${chat._id}`,
         {
           method: "POST",
           headers: {
@@ -240,7 +240,7 @@ export default function Chat() {
     formData.append("image", file);
 
     try {
-      const res = await fetch(`http://localhost:5000/chat/send-image/${chat._id}`, {
+      const res = await fetch(`https://servicesync-server.onrender.com/chat/send-image/${chat._id}`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         credentials: "include",
@@ -306,7 +306,7 @@ export default function Chat() {
     if (!selectedMessage?._id) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/chat/delete/${selectedMessage._id}`, {
+      const res = await fetch(`https://servicesync-server.onrender.com/chat/delete/${selectedMessage._id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
         credentials: "include",
