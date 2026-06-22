@@ -108,7 +108,7 @@ export default function Chat() {
         if (!msg?.text?.trim() && !msg?.image) return;
 
         const isTempMessage = msg._id && msg._id.startsWith('temp-');
-        
+
         if (String(msg.sender) === String(user._id) && !isTempMessage) {
           setMessages((prev) => {
             const tempIndex = prev.findIndex((m) => m._id === `temp-${msg.tempId}`);
@@ -128,7 +128,7 @@ export default function Chat() {
           return [...prev, { ...msg, seen: false }];
         });
 
-        new Audio("/notification.mp3").play().catch(() => {});
+        new Audio("/notification.mp3").play().catch(() => { });
       },
       message_seen: (msgId) => {
         setMessages((prev) =>
@@ -159,7 +159,7 @@ export default function Chat() {
     setMessage("");
 
     const tempId = `temp-${Date.now()}`;
-    
+
     const tempMessage = {
       _id: tempId,
       tempId: tempId,
@@ -224,7 +224,7 @@ export default function Chat() {
     if (!file || !chat?._id || !user._id) return;
 
     const tempId = `temp-${Date.now()}`;
-    
+
     const tempMessage = {
       _id: tempId,
       sender: user._id,
@@ -233,7 +233,7 @@ export default function Chat() {
       isTemp: true,
       image: file.name,
     };
-    
+
     setMessages((prev) => [...prev, tempMessage]);
 
     const formData = new FormData();
@@ -258,7 +258,7 @@ export default function Chat() {
           updated[index] = result.data;
           return updated;
         });
-        
+
         socket.emit("send_message", { chatId: chat._id, message: result.data });
         scrollToBottom(true);
       }
@@ -333,13 +333,13 @@ export default function Chat() {
   }
 
   return (
-    <div className="h-screen bg-gradient-to-r from-[#081c3a] to-[#0b3c78] flex justify-center items-center p-3">
-      <div className="w-full max-w-3xl h-[95vh] bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl flex flex-col overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-r from-[#081c3a] to-[#0b3c78] flex justify-center items-center p-2 sm:p-4">
+      <div className="w-full max-w-3xl h-[100dvh] sm:h-[95vh] bg-white/10 backdrop-blur-lg border border-white/20 rounded-none sm:rounded-3xl flex flex-col overflow-hidden">
         <div className="p-4 border-b border-white/20 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img
               src={otherUser?.profileImage?.url || "https://i.pravatar.cc/100"}
-              className="w-12 h-12 rounded-full object-cover"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover"
               alt="profile"
             />
             <div>
@@ -355,8 +355,7 @@ export default function Chat() {
 
         <div
           ref={chatContainerRef}
-          className="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-transparent"
-        >
+          className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3 sm:space-y-4 scroll-smooth scrollbar-thin scrollbar-thumb-gray-500">
           {messages.length === 0 ? (
             <div className="text-center py-8">
               <p className="text-white/70 mb-4">No messages yet. Start the conversation!</p>
@@ -374,7 +373,7 @@ export default function Chat() {
             </div>
           ) : (
             messages.map((m) => {
-              
+
               const isMine = String(m.sender) === String(user._id);
 
               return (
@@ -389,11 +388,10 @@ export default function Chat() {
                   className={`flex ${isMine ? "justify-end" : "justify-start"}`}
                 >
                   <div
-                    className={`max-w-[75%] px-4 py-3 shadow-lg ${
-                      isMine
-                        ? "bg-blue-500 text-white rounded-2xl rounded-br-md"
-                        : "bg-white text-black rounded-2xl rounded-bl-md"
-                    }`}
+                    className={`max-w-[75%] px-4 py-3 shadow-lg ${isMine
+                      ? "bg-blue-500 text-white rounded-2xl rounded-br-md"
+                      : "bg-white text-black rounded-2xl rounded-bl-md"
+                      }`}
                   >
                     {m.image && (
                       <img
@@ -451,7 +449,7 @@ export default function Chat() {
           </div>
         )}
 
-        <div className="border-t border-white/20 p-4 flex items-center gap-3">
+        <div className="border-t border-white/20 p-2 sm:p-4 flex items-center gap-2 sm:gap-3">
           <button
             onClick={() => setShowEmoji(!showEmoji)}
             className="text-white p-2 hover:bg-white/10 rounded-xl transition"
@@ -493,8 +491,7 @@ export default function Chat() {
             onChange={handleTyping}
             onKeyDown={(e) => e.key === "Enter" && sendMessage()}
             placeholder="Type a message..."
-            className="flex-1 bg-white/10 border border-white/20 rounded-2xl px-4 py-3 text-white placeholder-gray-300 outline-none"
-          />
+            className="flex-1 min-w-0 bg-white/10 border border-white/20 rounded-2xl px-3 sm:px-4 py-2 sm:py-3 text-white placeholder-gray-300 outline-none" />
 
           <button
             onClick={sendMessage}
