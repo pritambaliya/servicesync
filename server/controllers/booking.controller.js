@@ -153,22 +153,31 @@ export const getCustomerBookings = async (req, res) => {
     }
 
     const bookings = await Booking.find(filter)
-      .populate("provider");
+      .populate({
+        path:"provider",
+        select:"name profileImage rating mobile email service location"
+      });
 
     const result = bookings.map(b => {
-      const providerData = { ...b.provider._doc };
 
-      if (b.status !== "accepted") {
-        delete providerData.mobile;
-        delete providerData.email;
-      }
+    let providerData = {};
 
-      return {
-        ...b._doc,
-        provider: providerData
-      };
-    });
+    if (b.provider) {
 
+    providerData = { ...b.provider._doc };
+
+    if (b.status !== "accepted") {
+      delete providerData.mobile;
+      delete providerData.email;
+    }
+  }
+
+  return {
+    ...b._doc,
+    provider: providerData
+  };
+
+});
     req.flash("success", "Filtered bookings fetched");
 
     res.json({
