@@ -1,26 +1,29 @@
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import dotenv from "dotenv";
+
 dotenv.config();
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 
 const sendEmail = async (to, subject, html) => {
 
-    const transporter = nodemailer.createTransport({
-      service:"gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
+    try {
+        console.log("Sending email through Resend...");
+        const result = await resend.emails.send({
+            from: "ServiceSync <onboarding@resend.dev>",
+            to,
+            subject,
+            html
+        });
+        console.log("✅ Email sent:", result);
 
-    await transporter.sendMail({
-      from: `"ServiceSync Support" <${process.env.EMAIL_USER}>`,
-      to,
-      subject,
-      html
-    });
-    
-    console.log("✅ Email sent to:", to);
+    } catch (error) {
+        console.log("❌ Resend Error:", error.message);
+        throw error;
+    }
 
 };
+
 
 export default sendEmail;
