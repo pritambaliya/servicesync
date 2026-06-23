@@ -61,6 +61,7 @@ const sendForgotOtp = async (req, res) => {
 
     await user.save();
 
+    console.log("BEFORE SEND EMAIL");
     await sendEmail(
       email,
       "ServiceSync Password Reset OTP",
@@ -73,6 +74,7 @@ const sendForgotOtp = async (req, res) => {
       <p>Account Type: ${role}</p>
       `
     );
+    console.log("AFTER SEND EMAIL");
 
     res.status(200).json({
       success: true,
