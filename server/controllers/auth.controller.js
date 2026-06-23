@@ -32,6 +32,8 @@ const logoutUser = (req, res) => {
 
 
 const sendForgotOtp = async (req, res) => {
+  console.log("FORGOT CONTROLLER HIT");
+
   try {
     const { email, role } = req.body;
 
