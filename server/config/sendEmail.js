@@ -4,8 +4,8 @@ const sendEmail = async (to, subject, html) => {
 
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
+      port: 465,
+      secure: true,
       family: 4,
       auth: {
         user: process.env.EMAIL_USER,
@@ -13,13 +13,17 @@ const sendEmail = async (to, subject, html) => {
       }
     });
 
+    await transporter.verify();
+    console.log("SMTP working");
+    console.log(process.env.EMAIL_USER)
+
     await transporter.sendMail({
       from: `"ServiceSync Support" <${process.env.EMAIL_USER}>`,
       to,
       subject,
       html
     });
-
+    
     console.log("✅ Email sent to:", to);
 
 };

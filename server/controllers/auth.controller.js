@@ -30,6 +30,7 @@ const logoutUser = (req, res) => {
 };
 
 
+
 const sendForgotOtp = async (req, res) => {
   try {
     const { email, role } = req.body;
@@ -135,5 +136,4 @@ const resetPassword = async (req, res) => {
     });
   }
 };  
-
 export { loginSuccess, logoutUser, sendForgotOtp, resetPassword };
