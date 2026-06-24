@@ -1,18 +1,18 @@
-import brevo from "@getbrevo/brevo";
+import { TransactionalEmailsApi, TransactionalEmailsApiApiKeys, SendSmtpEmail } from "@getbrevo/brevo";
 import dotenv from "dotenv";
 dotenv.config();
 
-const apiInstance = new brevo.TransactionalEmailsApi();
+const apiInstance = new TransactionalEmailsApi();
 
 apiInstance.setApiKey(
-    brevo.TransactionalEmailsApiApiKeys.apiKey,
+    TransactionalEmailsApiApiKeys.apiKey,
     process.env.BREVO_API_KEY
 );
 
 const sendEmail = async (to, subject, html) => {
     try {
         console.log("Sending email through Brevo API...");
-        const email = new brevo.SendSmtpEmail();
+        const email = new SendSmtpEmail();
 
         email.sender = {
             name: "ServiceSync",
