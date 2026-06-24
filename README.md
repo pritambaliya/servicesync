@@ -67,6 +67,7 @@ ServiceSync solves this problem by providing a digital bridge between customers 
 - JWT Authentication
 - Email Verification
 - Integrated Cloudinary for image storage
+- Google map API
 - Cloud Deployment (Render)
 
 ---
