@@ -23,10 +23,8 @@ dotenv.config();
 
 const app = express();
 
-// Create HTTP Server
 const server = http.createServer(app);
 
-// Initialize Socket.IO
 initSocket(server);
 
 // Middleware
@@ -54,16 +52,6 @@ app.use(
     },
   })
 );
-
-app.get("/check-ip", async (req,res)=>{
-
-  const response = await fetch("https://api.ipify.org?format=json");
-
-  const data = await response.json();
-
-  res.json(data);
-
-});
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -121,9 +109,6 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB Connected ✅");
-
-    // IMPORTANT:
-    // Use server.listen() NOT app.listen()
     server.listen(process.env.PORT || 5000, () => {
       console.log(
         `Server running on port ${
