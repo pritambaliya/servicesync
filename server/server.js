@@ -55,6 +55,16 @@ app.use(
   })
 );
 
+app.get("/check-ip", async (req,res)=>{
+
+  const response = await fetch("https://api.ipify.org?format=json");
+
+  const data = await response.json();
+
+  res.json(data);
+
+});
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
