@@ -1,37 +1,40 @@
-import { TransactionalEmailsApi } from "@getbrevo/brevo";
+import Brevo from "@getbrevo/brevo";
 import dotenv from "dotenv";
-
 dotenv.config();
-const apiInstance = new TransactionalEmailsApi();
+
+const apiInstance = new Brevo.TransactionalEmailsApi();
 
 apiInstance.setApiKey(
-    0,
+    Brevo.TransactionalEmailsApiApiKeys.apiKey,
     process.env.BREVO_API_KEY
 );
 
 const sendEmail = async (to, subject, html) => {
     try {
         console.log("Sending email through Brevo API...");
-        const email = {
-            sender: {
-                name: "ServiceSync",
-                email: process.env.EMAIL_USER
-            },
-            to: [
-                {
-                    email: to
-                }
-            ],
+        const email = new Brevo.SendSmtpEmail();
 
-            subject: subject,
-            htmlContent: html
+        email.sender = {
+            name: "ServiceSync",
+            email: process.env.EMAIL_USER
         };
 
+        email.to = [
+            {
+                email: to
+            }
+        ];
+
+        email.subject = subject;
+        email.htmlContent = html;
+
         const result = await apiInstance.sendTransacEmail(email);
+
         console.log("✅ Email sent:", result);
 
-    } catch (error) {
+    } catch(error) {
         console.log("❌ Brevo Error:", error.message);
+
         throw error;
     }
 
