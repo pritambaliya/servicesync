@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-ServiceSync is a full-stack service marketplace platform that connects customers with trusted local service providers such as electricians, plumbers, carpenters, and other professionals.
+ServiceSync is a MERN Stack web service marketplace platform that connects customers with trusted local service providers such as electricians, plumbers, carpenters, and other professionals.
 
 The platform allows customers to find nearby service providers, book services, manage appointments, and communicate efficiently. Service providers can create profiles, receive booking requests, and manage their services.
 
