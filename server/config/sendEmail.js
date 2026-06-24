@@ -1,45 +1,38 @@
-import nodemailer from "nodemailer";
+import brevo from "@getbrevo/brevo";
 import dotenv from "dotenv";
 dotenv.config();
 
-const transporter = nodemailer.createTransport({
-    host: "smtp-relay.brevo.com",
-    port: 587,
-    auth: {
-        user: process.env.BREVO_USER,
-        pass: process.env.BREVO_PASS
-    }
-});
+const apiInstance = new brevo.TransactionalEmailsApi();
 
-transporter.verify((err)=>{
-    if(err){
-        console.log("SMTP ERROR", err);
-    }else{
-        console.log("SMTP CONNECTED");
-    }
-});
+apiInstance.setApiKey(
+    brevo.TransactionalEmailsApiApiKeys.apiKey,
+    process.env.BREVO_API_KEY
+);
 
 const sendEmail = async (to, subject, html) => {
-
     try {
-        console.log("Sending email through Brevo...");
-        const result = await transporter.sendMail({
+        console.log("Sending email through Brevo API...");
+        const email = new brevo.SendSmtpEmail();
 
-            from: `ServiceSync <${process.env.EMAIL_USER}>`,
-            to,
-            subject,
-            html
-        });
-        console.log("✅ Email sent:", result.messageId);
+        email.sender = {
+            name: "ServiceSync",
+            email: process.env.EMAIL_USER
+        };
 
+        email.to = [
+            {
+                email: to
+            }
+        ];
+        email.subject = subject;
+        email.htmlContent = html;
+        const result = await apiInstance.sendTransacEmail(email);
+        console.log("✅ Email sent:", result);
 
     } catch (error) {
         console.log("❌ Brevo Error:", error.message);
         throw error;
-
     }
-
 };
-
 
 export default sendEmail;
