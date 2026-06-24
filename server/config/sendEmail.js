@@ -1,39 +1,29 @@
-import Brevo from "@getbrevo/brevo";
+import sgMail from "@sendgrid/mail";
 import dotenv from "dotenv";
 dotenv.config();
 
-const apiInstance = new Brevo.TransactionalEmailsApi();
-
-apiInstance.setApiKey(
-    Brevo.TransactionalEmailsApiApiKeys.apiKey,
-    process.env.BREVO_API_KEY
-);
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const sendEmail = async (to, subject, html) => {
     try {
-        console.log("Sending email through Brevo API...");
-        const email = new Brevo.SendSmtpEmail();
-
-        email.sender = {
-            name: "ServiceSync",
-            email: process.env.EMAIL_USER
+        console.log("Sending email through SendGrid...");
+        const msg = {
+            to: to,
+            from: {
+                email: process.env.EMAIL_USER,
+                name: "ServiceSync"
+            },
+            subject: subject,
+            html: html
         };
 
-        email.to = [
-            {
-                email: to
-            }
-        ];
-
-        email.subject = subject;
-        email.htmlContent = html;
-
-        const result = await apiInstance.sendTransacEmail(email);
-
-        console.log("✅ Email sent:", result);
-
+        const result = await sgMail.send(msg);
+        console.log("✅ Email sent:", result[0].statusCode);
     } catch(error) {
-        console.log("❌ Brevo Error:", error.message);
+        console.log(
+          "❌ SendGrid Error:",
+          error.response?.body || error.message
+        );
 
         throw error;
     }
